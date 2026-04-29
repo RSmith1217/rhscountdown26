@@ -76,6 +76,20 @@
       font-size: 1.05rem;
     }
 
+    .holiday-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e7ff;
+      font-size: 0.95rem;
+      font-weight: 750;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
     .hero-side {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -166,7 +180,7 @@
       border-radius: 24px;
     }
 
-    .panel-header {
+    .panel-header, .schedule-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -219,18 +233,45 @@
       font-weight: 950;
     }
 
-    .schedule-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
     .schedule-header p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
+    }
+
+    .toggle-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .toggle-button:hover {
+      background: #e0e7ff;
+    }
+
+    .arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .arrow.closed {
+      transform: rotate(-90deg);
+    }
+
+    .calendar-body {
+      overflow: hidden;
+    }
+
+    .calendar-body.hidden {
+      display: none;
     }
 
     .schedule-grid {
@@ -321,6 +362,7 @@
       main { padding: 14px; }
       .stats, .rotation-grid, .schedule-grid, .hero-side { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
+      .panel-header, .schedule-header { align-items: flex-start; flex-direction: column; }
     }
 
     @media print {
@@ -328,6 +370,8 @@
       main { padding: 0; }
       .hero, .stat-card, .panel, .schedule-card { box-shadow: none; }
       .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .calendar-body.hidden { display: block; }
+      .toggle-button { display: none; }
     }
   </style>
 </head>
@@ -338,7 +382,8 @@
         <div>
           <div class="eyebrow">🎓 School Year Countdown · v2</div>
           <h1 id="dailyMessage">Almost there.</h1>
-          <p>This version hides past dates automatically, highlights the next school day, and changes the header message each day.</p>
+          <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p>
+          <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
         </div>
 
         <div class="hero-side">
@@ -387,10 +432,18 @@
 
       <section class="panel">
         <div class="schedule-header">
-          <h2>Upcoming Schedule</h2>
-          <p>Past dates are hidden automatically</p>
+          <div>
+            <h2>Upcoming Schedule</h2>
+            <p>Past dates are hidden automatically</p>
+          </div>
+          <button class="toggle-button" id="calendarToggle" type="button" aria-expanded="true" aria-controls="calendarBody">
+            <span class="arrow" id="calendarArrow">▼</span>
+            <span id="calendarToggleText">Hide calendar</span>
+          </button>
         </div>
-        <div id="schedule"></div>
+        <div class="calendar-body" id="calendarBody">
+          <div id="schedule"></div>
+        </div>
       </section>
     </div>
   </main>
@@ -457,7 +510,50 @@
       "The light at the end of the hallway is June.",
       "Still standing. Still teaching.",
       "The end-of-year playlist is forming.",
-      "Today's forecast: learning with a chance of summer."
+      "Today's forecast: learning with a chance of summer.",
+      "May your coffee be strong and your Wi-Fi be stronger.",
+      "The pencil sharpener believes in us.",
+      "Teach, laugh, repeat.",
+      "We are closer than the gradebook feels.",
+      "A little progress still counts as progress.",
+      "The bell schedule is no match for us.",
+      "Summer is not a rumor anymore.",
+      "Just enough chaos to keep it interesting.",
+      "Professional patience: activated.",
+      "There will be sunshine after the spreadsheets."
+    ];
+
+    const nationalDays = [
+      "National Ice Cream Sundae Day",
+      "National High Five Day",
+      "National Donut Day",
+      "National Chocolate Chip Cookie Day",
+      "National Taco Day",
+      "National Pizza Party Day",
+      "National Smile Day",
+      "National Coffee Day",
+      "National Compliment Day",
+      "National Kindness Day",
+      "National Take a Walk Day",
+      "National Sunglasses Day",
+      "National Pancake Day",
+      "National Pretzel Day",
+      "National Popcorn Day",
+      "National Waffle Day",
+      "National Pencil Day",
+      "National Book Lovers Day",
+      "National Clean Your Desk Day",
+      "National Trivia Day",
+      "National Tell a Joke Day",
+      "National Relaxation Day",
+      "National Banana Split Day",
+      "National Trail Mix Day",
+      "National Bagel Day",
+      "National Teacher Appreciation Day",
+      "National Read a Book Day",
+      "National Make a Friend Day",
+      "National Technology Day",
+      "National Creativity Day"
     ];
 
     function formatToday(date = new Date()) {
@@ -483,11 +579,19 @@
       return days.filter((item) => parseISODate(item.iso) >= todayOnly);
     }
 
-    function getDailyMessage(date = new Date()) {
+    function dayOfYear(date = new Date()) {
       const startOfYear = new Date(date.getFullYear(), 0, 0);
       const diff = toLocalDateOnly(date) - startOfYear;
-      const dayOfYear = Math.floor(diff / 86400000);
-      return dailyMessages[dayOfYear % dailyMessages.length];
+      return Math.floor(diff / 86400000);
+    }
+
+    function getRandomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function getNationalDay(date = new Date()) {
+      const index = dayOfYear(date) % nationalDays.length;
+      return nationalDays[index];
     }
 
     function countByRotationDay(days) {
@@ -509,6 +613,20 @@
       return "Day " + item.day;
     }
 
+    function setupCalendarToggle() {
+      const button = document.getElementById("calendarToggle");
+      const body = document.getElementById("calendarBody");
+      const arrow = document.getElementById("calendarArrow");
+      const text = document.getElementById("calendarToggleText");
+
+      button.addEventListener("click", () => {
+        const isHidden = body.classList.toggle("hidden");
+        button.setAttribute("aria-expanded", String(!isHidden));
+        arrow.classList.toggle("closed", isHidden);
+        text.textContent = isHidden ? "Show calendar" : "Hide calendar";
+      });
+    }
+
     const today = new Date();
     const upcomingDays = getUpcomingDays(schoolDays, today);
     const nextUp = upcomingDays[0];
@@ -519,13 +637,14 @@
     const rotationDaysLeft = upcomingDays.filter((item) => item.type === "rotation").length;
     const finalDaysLeft = upcomingDays.filter((item) => item.type === "finals").length;
 
-    // basic sanity checks
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 2)).length === 36);
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
-    console.assert(typeof getDailyMessage(new Date(2026, 3, 29)) === "string");
+    console.assert(typeof getRandomItem(dailyMessages) === "string");
+    console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
 
-    document.getElementById("dailyMessage").textContent = getDailyMessage(today);
+    document.getElementById("dailyMessage").textContent = getRandomItem(dailyMessages);
+    document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
     document.getElementById("today").textContent = formatToday(today);
 
     document.getElementById("nextDate").textContent = nextUp ? nextUp.date : "Done!";
@@ -563,6 +682,8 @@
         </article>
       `).join("");
     }
+
+    setupCalendarToggle();
   </script>
 </body>
 </html>
