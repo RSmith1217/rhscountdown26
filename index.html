@@ -13,6 +13,7 @@
       --border: #e2e8f0;
       --indigo: #4f46e5;
       --indigo-dark: #3730a3;
+      --sky-dark: #0369a1;
       --amber: #d97706;
       --emerald: #059669;
       --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
@@ -136,7 +137,7 @@
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
@@ -167,6 +168,7 @@
     }
 
     .stat-value.primary { color: var(--indigo-dark); }
+    .stat-value.sky { color: var(--sky-dark); }
 
     .stat-note {
       margin-top: 6px;
@@ -351,11 +353,19 @@
       font-weight: 950;
     }
 
+    @media (max-width: 1050px) {
+      .stats { grid-template-columns: repeat(3, 1fr); }
+    }
+
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
       .hero-side { min-width: 0; }
       .info-card, .next-card { text-align: left; }
-      .stats, .rotation-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .rotation-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 650px) {
+      .stats { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 540px) {
@@ -380,9 +390,9 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 School Year Countdown · v2</div>
+          <div class="eyebrow">🎓 School Year Countdown · v2.2</div>
           <h1 id="dailyMessage">Almost there.</h1>
-          <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
+          <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p>
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
         </div>
 
@@ -404,6 +414,11 @@
           <div class="stat-label">Student days left</div>
           <div class="stat-value primary" id="studentDays">0</div>
           <div class="stat-note">Auto-updates by date</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Actual days to June 24</div>
+          <div class="stat-value sky" id="actualDays">0</div>
+          <div class="stat-note">Calendar days, not school days</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Teacher days left</div>
@@ -579,6 +594,13 @@
       return days.filter((item) => parseISODate(item.iso) >= todayOnly);
     }
 
+    function getCalendarDaysUntil(targetISO, today = new Date()) {
+      const todayOnly = toLocalDateOnly(today);
+      const targetDate = parseISODate(targetISO);
+      const diff = targetDate - todayOnly;
+      return Math.max(0, Math.ceil(diff / 86400000));
+    }
+
     function dayOfYear(date = new Date()) {
       const startOfYear = new Date(date.getFullYear(), 0, 0);
       const diff = toLocalDateOnly(date) - startOfYear;
@@ -633,6 +655,7 @@
     const rotationCounts = countByRotationDay(upcomingDays);
 
     const studentDaysLeft = upcomingDays.filter((item) => item.date !== "June 25").length;
+    const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today);
     const teacherDaysLeft = upcomingDays.length;
     const rotationDaysLeft = upcomingDays.filter((item) => item.type === "rotation").length;
     const finalDaysLeft = upcomingDays.filter((item) => item.type === "finals").length;
@@ -640,6 +663,8 @@
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 2)).length === 36);
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
+    console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29)) === 56);
+    console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
     console.assert(typeof getRandomItem(dailyMessages) === "string");
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
 
@@ -651,6 +676,7 @@
     document.getElementById("nextLabel").textContent = nextUp ? nextUp.label : "School year complete";
 
     document.getElementById("studentDays").textContent = studentDaysLeft;
+    document.getElementById("actualDays").textContent = actualDaysUntilJune24;
     document.getElementById("teacherDays").textContent = teacherDaysLeft;
     document.getElementById("rotationDays").textContent = rotationDaysLeft;
     document.getElementById("finalDays").textContent = finalDaysLeft;
