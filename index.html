@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School Countdown</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --indigo: #4f46e5;
+      --amber: #d97706;
+      --emerald: #059669;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8fafc, #eef2ff, #f0f9ff);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: 28px;
+      color: white;
+      background: #0f172a;
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.25rem, 7vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+
+    .today-card {
+      min-width: 240px;
+      padding: 16px;
+      border-radius: 18px;
+      text-align: right;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .today-card .label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #cbd5e1;
+    }
+
+    .today-card .date {
+      margin-top: 5px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .today-card .through {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card, .panel, .schedule-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card {
+      padding: 20px;
+      border-radius: 20px;
+    }
+
+    .stat-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .icon {
+      display: inline-flex;
+      width: 26px;
+      height: 26px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #f1f5f9;
+    }
+
+    .stat-value {
+      margin-top: 10px;
+      font-size: 2.5rem;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-note {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .panel {
+      margin-bottom: 24px;
+      padding: 22px;
+      border-radius: 24px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .rotation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .rotation-card {
+      padding: 20px;
+      border-radius: 18px;
+      text-align: center;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .rotation-card .small {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .rotation-card .big {
+      margin-top: 4px;
+      color: var(--indigo);
+      font-size: 3rem;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .schedule-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .schedule-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .schedule-card {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+    .number {
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .date {
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .badge {
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .badge.rotation {
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .badge.finals {
+      background: #fef3c7;
+      color: var(--amber);
+    }
+
+    .badge.milestone {
+      background: #d1fae5;
+      color: var(--emerald);
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .today-card {
+        text-align: left;
+        min-width: 0;
+      }
+
+      .stats, .rotation-grid, .schedule-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 540px) {
+      main {
+        padding: 14px;
+      }
+
+      .stats, .rotation-grid, .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero, .panel {
+        border-radius: 20px;
+        padding: 20px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .hero, .stat-card, .panel, .schedule-card {
+        box-shadow: none;
+      }
+
+      .hero {
+        color: white;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">🎓 School Year Countdown</div>
+          <h1>Almost there.</h1>
+          <p>Remaining school days, rotation-day totals, finals, and end-of-year milestones.</p>
+        </div>
+        <aside class="today-card">
+          <div class="label">Today</div>
+          <div class="date" id="today">Loading...</div>
+          <div class="through">Through <strong>June 25</strong><br />Last teacher day</div>
+        </aside>
+      </section>
+
+      <section class="stats" aria-label="Countdown totals">
+        <div class="stat-card">
+          <div class="stat-label"><span class="icon">📅</span> Student days left</div>
+          <div class="stat-value" id="studentDays">0</div>
+          <div class="stat-note">Includes finals and June 24</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="icon">⏱</span> Teacher days left</div>
+          <div class="stat-value" id="teacherDays">0</div>
+          <div class="stat-note">Includes June 25</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="icon">✓</span> Rotation days left</div>
+          <div class="stat-value" id="rotationDays">0</div>
+          <div class="stat-note">Before finals begin</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="icon">✏️</span> Final exam days</div>
+          <div class="stat-value" id="finalDays">0</div>
+          <div class="stat-note">June 17, 18, 22, 23</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Rotation Days Remaining</h2>
+        <div class="rotation-grid" id="rotationCounts"></div>
+      </section>
+
+      <section class="panel">
+        <div class="schedule-header">
+          <h2>Remaining Schedule</h2>
+          <p>Compact list for easy sharing or printing</p>
+        </div>
+        <div class="schedule-grid" id="schedule"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const schoolDays = [
+      { date: "April 30", label: "2 Day", type: "rotation", day: 2 },
+      { date: "May 1", label: "1 Day", type: "rotation", day: 1 },
+      { date: "May 4", label: "4 Day", type: "rotation", day: 4 },
+      { date: "May 5", label: "3 Day", type: "rotation", day: 3 },
+      { date: "May 6", label: "2 Day", type: "rotation", day: 2 },
+      { date: "May 7", label: "1 Day", type: "rotation", day: 1 },
+      { date: "May 8", label: "4 Day", type: "rotation", day: 4 },
+      { date: "May 11", label: "3 Day", type: "rotation", day: 3 },
+      { date: "May 12", label: "2 Day", type: "rotation", day: 2 },
+      { date: "May 13", label: "1 Day", type: "rotation", day: 1 },
+      { date: "May 14", label: "4 Day", type: "rotation", day: 4 },
+      { date: "May 15", label: "3 Day", type: "rotation", day: 3 },
+      { date: "May 18", label: "2 Day", type: "rotation", day: 2 },
+      { date: "May 19", label: "1 Day", type: "rotation", day: 1 },
+      { date: "May 20", label: "4 Day", type: "rotation", day: 4 },
+      { date: "May 21", label: "3 Day", type: "rotation", day: 3 },
+      { date: "May 22", label: "2 Day", type: "rotation", day: 2 },
+      { date: "May 27", label: "1 Day", type: "rotation", day: 1 },
+      { date: "May 28", label: "4 Day", type: "rotation", day: 4 },
+      { date: "May 29", label: "3 Day", type: "rotation", day: 3 },
+      { date: "June 1", label: "2 Day", type: "rotation", day: 2 },
+      { date: "June 2", label: "1 Day", type: "rotation", day: 1 },
+      { date: "June 3", label: "4 Day", type: "rotation", day: 4 },
+      { date: "June 4", label: "3 Day", type: "rotation", day: 3 },
+      { date: "June 5", label: "2 Day", type: "rotation", day: 2 },
+      { date: "June 8", label: "1 Day", type: "rotation", day: 1 },
+      { date: "June 9", label: "4 Day", type: "rotation", day: 4 },
+      { date: "June 10", label: "3 Day", type: "rotation", day: 3 },
+      { date: "June 11", label: "2 Day", type: "rotation", day: 2 },
+      { date: "June 12", label: "1 Day", type: "rotation", day: 1 },
+      { date: "June 15", label: "4 Day", type: "rotation", day: 4 },
+      { date: "June 16", label: "3 Day", type: "rotation", day: 3 },
+      { date: "June 17", label: "Finals: Periods 4 & 8", type: "finals" },
+      { date: "June 18", label: "Finals: Periods 3 & 7", type: "finals" },
+      { date: "June 22", label: "Finals: Periods 2 & 6", type: "finals" },
+      { date: "June 23", label: "Finals: Periods 1 & 5", type: "finals" },
+      { date: "June 24", label: "Last Student Day", type: "milestone" },
+      { date: "June 25", label: "Last Teacher Day", type: "milestone" }
+    ];
+
+    function countByRotationDay(days) {
+      return [1, 2, 3, 4].map((day) => ({
+        day,
+        count: days.filter((item) => item.type === "rotation" && item.day === day).length
+      }));
+    }
+
+    function formatToday(date = new Date()) {
+      return new Intl.DateTimeFormat(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      }).format(date);
+    }
+
+    function badgeClass(item) {
+      if (item.type === "finals") return "badge finals";
+      if (item.type === "milestone") return "badge milestone";
+      return "badge rotation";
+    }
+
+    function badgeText(item) {
+      if (item.type === "finals") return "Finals";
+      if (item.type === "milestone") return "Milestone";
+      return "Day " + item.day;
+    }
+
+    const rotationCounts = countByRotationDay(schoolDays);
+    const totalTeacherDays = schoolDays.length;
+    const totalStudentDays = schoolDays.filter((item) => item.date !== "June 25").length;
+    const totalRotationDays = schoolDays.filter((item) => item.type === "rotation").length;
+    const totalFinalDays = schoolDays.filter((item) => item.type === "finals").length;
+
+    console.assert(totalTeacherDays === 38, "Expected 38 teacher days.");
+    console.assert(totalStudentDays === 37, "Expected 37 student days.");
+    console.assert(totalRotationDays === 32, "Expected 32 rotation days.");
+    console.assert(totalFinalDays === 4, "Expected 4 final exam days.");
+    console.assert(rotationCounts.every((item) => item.count === 8), "Expected 8 of each rotation day.");
+
+    document.getElementById("today").textContent = formatToday();
+    document.getElementById("studentDays").textContent = totalStudentDays;
+    document.getElementById("teacherDays").textContent = totalTeacherDays;
+    document.getElementById("rotationDays").textContent = totalRotationDays;
+    document.getElementById("finalDays").textContent = totalFinalDays;
+
+    document.getElementById("rotationCounts").innerHTML = rotationCounts
+      .map((item) => `
+        <div class="rotation-card">
+          <div class="small">Day ${item.day}</div>
+          <div class="big">${item.count}</div>
+          <div class="description">remaining</div>
+        </div>
+      `)
+      .join("");
+
+    document.getElementById("schedule").innerHTML = schoolDays
+      .map((item, index) => `
+        <article class="schedule-card">
+          <div>
+            <div class="number">#${index + 1}</div>
+            <div class="date">${item.date}</div>
+            <div class="description">${item.label}</div>
+          </div>
+          <span class="${badgeClass(item)}">${badgeText(item)}</span>
+        </article>
+      `)
+      .join("");
+  </script>
+</body>
+</html>
