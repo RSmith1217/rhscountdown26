@@ -45,58 +45,22 @@
       padding: 28px;
       border-radius: 28px;
       color: white;
-      background: #8b4a57;
+      background: #0f172a;
       box-shadow: var(--shadow);
     }
 
-    .hero-main {
-      max-width: 720px;
-    }
-
-    .hero-calendar {
-      flex-shrink: 0;
-      min-width: 112px;
-      display: inline-grid;
-      grid-template-rows: auto 1fr auto;
-      justify-items: center;
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
-      align-self: center;
-      border-radius: 18px;
-      overflow: hidden;
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 14px 22px rgba(15, 23, 42, 0.18);
-    }
-
-    .hero-calendar-month {
-      width: 100%;
-      padding: 6px 12px;
-      background: #dbeafe;
-      color: #1d4ed8;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      text-align: center;
-      text-transform: uppercase;
-    }
-
-    .hero-calendar-day {
-      padding: 10px 14px 2px;
-      color: #0f172a;
-      font-size: 2.4rem;
-      font-weight: 950;
-      line-height: 1;
-    }
-
-    .hero-calendar-note {
-      padding: 0 10px 10px;
-      color: #475569;
-      font-size: 11px;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: 0.04em;
-      line-height: 1.15;
-      text-align: center;
-      white-space: nowrap;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     h1 {
@@ -127,6 +91,50 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
     }
 
+    .hero-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      min-width: 420px;
+    }
+
+    .info-card, .next-card {
+      padding: 16px;
+      border-radius: 18px;
+      text-align: right;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .next-card {
+      background: var(--indigo);
+      box-shadow: 0 14px 28px rgba(49, 46, 129, 0.35);
+    }
+
+    .info-label {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #cbd5e1;
+    }
+
+    .info-main {
+      margin-top: 5px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .info-sub {
+      margin-top: 4px;
+      color: #dbeafe;
+      font-size: 14px;
+    }
+
     .stats {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -141,12 +149,8 @@
     }
 
     .stat-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 20px;
       border-radius: 20px;
-      text-align: center;
     }
 
     .stat-label {
@@ -205,6 +209,13 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
+    }
+
+    .period-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
     }
 
     .rotation-card {
@@ -351,12 +362,14 @@
 
     @media (max-width: 1050px) {
       .stats { grid-template-columns: repeat(3, 1fr); }
+      .period-grid { grid-template-columns: repeat(4, 1fr); }
     }
 
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
-      .hero-calendar { align-self: flex-start; }
-      .rotation-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-side { min-width: 0; }
+      .info-card, .next-card { text-align: left; }
+      .rotation-grid, .period-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 650px) {
@@ -365,10 +378,9 @@
 
     @media (max-width: 540px) {
       main { padding: 14px; }
-      .stats, .rotation-grid, .schedule-grid { grid-template-columns: 1fr; }
+      .stats, .rotation-grid, .period-grid, .schedule-grid, .hero-side { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
       .panel-header, .schedule-header { align-items: flex-start; flex-direction: column; }
-      .hero-calendar { min-width: 88px; }
     }
 
     @media print {
@@ -378,7 +390,6 @@
       .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .calendar-body.hidden { display: block; }
       .toggle-button { display: none; }
-      .hero-calendar { box-shadow: none; }
     }
   </style>
 </head>
@@ -386,15 +397,23 @@
   <main>
     <div class="container">
       <section class="hero">
-        <div class="hero-main">
-          <h1>RHS School Countdown</h1>
-          <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
+        <div>
+          <div class="eyebrow">🎓 School Year Countdown · v2.2</div>
+          <h1 id="dailyMessage">Almost there.</h1>
+          <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p>
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
         </div>
-        <div class="hero-calendar" aria-label="Today's date">
-          <div class="hero-calendar-month" id="todayMonth">---</div>
-          <div class="hero-calendar-day" id="todayDay">--</div>
-          <div class="hero-calendar-note" id="todayNote">Loading...</div>
+
+        <div class="hero-side">
+          <aside class="info-card">
+            <div class="info-label">Today</div>
+            <div class="info-main" id="today">Loading...</div>
+          </aside>
+          <aside class="next-card">
+            <div class="info-label">Next up</div>
+            <div class="info-main" id="nextDate">Loading...</div>
+            <div class="info-sub" id="nextLabel"></div>
+          </aside>
         </div>
       </section>
 
@@ -428,10 +447,11 @@
 
       <section class="panel">
         <div class="panel-header">
-          <h2>Rotation Days Remaining</h2>
+          <h2>Day Countdowns</h2>
           <span class="pill">From today forward</span>
         </div>
         <div class="rotation-grid" id="rotationCounts"></div>
+        <div class="period-grid" id="periodCounts"></div>
       </section>
 
       <section class="panel">
@@ -494,6 +514,39 @@
       { date: "June 25", iso: "2026-06-25", label: "Last Teacher Day", type: "milestone" }
     ];
 
+    const dailyMessages = [
+      "Almost there.",
+      "The countdown is getting serious.",
+      "Hydrate, caffeinate, educate.",
+      "Another day closer to summer.",
+      "We are entering the final boss level.",
+      "Keep calm and check the rotation day.",
+      "The copier has made it this far. So have we.",
+      "Summer is loading...",
+      "One bell at a time.",
+      "Today counts. Literally.",
+      "The calendar says keep going.",
+      "Final stretch energy activated.",
+      "Gradebook courage required.",
+      "The hallway clock is not moving slowly. Probably.",
+      "We are officially in countdown mode.",
+      "Coffee first, countdown second.",
+      "The light at the end of the hallway is June.",
+      "Still standing. Still teaching.",
+      "The end-of-year playlist is forming.",
+      "Today's forecast: learning with a chance of summer.",
+      "May your coffee be strong and your Wi-Fi be stronger.",
+      "The pencil sharpener believes in us.",
+      "Teach, laugh, repeat.",
+      "We are closer than the gradebook feels.",
+      "A little progress still counts as progress.",
+      "The bell schedule is no match for us.",
+      "Summer is not a rumor anymore.",
+      "Just enough chaos to keep it interesting.",
+      "Professional patience: activated.",
+      "There will be sunshine after the spreadsheets."
+    ];
+
     const nationalDays = [
       "National Ice Cream Sundae Day",
       "National High Five Day",
@@ -527,6 +580,13 @@
       "National Creativity Day"
     ];
 
+    const periodMeetingsByRotationDay = {
+      1: [1, 2, 3, 5, 6, 7],
+      2: [2, 3, 4, 6, 7, 8],
+      3: [3, 4, 1, 7, 8, 5],
+      4: [4, 1, 2, 8, 5, 6]
+    };
+
     function formatToday(date = new Date()) {
       return new Intl.DateTimeFormat(undefined, {
         weekday: "long",
@@ -534,18 +594,6 @@
         day: "numeric",
         year: "numeric"
       }).format(date);
-    }
-
-    function formatMonthShort(date = new Date()) {
-      return new Intl.DateTimeFormat(undefined, { month: "short" }).format(date);
-    }
-
-    function formatDayNumber(date = new Date()) {
-      return new Intl.DateTimeFormat(undefined, { day: "numeric" }).format(date);
-    }
-
-    function formatWeekdayShort(date = new Date()) {
-      return new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(date);
     }
 
     function toLocalDateOnly(date) {
@@ -575,20 +623,36 @@
       return Math.floor(diff / 86400000);
     }
 
+    function getRandomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
     function getNationalDay(date = new Date()) {
       const index = dayOfYear(date) % nationalDays.length;
       return nationalDays[index];
-    }
-
-    function getTodayScheduleItem(days, today = new Date()) {
-      const todayOnly = toLocalDateOnly(today).getTime();
-      return days.find((item) => parseISODate(item.iso).getTime() === todayOnly) || null;
     }
 
     function countByRotationDay(days) {
       return [1, 2, 3, 4].map((day) => ({
         day,
         count: days.filter((item) => item.type === "rotation" && item.day === day).length
+      }));
+    }
+
+    function countByPeriod(days) {
+      const counts = Object.fromEntries(Array.from({ length: 8 }, (_, index) => [index + 1, 0]));
+
+      days
+        .filter((item) => item.type === "rotation")
+        .forEach((item) => {
+          periodMeetingsByRotationDay[item.day].forEach((period) => {
+            counts[period] += 1;
+          });
+        });
+
+      return Object.entries(counts).map(([period, count]) => ({
+        period: Number(period),
+        count
       }));
     }
 
@@ -601,7 +665,7 @@
     function badgeText(item) {
       if (item.type === "finals") return "Finals";
       if (item.type === "milestone") return "Milestone";
-      return "Day " + item.day;
+      return item.day + " Day";
     }
 
     function setupCalendarToggle() {
@@ -619,9 +683,10 @@
     }
 
     const today = new Date();
-    const todayItem = getTodayScheduleItem(schoolDays, today);
     const upcomingDays = getUpcomingDays(schoolDays, today);
+    const nextUp = upcomingDays[0];
     const rotationCounts = countByRotationDay(upcomingDays);
+    const periodCounts = countByPeriod(upcomingDays);
 
     const studentDaysLeft = upcomingDays.filter((item) => item.date !== "June 25").length;
     const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today);
@@ -632,16 +697,18 @@
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 2)).length === 36);
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
+    console.assert(countByPeriod(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 24));
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29)) === 56);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
+    console.assert(typeof getRandomItem(dailyMessages) === "string");
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
 
+    document.getElementById("dailyMessage").textContent = getRandomItem(dailyMessages);
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
-    document.getElementById("todayMonth").textContent = formatMonthShort(today);
-    document.getElementById("todayDay").textContent = formatDayNumber(today);
-    document.getElementById("todayNote").textContent = todayItem && todayItem.type === "rotation"
-      ? `${formatWeekdayShort(today)} · Day ${todayItem.day}`
-      : formatWeekdayShort(today);
+    document.getElementById("today").textContent = formatToday(today);
+
+    document.getElementById("nextDate").textContent = nextUp ? nextUp.date : "Done!";
+    document.getElementById("nextLabel").textContent = nextUp ? nextUp.label : "School year complete";
 
     document.getElementById("studentDays").textContent = studentDaysLeft;
     document.getElementById("actualDays").textContent = actualDaysUntilJune24;
@@ -651,9 +718,17 @@
 
     document.getElementById("rotationCounts").innerHTML = rotationCounts.map((item) => `
       <div class="rotation-card">
-        <div class="small">Day ${item.day}</div>
+        <div class="small">${item.day} Day</div>
         <div class="big">${item.count}</div>
         <div class="description">remaining</div>
+      </div>
+    `).join("");
+
+    document.getElementById("periodCounts").innerHTML = periodCounts.map((item) => `
+      <div class="rotation-card">
+        <div class="small">Period ${item.period}</div>
+        <div class="big">${item.count}</div>
+        <div class="description">meetings left</div>
       </div>
     `).join("");
 
