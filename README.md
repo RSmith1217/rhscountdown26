@@ -1,4 +1,4 @@
-# School Countdown Widget v2.3
+# RHS Countdown Timer v2.3
 
 Self-contained GitHub Pages widget with:
 - Auto-hiding past dates
