@@ -49,43 +49,28 @@
       box-shadow: var(--shadow);
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: stretch;
-      gap: 14px;
-      margin-bottom: 12px;
-      padding: 8px 10px 8px 14px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.1);
-      font-size: 14px;
-      font-weight: 800;
-      color: #e2e8f0;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+    .hero-main {
+      max-width: 720px;
     }
 
-    .eyebrow-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .eyebrow-calendar {
-      margin-left: auto;
-      min-width: 86px;
+    .hero-calendar {
+      flex-shrink: 0;
+      min-width: 96px;
       display: inline-grid;
       grid-template-rows: auto 1fr auto;
       justify-items: center;
       align-items: center;
-      border-radius: 14px;
+      align-self: flex-start;
+      border-radius: 16px;
       overflow: hidden;
       background: #ffffff;
       color: #0f172a;
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.14);
+      box-shadow: 0 14px 22px rgba(15, 23, 42, 0.18);
     }
 
-    .eyebrow-calendar-month {
+    .hero-calendar-month {
       width: 100%;
-      padding: 4px 10px;
+      padding: 5px 10px;
       background: #dbeafe;
       color: #1d4ed8;
       font-size: 10px;
@@ -95,16 +80,16 @@
       text-transform: uppercase;
     }
 
-    .eyebrow-calendar-day {
-      padding: 7px 10px 1px;
+    .hero-calendar-day {
+      padding: 8px 12px 2px;
       color: #0f172a;
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 950;
       line-height: 1;
     }
 
-    .eyebrow-calendar-note {
-      padding: 0 8px 7px;
+    .hero-calendar-note {
+      padding: 0 8px 8px;
       color: #475569;
       font-size: 10px;
       font-weight: 800;
@@ -366,6 +351,7 @@
 
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
+      .hero-calendar { align-self: flex-start; }
       .rotation-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -378,6 +364,7 @@
       .stats, .rotation-grid, .schedule-grid { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
       .panel-header, .schedule-header { align-items: flex-start; flex-direction: column; }
+      .hero-calendar { min-width: 88px; }
     }
 
     @media print {
@@ -387,6 +374,7 @@
       .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .calendar-body.hidden { display: block; }
       .toggle-button { display: none; }
+      .hero-calendar { box-shadow: none; }
     }
   </style>
 </head>
@@ -394,18 +382,15 @@
   <main>
     <div class="container">
       <section class="hero">
-        <div>
-          <div class="eyebrow">
-            <span class="eyebrow-title">🎓 School Year Countdown</span>
-            <span class="eyebrow-calendar" aria-label="Today's date">
-              <span class="eyebrow-calendar-month" id="todayMonth">---</span>
-              <span class="eyebrow-calendar-day" id="todayDay">--</span>
-              <span class="eyebrow-calendar-note" id="todayNote">Loading...</span>
-            </span>
-          </div>
-          <h1 id="dailyMessage">Almost there.</h1>
+        <div class="hero-main">
+          <h1>School Countdown</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
+        </div>
+        <div class="hero-calendar" aria-label="Today's date">
+          <div class="hero-calendar-month" id="todayMonth">---</div>
+          <div class="hero-calendar-day" id="todayDay">--</div>
+          <div class="hero-calendar-note" id="todayNote">Loading...</div>
         </div>
       </section>
 
@@ -505,39 +490,6 @@
       { date: "June 25", iso: "2026-06-25", label: "Last Teacher Day", type: "milestone" }
     ];
 
-    const dailyMessages = [
-      "Almost there.",
-      "The countdown is getting serious.",
-      "Hydrate, caffeinate, educate.",
-      "Another day closer to summer.",
-      "We are entering the final boss level.",
-      "Keep calm and check the rotation day.",
-      "The copier has made it this far. So have we.",
-      "Summer is loading...",
-      "One bell at a time.",
-      "Today counts. Literally.",
-      "The calendar says keep going.",
-      "Final stretch energy activated.",
-      "Gradebook courage required.",
-      "The hallway clock is not moving slowly. Probably.",
-      "We are officially in countdown mode.",
-      "Coffee first, countdown second.",
-      "The light at the end of the hallway is June.",
-      "Still standing. Still teaching.",
-      "The end-of-year playlist is forming.",
-      "Today's forecast: learning with a chance of summer.",
-      "May your coffee be strong and your Wi-Fi be stronger.",
-      "The pencil sharpener believes in us.",
-      "Teach, laugh, repeat.",
-      "We are closer than the gradebook feels.",
-      "A little progress still counts as progress.",
-      "The bell schedule is no match for us.",
-      "Summer is not a rumor anymore.",
-      "Just enough chaos to keep it interesting.",
-      "Professional patience: activated.",
-      "There will be sunshine after the spreadsheets."
-    ];
-
     const nationalDays = [
       "National Ice Cream Sundae Day",
       "National High Five Day",
@@ -619,10 +571,6 @@
       return Math.floor(diff / 86400000);
     }
 
-    function getRandomItem(items) {
-      return items[Math.floor(Math.random() * items.length)];
-    }
-
     function getNationalDay(date = new Date()) {
       const index = dayOfYear(date) % nationalDays.length;
       return nationalDays[index];
@@ -669,7 +617,6 @@
     const today = new Date();
     const todayItem = getTodayScheduleItem(schoolDays, today);
     const upcomingDays = getUpcomingDays(schoolDays, today);
-    const nextUp = upcomingDays[0];
     const rotationCounts = countByRotationDay(upcomingDays);
 
     const studentDaysLeft = upcomingDays.filter((item) => item.date !== "June 25").length;
@@ -683,10 +630,8 @@
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29)) === 56);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
-    console.assert(typeof getRandomItem(dailyMessages) === "string");
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
 
-    document.getElementById("dailyMessage").textContent = getRandomItem(dailyMessages);
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
     document.getElementById("todayMonth").textContent = formatMonthShort(today);
     document.getElementById("todayDay").textContent = formatDayNumber(today);
