@@ -55,6 +55,7 @@
       grid-template-areas:
         "title title"
         ". date";
+      row-gap: 2px;
       margin-bottom: 12px;
       padding: 8px 14px;
       border-radius: 999px;
@@ -74,11 +75,12 @@
 
     .eyebrow-date {
       grid-area: date;
-      margin-top: 3px;
+      justify-self: end;
       color: #dbeafe;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.04em;
+      line-height: 1.1;
       white-space: nowrap;
     }
 
