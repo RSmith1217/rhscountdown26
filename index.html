@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>School Countdown</title>
+  <title>RHS Countdown Timer</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -45,7 +45,7 @@
       padding: 28px;
       border-radius: 28px;
       color: white;
-      background: #0f172a;
+      background: #8b4a57;
       box-shadow: var(--shadow);
     }
 
@@ -398,9 +398,9 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 School Year Countdown · v2.3</div>
-          <h1 id="dailyMessage">Almost there.</h1>
-          <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p>
+          <div class="eyebrow">🎓 Countdown</div>
+          <h1 id="dailyMessage">RHS Countdown Timer</h1>
+          <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
         </div>
 
@@ -703,7 +703,7 @@
     console.assert(typeof getRandomItem(dailyMessages) === "string");
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
 
-    document.getElementById("dailyMessage").textContent = getRandomItem(dailyMessages);
+    document.getElementById("dailyMessage").textContent = "RHS Countdown Timer";
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
     document.getElementById("today").textContent = formatToday(today);
 
