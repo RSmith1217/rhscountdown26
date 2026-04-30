@@ -50,15 +50,12 @@
     }
 
     .eyebrow {
-      display: inline-grid;
-      grid-template-columns: auto auto;
-      grid-template-areas:
-        "title title"
-        ". date";
-      row-gap: 2px;
+      display: inline-flex;
+      align-items: stretch;
+      gap: 14px;
       margin-bottom: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
+      padding: 8px 10px 8px 14px;
+      border-radius: 22px;
       background: rgba(255, 255, 255, 0.1);
       font-size: 14px;
       font-weight: 800;
@@ -67,20 +64,53 @@
     }
 
     .eyebrow-title {
-      grid-area: title;
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
-    .eyebrow-date {
-      grid-area: date;
-      justify-self: end;
-      color: #dbeafe;
-      font-size: 11px;
-      font-weight: 700;
+    .eyebrow-calendar {
+      margin-left: auto;
+      min-width: 86px;
+      display: inline-grid;
+      grid-template-rows: auto 1fr auto;
+      justify-items: center;
+      align-items: center;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.14);
+    }
+
+    .eyebrow-calendar-month {
+      width: 100%;
+      padding: 4px 10px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-calendar-day {
+      padding: 7px 10px 1px;
+      color: #0f172a;
+      font-size: 1.75rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .eyebrow-calendar-note {
+      padding: 0 8px 7px;
+      color: #475569;
+      font-size: 10px;
+      font-weight: 800;
       letter-spacing: 0.04em;
-      line-height: 1.1;
+      line-height: 1.15;
+      text-align: center;
       white-space: nowrap;
     }
 
@@ -367,7 +397,11 @@
         <div>
           <div class="eyebrow">
             <span class="eyebrow-title">🎓 School Year Countdown</span>
-            <span class="eyebrow-date" id="today">Loading...</span>
+            <span class="eyebrow-calendar" aria-label="Today's date">
+              <span class="eyebrow-calendar-month" id="todayMonth">---</span>
+              <span class="eyebrow-calendar-day" id="todayDay">--</span>
+              <span class="eyebrow-calendar-note" id="todayNote">Loading...</span>
+            </span>
           </div>
           <h1 id="dailyMessage">Almost there.</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
@@ -546,6 +580,18 @@
       }).format(date);
     }
 
+    function formatMonthShort(date = new Date()) {
+      return new Intl.DateTimeFormat(undefined, { month: "short" }).format(date);
+    }
+
+    function formatDayNumber(date = new Date()) {
+      return new Intl.DateTimeFormat(undefined, { day: "numeric" }).format(date);
+    }
+
+    function formatWeekdayShort(date = new Date()) {
+      return new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(date);
+    }
+
     function toLocalDateOnly(date) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }
@@ -582,6 +628,11 @@
       return nationalDays[index];
     }
 
+    function getTodayScheduleItem(days, today = new Date()) {
+      const todayOnly = toLocalDateOnly(today).getTime();
+      return days.find((item) => parseISODate(item.iso).getTime() === todayOnly) || null;
+    }
+
     function countByRotationDay(days) {
       return [1, 2, 3, 4].map((day) => ({
         day,
@@ -616,6 +667,7 @@
     }
 
     const today = new Date();
+    const todayItem = getTodayScheduleItem(schoolDays, today);
     const upcomingDays = getUpcomingDays(schoolDays, today);
     const nextUp = upcomingDays[0];
     const rotationCounts = countByRotationDay(upcomingDays);
@@ -636,7 +688,11 @@
 
     document.getElementById("dailyMessage").textContent = getRandomItem(dailyMessages);
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
-    document.getElementById("today").textContent = formatToday(today);
+    document.getElementById("todayMonth").textContent = formatMonthShort(today);
+    document.getElementById("todayDay").textContent = formatDayNumber(today);
+    document.getElementById("todayNote").textContent = todayItem && todayItem.type === "rotation"
+      ? `${formatWeekdayShort(today)} · Day ${todayItem.day}`
+      : formatWeekdayShort(today);
 
     document.getElementById("studentDays").textContent = studentDaysLeft;
     document.getElementById("actualDays").textContent = actualDaysUntilJune24;
