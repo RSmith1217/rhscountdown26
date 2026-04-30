@@ -50,9 +50,11 @@
     }
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      grid-template-areas:
+        "title title"
+        ". date";
       margin-bottom: 12px;
       padding: 8px 14px;
       border-radius: 999px;
@@ -61,6 +63,23 @@
       font-weight: 800;
       color: #e2e8f0;
       border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .eyebrow-title {
+      grid-area: title;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow-date {
+      grid-area: date;
+      margin-top: 3px;
+      color: #dbeafe;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     h1 {
@@ -89,50 +108,6 @@
       font-size: 0.95rem;
       font-weight: 750;
       border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .hero-side {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      min-width: 420px;
-    }
-
-    .info-card, .next-card {
-      padding: 16px;
-      border-radius: 18px;
-      text-align: right;
-    }
-
-    .info-card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-    }
-
-    .next-card {
-      background: var(--indigo);
-      box-shadow: 0 14px 28px rgba(49, 46, 129, 0.35);
-    }
-
-    .info-label {
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #cbd5e1;
-    }
-
-    .info-main {
-      margin-top: 5px;
-      font-size: 1.1rem;
-      font-weight: 900;
-      line-height: 1.2;
-    }
-
-    .info-sub {
-      margin-top: 4px;
-      color: #dbeafe;
-      font-size: 14px;
     }
 
     .stats {
@@ -359,8 +334,6 @@
 
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
-      .hero-side { min-width: 0; }
-      .info-card, .next-card { text-align: left; }
       .rotation-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -370,7 +343,7 @@
 
     @media (max-width: 540px) {
       main { padding: 14px; }
-      .stats, .rotation-grid, .schedule-grid, .hero-side { grid-template-columns: 1fr; }
+      .stats, .rotation-grid, .schedule-grid { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
       .panel-header, .schedule-header { align-items: flex-start; flex-direction: column; }
     }
@@ -390,17 +363,13 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 School Year Countdown</div>
+          <div class="eyebrow">
+            <span class="eyebrow-title">🎓 School Year Countdown</span>
+            <span class="eyebrow-date" id="today">Loading...</span>
+          </div>
           <h1 id="dailyMessage">Almost there.</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
-        </div>
-
-        <div class="hero-side">
-          <aside class="info-card">
-            <div class="info-label">Today</div>
-            <div class="info-main" id="today">Loading...</div>
-          </aside>
         </div>
       </section>
 
