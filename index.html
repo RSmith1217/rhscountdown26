@@ -390,7 +390,7 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 School Year Countdown · v2.2</div>
+          <div class="eyebrow">🎓 School Year Countdown</div>
           <h1 id="dailyMessage">Almost there.</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
@@ -400,11 +400,6 @@
           <aside class="info-card">
             <div class="info-label">Today</div>
             <div class="info-main" id="today">Loading...</div>
-          </aside>
-          <aside class="next-card">
-            <div class="info-label">Next up</div>
-            <div class="info-main" id="nextDate">Loading...</div>
-            <div class="info-sub" id="nextLabel"></div>
           </aside>
         </div>
       </section>
@@ -671,9 +666,6 @@
     document.getElementById("dailyMessage").textContent = getRandomItem(dailyMessages);
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
     document.getElementById("today").textContent = formatToday(today);
-
-    document.getElementById("nextDate").textContent = nextUp ? nextUp.date : "Done!";
-    document.getElementById("nextLabel").textContent = nextUp ? nextUp.label : "School year complete";
 
     document.getElementById("studentDays").textContent = studentDaysLeft;
     document.getElementById("actualDays").textContent = actualDaysUntilJune24;
