@@ -1,4 +1,4 @@
-# RHS Countdown Timer v2.4
+# RHS Countdown Timer v2.5
 
 Self-contained GitHub Pages widget with:
 - Auto-hiding past dates
@@ -9,6 +9,7 @@ Self-contained GitHub Pages widget with:
 - Finals and milestones
 - Random inspirational/quirky header message on each load
 - Date-based fun holiday message
+- Expandable AP Testing schedule details
 - Collapsible upcoming schedule/calendar
 - Actual calendar days until June 24
 

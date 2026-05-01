@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RHS Countdown Timer v2.4</title>
+  <title>RHS Countdown Timer v2.5</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -337,6 +337,26 @@
       border-radius: 16px;
     }
 
+    .schedule-card.has-details {
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .schedule-card.has-details:hover,
+    .schedule-card.has-details:focus {
+      border-color: #c4b5fd;
+      box-shadow: 0 14px 28px rgba(79, 70, 229, 0.13);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .schedule-card.expanded {
+      grid-column: span 2;
+      align-items: flex-start;
+      border-color: #a5b4fc;
+      background: #f8fafc;
+    }
+
     .schedule-card.next {
       border: 2px solid #a5b4fc;
       background: #eef2ff;
@@ -370,6 +390,39 @@
       color: #94a3b8;
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .ap-details {
+      display: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .schedule-card.expanded .ap-details {
+      display: grid;
+    }
+
+    .ap-session {
+      min-width: 0;
+    }
+
+    .ap-time {
+      color: var(--indigo-dark);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .ap-exams {
+      margin-top: 4px;
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 750;
     }
 
     .badge {
@@ -415,6 +468,7 @@
       .hero { flex-direction: column; align-items: stretch; }
       .tearaway-calendar { align-self: flex-start; }
       .rotation-grid, .period-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .schedule-card.expanded { grid-column: span 2; }
     }
 
     @media (max-width: 650px) {
@@ -424,6 +478,8 @@
     @media (max-width: 540px) {
       main { padding: 14px; }
       .stats, .rotation-grid, .period-grid, .schedule-grid { grid-template-columns: 1fr; }
+      .schedule-card.expanded { grid-column: span 1; }
+      .ap-details { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
       .panel-header, .schedule-header { align-items: flex-start; flex-direction: column; }
     }
@@ -444,7 +500,7 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 RHS Countdown Timer v2.4</div>
+          <div class="eyebrow">🎓 RHS Countdown Timer v2.5</div>
           <h1 id="dailyMessage">RHS Countdown Timer</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
@@ -633,6 +689,49 @@
       4: [4, 1, 2, 8, 5, 6]
     };
 
+    const apExamSchedule = {
+      "2026-05-04": {
+        am: ["Biology", "Latin"],
+        pm: ["European History", "Microeconomics"]
+      },
+      "2026-05-05": {
+        am: ["Chemistry", "Human Geography"],
+        pm: ["United States Government and Politics"]
+      },
+      "2026-05-06": {
+        am: ["English Literature and Composition"],
+        pm: ["Comparative Government and Politics", "Physics 1: Algebra-Based"]
+      },
+      "2026-05-07": {
+        am: ["Physics 2: Algebra-Based", "World History: Modern"],
+        pm: ["African American Studies", "Statistics"]
+      },
+      "2026-05-08": {
+        am: ["Italian Language and Culture", "United States History"],
+        pm: ["Chinese Language and Culture", "Macroeconomics"]
+      },
+      "2026-05-11": {
+        am: ["Calculus AB", "Calculus BC"],
+        pm: ["Music Theory", "Seminar"]
+      },
+      "2026-05-12": {
+        am: ["French Language and Culture", "Precalculus"],
+        pm: ["Japanese Language and Culture", "Psychology"]
+      },
+      "2026-05-13": {
+        am: ["English Language and Composition", "German Language and Culture"],
+        pm: ["Physics C: Mechanics", "Spanish Literature and Culture"]
+      },
+      "2026-05-14": {
+        am: ["Art History", "Spanish Language and Culture"],
+        pm: ["Computer Science Principles", "Physics C: Electricity and Magnetism"]
+      },
+      "2026-05-15": {
+        am: ["Environmental Science"],
+        pm: ["Computer Science A"]
+      }
+    };
+
     function formatToday(date = new Date()) {
       return new Intl.DateTimeFormat(undefined, {
         weekday: "long",
@@ -725,11 +824,29 @@
     }
 
     function getScheduleNote(item) {
-      if (item.iso >= "2026-05-04" && item.iso <= "2026-05-15") {
+      if (apExamSchedule[item.iso]) {
         return "AP Testing";
       }
 
       return "";
+    }
+
+    function getApExamDetails(item) {
+      const exams = apExamSchedule[item.iso];
+      if (!exams) return "";
+
+      return `
+        <div class="ap-details" aria-hidden="true">
+          <div class="ap-session">
+            <div class="ap-time">AM</div>
+            <div class="ap-exams">${exams.am.join("<br>")}</div>
+          </div>
+          <div class="ap-session">
+            <div class="ap-time">PM</div>
+            <div class="ap-exams">${exams.pm.join("<br>")}</div>
+          </div>
+        </div>
+      `;
     }
 
     function setupCalendarToggle() {
@@ -785,6 +902,25 @@
       renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked));
     }
 
+    function toggleScheduleCard(card) {
+      const isExpanded = card.classList.toggle("expanded");
+      card.setAttribute("aria-expanded", String(isExpanded));
+      const details = card.querySelector(".ap-details");
+      if (details) details.setAttribute("aria-hidden", String(!isExpanded));
+    }
+
+    function setupApScheduleCards() {
+      document.querySelectorAll(".schedule-card.has-details").forEach((card) => {
+        card.addEventListener("click", () => toggleScheduleCard(card));
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleScheduleCard(card);
+          }
+        });
+      });
+    }
+
     const today = new Date();
     const upcomingDays = getUpcomingDays(schoolDays, today);
     const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today);
@@ -801,6 +937,8 @@
     console.assert(getNationalDay(new Date(2026, 4, 1)) === "School Principals' Day");
     console.assert(getNationalDay(new Date(2026, 5, 5)) === "National Doughnut Day");
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
+    console.assert(apExamSchedule["2026-05-04"].am.includes("Biology"));
+    console.assert(apExamSchedule["2026-05-15"].pm.includes("Computer Science A"));
 
     document.getElementById("dailyMessage").textContent = "RHS Countdown Timer";
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
@@ -818,9 +956,14 @@
       scheduleElement.className = "schedule-grid";
       scheduleElement.innerHTML = upcomingDays.map((item, index) => {
         const scheduleNote = getScheduleNote(item);
+        const apExamDetails = getApExamDetails(item);
+        const hasDetails = Boolean(apExamDetails);
 
         return `
-          <article class="schedule-card ${index === 0 ? "next" : ""}">
+          <article
+            class="schedule-card ${index === 0 ? "next" : ""} ${hasDetails ? "has-details" : ""}"
+            ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
+          >
             <div>
               <div class="number ${index === 0 ? "next-label" : ""}">
                 ${index === 0 ? "Next school day" : "#" + (index + 1)}
@@ -828,6 +971,7 @@
               <div class="date">${item.date}</div>
               <div class="description">${item.label}</div>
               ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
+              ${apExamDetails}
             </div>
             <span class="${badgeClass(item)}">${badgeText(item)}</span>
           </article>
@@ -837,6 +981,7 @@
 
     setupCalendarToggle();
     setupCountTodayToggle(today);
+    setupApScheduleCards();
   </script>
 </body>
 </html>
