@@ -579,38 +579,45 @@
       "There will be sunshine after the spreadsheets."
     ];
 
-    const nationalDays = [
-      "National Ice Cream Sundae Day",
-      "National High Five Day",
-      "National Donut Day",
-      "National Chocolate Chip Cookie Day",
-      "National Taco Day",
-      "National Pizza Party Day",
-      "National Smile Day",
-      "National Coffee Day",
-      "National Compliment Day",
-      "National Kindness Day",
-      "National Take a Walk Day",
-      "National Sunglasses Day",
-      "National Pancake Day",
-      "National Pretzel Day",
-      "National Popcorn Day",
-      "National Waffle Day",
-      "National Pencil Day",
-      "National Book Lovers Day",
-      "National Clean Your Desk Day",
-      "National Trivia Day",
-      "National Tell a Joke Day",
-      "National Relaxation Day",
-      "National Banana Split Day",
-      "National Trail Mix Day",
-      "National Bagel Day",
-      "National Teacher Appreciation Day",
-      "National Read a Book Day",
-      "National Make a Friend Day",
-      "National Technology Day",
-      "National Creativity Day"
-    ];
+    const funHolidaysByDate = {
+      "05-01": "School Principals' Day",
+      "05-04": "Star Wars Day",
+      "05-05": "Cinco de Mayo",
+      "05-06": "National Teacher Appreciation Day",
+      "05-07": "National Tourism Day",
+      "05-08": "National Have a Coke Day",
+      "05-11": "National Eat What You Want Day",
+      "05-12": "National Limerick Day",
+      "05-13": "National Frog Jumping Day",
+      "05-14": "National Dance Like a Chicken Day",
+      "05-15": "National Chocolate Chip Day",
+      "05-18": "National No Dirty Dishes Day",
+      "05-19": "National May Ray Day",
+      "05-20": "National Be a Millionaire Day",
+      "05-21": "National Strawberries and Cream Day",
+      "05-22": "National Buy a Musical Instrument Day",
+      "05-27": "National Grape Popsicle Day",
+      "05-28": "National Hamburger Day",
+      "05-29": "National Paperclip Day",
+      "06-01": "National Say Something Nice Day",
+      "06-02": "National Leave the Office Early Day",
+      "06-03": "National Repeat Day",
+      "06-04": "National Hug Your Cat Day",
+      "06-05": "National Doughnut Day",
+      "06-08": "National Best Friends Day",
+      "06-09": "National Donald Duck Day",
+      "06-10": "National Iced Tea Day",
+      "06-11": "National Corn on the Cob Day",
+      "06-12": "National Red Rose Day",
+      "06-15": "Nature Photography Day",
+      "06-16": "Bloomsday",
+      "06-17": "National Eat Your Vegetables Day",
+      "06-18": "International Picnic Day",
+      "06-22": "National Onion Rings Day",
+      "06-23": "National Hydration Day",
+      "06-24": "National Pralines Day",
+      "06-25": "National Catfish Day"
+    };
 
     const periodMeetingsByRotationDay = {
       1: [1, 2, 3, 5, 6, 7],
@@ -664,19 +671,14 @@
       return Math.max(0, Math.ceil(diff / 86400000));
     }
 
-    function dayOfYear(date = new Date()) {
-      const startOfYear = new Date(date.getFullYear(), 0, 0);
-      const diff = toLocalDateOnly(date) - startOfYear;
-      return Math.floor(diff / 86400000);
-    }
-
     function getRandomItem(items) {
       return items[Math.floor(Math.random() * items.length)];
     }
 
     function getNationalDay(date = new Date()) {
-      const index = dayOfYear(date) % nationalDays.length;
-      return nationalDays[index];
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return funHolidaysByDate[`${month}-${day}`] || "a day worth celebrating";
     }
 
     function countByRotationDay(days) {
@@ -783,6 +785,8 @@
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29)) === 56);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
     console.assert(typeof getRandomItem(dailyMessages) === "string");
+    console.assert(getNationalDay(new Date(2026, 4, 1)) === "School Principals' Day");
+    console.assert(getNationalDay(new Date(2026, 5, 5)) === "National Doughnut Day");
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
 
     document.getElementById("dailyMessage").textContent = "RHS Countdown Timer";

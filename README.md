@@ -8,7 +8,7 @@ Self-contained GitHub Pages widget with:
 - Count-today toggle
 - Finals and milestones
 - Random inspirational/quirky header message on each load
-- Built-in "National ___ Day" style message
+- Date-based fun holiday message
 - Collapsible upcoming schedule/calendar
 - Actual calendar days until June 24
 
