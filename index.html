@@ -192,13 +192,56 @@
       letter-spacing: -0.02em;
     }
 
-    .pill {
-      border-radius: 999px;
-      padding: 5px 11px;
-      background: #f1f5f9;
+    .count-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       color: #475569;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .count-toggle input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .switch-track {
+      position: relative;
+      width: 46px;
+      height: 26px;
+      border-radius: 999px;
+      background: #cbd5e1;
+      transition: background 0.2s ease;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.22);
+      transition: transform 0.2s ease;
+    }
+
+    .count-toggle input:checked + .switch-track {
+      background: var(--indigo);
+    }
+
+    .count-toggle input:checked + .switch-track::after {
+      transform: translateX(20px);
+    }
+
+    .count-toggle input:focus-visible + .switch-track {
+      outline: 3px solid #c7d2fe;
+      outline-offset: 2px;
     }
 
     .rotation-grid {
@@ -433,7 +476,11 @@
       <section class="panel">
         <div class="panel-header">
           <h2>Day Countdowns</h2>
-          <span class="pill">From today forward</span>
+          <label class="count-toggle">
+            <input id="countTodayToggle" type="checkbox" checked />
+            <span class="switch-track" aria-hidden="true"></span>
+            <span id="countTodayLabel">Count today</span>
+          </label>
         </div>
         <div class="rotation-grid" id="rotationCounts"></div>
         <div class="period-grid" id="periodCounts"></div>
@@ -602,9 +649,12 @@
       return new Date(y, m - 1, d);
     }
 
-    function getUpcomingDays(days, today = new Date()) {
+    function getUpcomingDays(days, today = new Date(), countToday = true) {
       const todayOnly = toLocalDateOnly(today);
-      return days.filter((item) => parseISODate(item.iso) >= todayOnly);
+      return days.filter((item) => countToday
+        ? parseISODate(item.iso) >= todayOnly
+        : parseISODate(item.iso) > todayOnly
+      );
     }
 
     function getCalendarDaysUntil(targetISO, today = new Date()) {
@@ -679,20 +729,56 @@
       });
     }
 
+    function renderCountdowns(days) {
+      const rotationCounts = countByRotationDay(days);
+      const periodCounts = countByPeriod(days);
+
+      const studentDaysLeft = days.filter((item) => item.date !== "June 25").length;
+      const teacherDaysLeft = days.length;
+      const rotationDaysLeft = days.filter((item) => item.type === "rotation").length;
+      const finalDaysLeft = days.filter((item) => item.type === "finals").length;
+
+      document.getElementById("studentDays").textContent = studentDaysLeft;
+      document.getElementById("teacherDays").textContent = teacherDaysLeft;
+      document.getElementById("rotationDays").textContent = rotationDaysLeft;
+      document.getElementById("finalDays").textContent = finalDaysLeft;
+
+      document.getElementById("rotationCounts").innerHTML = rotationCounts.map((item) => `
+        <div class="rotation-card">
+          <div class="small">${item.day} Day</div>
+          <div class="big">${item.count}</div>
+          <div class="description">remaining</div>
+        </div>
+      `).join("");
+
+      document.getElementById("periodCounts").innerHTML = periodCounts.map((item) => `
+        <div class="rotation-card">
+          <div class="small">Period ${item.period}</div>
+          <div class="big">${item.count}</div>
+          <div class="description">meetings left</div>
+        </div>
+      `).join("");
+    }
+
+    function setupCountTodayToggle(today = new Date()) {
+      const toggle = document.getElementById("countTodayToggle");
+
+      toggle.addEventListener("change", () => {
+        renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked));
+      });
+
+      renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked));
+    }
+
     const today = new Date();
     const upcomingDays = getUpcomingDays(schoolDays, today);
-    const rotationCounts = countByRotationDay(upcomingDays);
-    const periodCounts = countByPeriod(upcomingDays);
-
-    const studentDaysLeft = upcomingDays.filter((item) => item.date !== "June 25").length;
     const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today);
-    const teacherDaysLeft = upcomingDays.length;
-    const rotationDaysLeft = upcomingDays.filter((item) => item.type === "rotation").length;
-    const finalDaysLeft = upcomingDays.filter((item) => item.type === "finals").length;
 
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
+    console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false).length === 37);
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 2)).length === 36);
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
+    console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false))[1].count === 7);
     console.assert(countByPeriod(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 24));
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29)) === 56);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
@@ -705,27 +791,7 @@
     document.getElementById("todayDay").textContent = formatDayNumber(today);
     document.getElementById("todayWeekday").textContent = formatWeekdayShort(today);
 
-    document.getElementById("studentDays").textContent = studentDaysLeft;
     document.getElementById("actualDays").textContent = actualDaysUntilJune24;
-    document.getElementById("teacherDays").textContent = teacherDaysLeft;
-    document.getElementById("rotationDays").textContent = rotationDaysLeft;
-    document.getElementById("finalDays").textContent = finalDaysLeft;
-
-    document.getElementById("rotationCounts").innerHTML = rotationCounts.map((item) => `
-      <div class="rotation-card">
-        <div class="small">${item.day} Day</div>
-        <div class="big">${item.count}</div>
-        <div class="description">remaining</div>
-      </div>
-    `).join("");
-
-    document.getElementById("periodCounts").innerHTML = periodCounts.map((item) => `
-      <div class="rotation-card">
-        <div class="small">Period ${item.period}</div>
-        <div class="big">${item.count}</div>
-        <div class="description">meetings left</div>
-      </div>
-    `).join("");
 
     const scheduleElement = document.getElementById("schedule");
 
@@ -748,6 +814,7 @@
     }
 
     setupCalendarToggle();
+    setupCountTodayToggle(today);
   </script>
 </body>
 </html>

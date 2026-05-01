@@ -5,6 +5,7 @@ Self-contained GitHub Pages widget with:
 - Next school day highlight
 - Rotation day counts
 - Period meeting counts
+- Count-today toggle
 - Finals and milestones
 - Random inspirational/quirky header message on each load
 - Built-in "National ___ Day" style message
