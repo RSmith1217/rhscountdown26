@@ -365,6 +365,13 @@
       font-size: 14px;
     }
 
+    .schedule-note {
+      margin-top: 3px;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .badge {
       white-space: nowrap;
       border-radius: 999px;
@@ -717,6 +724,14 @@
       return item.day + " Day";
     }
 
+    function getScheduleNote(item) {
+      if (item.iso >= "2026-05-04" && item.iso <= "2026-05-15") {
+        return "AP Testing";
+      }
+
+      return "";
+    }
+
     function setupCalendarToggle() {
       const button = document.getElementById("calendarToggle");
       const body = document.getElementById("calendarBody");
@@ -803,18 +818,23 @@
       scheduleElement.innerHTML = '<div class="complete">School year complete!</div>';
     } else {
       scheduleElement.className = "schedule-grid";
-      scheduleElement.innerHTML = upcomingDays.map((item, index) => `
-        <article class="schedule-card ${index === 0 ? "next" : ""}">
-          <div>
-            <div class="number ${index === 0 ? "next-label" : ""}">
-              ${index === 0 ? "Next school day" : "#" + (index + 1)}
+      scheduleElement.innerHTML = upcomingDays.map((item, index) => {
+        const scheduleNote = getScheduleNote(item);
+
+        return `
+          <article class="schedule-card ${index === 0 ? "next" : ""}">
+            <div>
+              <div class="number ${index === 0 ? "next-label" : ""}">
+                ${index === 0 ? "Next school day" : "#" + (index + 1)}
+              </div>
+              <div class="date">${item.date}</div>
+              <div class="description">${item.label}</div>
+              ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
             </div>
-            <div class="date">${item.date}</div>
-            <div class="description">${item.label}</div>
-          </div>
-          <span class="${badgeClass(item)}">${badgeText(item)}</span>
-        </article>
-      `).join("");
+            <span class="${badgeClass(item)}">${badgeText(item)}</span>
+          </article>
+        `;
+      }).join("");
     }
 
     setupCalendarToggle();
