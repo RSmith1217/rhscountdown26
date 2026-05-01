@@ -287,6 +287,19 @@
       font-size: 14px;
     }
 
+    .heading-with-hint {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .heading-hint {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .toggle-button {
       display: inline-flex;
       align-items: center;
@@ -551,8 +564,9 @@
 
       <section class="panel">
         <div class="schedule-header">
-          <div>
+          <div class="heading-with-hint">
             <h2>Upcoming Schedule</h2>
+            <span class="heading-hint">Click AP Testing dates for details</span>
           </div>
           <button class="toggle-button" id="calendarToggle" type="button" aria-expanded="true" aria-controls="calendarBody">
             <span class="arrow" id="calendarArrow">▼</span>
