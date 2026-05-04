@@ -802,11 +802,12 @@
       );
     }
 
-    function getCalendarDaysUntil(targetISO, today = new Date()) {
+    function getCalendarDaysUntil(targetISO, today = new Date(), countToday = true) {
       const todayOnly = toLocalDateOnly(today);
       const targetDate = parseISODate(targetISO);
       const diff = targetDate - todayOnly;
-      return Math.max(0, Math.ceil(diff / 86400000));
+      const daysUntil = Math.max(0, Math.ceil(diff / 86400000));
+      return countToday && daysUntil > 0 ? daysUntil + 1 : daysUntil;
     }
 
     function getRandomItem(items) {
@@ -895,16 +896,18 @@
       });
     }
 
-    function renderCountdowns(days) {
+    function renderCountdowns(days, today = new Date(), countToday = true) {
       const rotationCounts = countByRotationDay(days);
       const periodCounts = countByPeriod(days);
 
       const studentDaysLeft = days.filter((item) => item.date !== "June 25").length;
+      const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today, countToday);
       const teacherDaysLeft = days.length;
       const rotationDaysLeft = days.filter((item) => item.type === "rotation").length;
       const finalDaysLeft = days.filter((item) => item.type === "finals").length;
 
       document.getElementById("studentDays").textContent = studentDaysLeft;
+      document.getElementById("actualDays").textContent = actualDaysUntilJune24;
       document.getElementById("teacherDays").textContent = teacherDaysLeft;
       document.getElementById("rotationDays").textContent = rotationDaysLeft;
       document.getElementById("finalDays").textContent = finalDaysLeft;
@@ -928,10 +931,10 @@
       const toggle = document.getElementById("countTodayToggle");
 
       toggle.addEventListener("change", () => {
-        renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked));
+        renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked), today, toggle.checked);
       });
 
-      renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked));
+      renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked), today, toggle.checked);
     }
 
     function toggleScheduleCard(card) {
@@ -955,7 +958,6 @@
 
     const today = new Date();
     const upcomingDays = getUpcomingDays(schoolDays, today);
-    const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today);
 
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false).length === 37);
@@ -963,7 +965,8 @@
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false))[1].count === 7);
     console.assert(countByPeriod(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 24));
-    console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29)) === 56);
+    console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29), false) === 56);
+    console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29), true) === 57);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
     console.assert(typeof getRandomItem(dailyMessages) === "string");
     console.assert(getNationalDay(new Date(2026, 4, 1)) === "School Principals' Day");
@@ -978,8 +981,6 @@
     document.getElementById("todayMonth").textContent = formatMonthShort(today);
     document.getElementById("todayDay").textContent = formatDayNumber(today);
     document.getElementById("todayWeekday").textContent = formatWeekdayShort(today);
-
-    document.getElementById("actualDays").textContent = actualDaysUntilJune24;
 
     const scheduleElement = document.getElementById("schedule");
 
