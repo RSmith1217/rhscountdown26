@@ -91,6 +91,15 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
     }
 
+    .share-line {
+      margin: -10px 0 24px;
+      padding: 0 4px;
+      color: #475569;
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
     .tearaway-calendar {
       flex-shrink: 0;
       min-width: 132px;
@@ -505,6 +514,7 @@
       .calendar-body.hidden { display: block; }
       .toggle-button { display: none; }
       .tearaway-calendar { box-shadow: none; }
+      .share-line { margin: 0 0 18px; }
     }
   </style>
 </head>
@@ -525,6 +535,8 @@
           <div class="calendar-weekday" id="todayWeekday">---</div>
         </aside>
       </section>
+
+      <p class="share-line">If you like this page, please share it with others!</p>
 
       <section class="stats">
         <div class="stat-card">
