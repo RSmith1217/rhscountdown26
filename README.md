@@ -1,8 +1,8 @@
-# RHS Countdown Timer v2.5
+# RHS Countdown Timer v2.6
 
 Self-contained GitHub Pages widget with:
 - Auto-hiding past dates
-- Next school day highlight
+- Today-aware schedule highlight
 - Rotation day counts
 - Period meeting counts
 - Count-today toggle

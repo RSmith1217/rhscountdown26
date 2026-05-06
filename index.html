@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RHS Countdown Timer v2.5</title>
+  <title>RHS Countdown Timer v2.6</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -523,7 +523,7 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 v2.5</div>
+          <div class="eyebrow">🎓 v2.6</div>
           <h1 id="dailyMessage">RHS Countdown Timer</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
@@ -894,6 +894,14 @@
       `;
     }
 
+    function isSameCalendarDate(item, date = new Date()) {
+      return parseISODate(item.iso).getTime() === toLocalDateOnly(date).getTime();
+    }
+
+    function scheduleCardNumberText(item, index, today = new Date()) {
+      return isSameCalendarDate(item, today) ? "Today" : "#" + (index + 1);
+    }
+
     function setupCalendarToggle() {
       const button = document.getElementById("calendarToggle");
       const body = document.getElementById("calendarBody");
@@ -943,10 +951,14 @@
       const toggle = document.getElementById("countTodayToggle");
 
       toggle.addEventListener("change", () => {
-        renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked), today, toggle.checked);
+        const days = getUpcomingDays(schoolDays, today, toggle.checked);
+        renderCountdowns(days, today, toggle.checked);
+        renderSchedule(days, today);
       });
 
-      renderCountdowns(getUpcomingDays(schoolDays, today, toggle.checked), today, toggle.checked);
+      const days = getUpcomingDays(schoolDays, today, toggle.checked);
+      renderCountdowns(days, today, toggle.checked);
+      renderSchedule(days, today);
     }
 
     function toggleScheduleCard(card) {
@@ -968,8 +980,44 @@
       });
     }
 
+    function renderSchedule(days, today = new Date()) {
+      const scheduleElement = document.getElementById("schedule");
+
+      if (days.length === 0) {
+        scheduleElement.className = "";
+        scheduleElement.innerHTML = '<div class="complete">School year complete!</div>';
+        return;
+      }
+
+      scheduleElement.className = "schedule-grid";
+      scheduleElement.innerHTML = days.map((item, index) => {
+        const scheduleNote = getScheduleNote(item);
+        const apExamDetails = getApExamDetails(item);
+        const hasDetails = Boolean(apExamDetails);
+
+        return `
+          <article
+            class="schedule-card ${index === 0 ? "next" : ""} ${hasDetails ? "has-details" : ""}"
+            ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
+          >
+            <div>
+              <div class="number ${isSameCalendarDate(item, today) ? "next-label" : ""}">
+                ${scheduleCardNumberText(item, index, today)}
+              </div>
+              <div class="date">${item.date}</div>
+              <div class="description">${item.label}</div>
+              ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
+              ${apExamDetails}
+            </div>
+            <span class="${badgeClass(item)}">${badgeText(item)}</span>
+          </article>
+        `;
+      }).join("");
+
+      setupApScheduleCards();
+    }
+
     const today = new Date();
-    const upcomingDays = getUpcomingDays(schoolDays, today);
 
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false).length === 37);
@@ -987,6 +1035,8 @@
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
     console.assert(apExamSchedule["2026-05-04"].am.includes("Biology"));
     console.assert(apExamSchedule["2026-05-15"].pm.includes("Computer Science A"));
+    console.assert(scheduleCardNumberText({ iso: "2026-05-06" }, 0, new Date(2026, 4, 6)) === "Today");
+    console.assert(scheduleCardNumberText({ iso: "2026-05-07" }, 0, new Date(2026, 4, 6)) === "#1");
 
     document.getElementById("dailyMessage").textContent = "RHS Countdown Timer";
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
@@ -994,40 +1044,8 @@
     document.getElementById("todayDay").textContent = formatDayNumber(today);
     document.getElementById("todayWeekday").textContent = formatWeekdayShort(today);
 
-    const scheduleElement = document.getElementById("schedule");
-
-    if (upcomingDays.length === 0) {
-      scheduleElement.innerHTML = '<div class="complete">School year complete!</div>';
-    } else {
-      scheduleElement.className = "schedule-grid";
-      scheduleElement.innerHTML = upcomingDays.map((item, index) => {
-        const scheduleNote = getScheduleNote(item);
-        const apExamDetails = getApExamDetails(item);
-        const hasDetails = Boolean(apExamDetails);
-
-        return `
-          <article
-            class="schedule-card ${index === 0 ? "next" : ""} ${hasDetails ? "has-details" : ""}"
-            ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
-          >
-            <div>
-              <div class="number ${index === 0 ? "next-label" : ""}">
-                ${index === 0 ? "Next school day" : "#" + (index + 1)}
-              </div>
-              <div class="date">${item.date}</div>
-              <div class="description">${item.label}</div>
-              ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
-              ${apExamDetails}
-            </div>
-            <span class="${badgeClass(item)}">${badgeText(item)}</span>
-          </article>
-        `;
-      }).join("");
-    }
-
     setupCalendarToggle();
     setupCountTodayToggle(today);
-    setupApScheduleCards();
   </script>
 </body>
 </html>
