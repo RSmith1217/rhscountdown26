@@ -470,6 +470,11 @@
       color: var(--emerald);
     }
 
+    .badge.teacher {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
     .complete {
       padding: 28px;
       border-radius: 20px;
@@ -611,6 +616,7 @@
       { date: "May 20", iso: "2026-05-20", label: "4 Day", type: "rotation", day: 4 },
       { date: "May 21", iso: "2026-05-21", label: "3 Day", type: "rotation", day: 3 },
       { date: "May 22", iso: "2026-05-22", label: "2 Day", type: "rotation", day: 2 },
+      { date: "May 26", iso: "2026-05-26", label: "Professional Development Day", type: "teacher" },
       { date: "May 27", iso: "2026-05-27", label: "1 Day", type: "rotation", day: 1 },
       { date: "May 28", iso: "2026-05-28", label: "4 Day", type: "rotation", day: 4 },
       { date: "May 29", iso: "2026-05-29", label: "3 Day", type: "rotation", day: 3 },
@@ -859,12 +865,14 @@
     function badgeClass(item) {
       if (item.type === "finals") return "badge finals";
       if (item.type === "milestone") return "badge milestone";
+      if (item.type === "teacher") return "badge teacher";
       return "badge rotation";
     }
 
     function badgeText(item) {
       if (item.type === "finals") return "Finals";
       if (item.type === "milestone") return "Milestone";
+      if (item.type === "teacher") return "Teacher Day";
       return item.day + " Day";
     }
 
@@ -920,7 +928,7 @@
       const rotationCounts = countByRotationDay(days);
       const periodCounts = countByPeriod(days);
 
-      const studentDaysLeft = days.filter((item) => item.date !== "June 25").length;
+      const studentDaysLeft = days.filter((item) => item.type !== "teacher" && item.date !== "June 25").length;
       const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today, countToday);
       const teacherDaysLeft = days.length;
       const rotationDaysLeft = days.filter((item) => item.type === "rotation").length;
@@ -1019,12 +1027,13 @@
 
     const today = new Date();
 
-    console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 38);
-    console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false).length === 37);
-    console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 2)).length === 36);
+    console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 29)).length === 39);
+    console.assert(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false).length === 38);
+    console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 2)).length === 37);
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 8));
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false))[1].count === 7);
     console.assert(countByPeriod(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 24));
+    console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 26))[0].type === "teacher");
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29), false) === 56);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29), true) === 57);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
