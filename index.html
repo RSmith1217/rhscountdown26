@@ -388,6 +388,10 @@
       color: #9a3412;
     }
 
+    .absences-body.hidden {
+      display: none;
+    }
+
     .bell-body.hidden {
       display: none;
     }
@@ -736,6 +740,7 @@
       .hero, .stat-card, .panel, .schedule-card { box-shadow: none; }
       .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .calendar-body.hidden { display: block; }
+      .absences-body.hidden { display: block; }
       .bell-body.hidden { display: block; }
       .toggle-button { display: none; }
       .tearaway-calendar { box-shadow: none; }
@@ -805,10 +810,18 @@
             <h2>Today's Absences</h2>
             <div class="absences-status" id="absencesStatus">Loading from RHS...</div>
           </div>
-          <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open source</a>
+          <div class="heading-with-hint">
+            <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open source</a>
+            <button class="toggle-button" id="absencesToggle" type="button" aria-expanded="true" aria-controls="absencesBody">
+              <span class="arrow" id="absencesArrow">▼</span>
+              <span id="absencesToggleText">Hide absences</span>
+            </button>
+          </div>
         </div>
-        <div id="absencesList">
-          <div class="absence-empty">Checking today&apos;s absence list...</div>
+        <div class="absences-body" id="absencesBody">
+          <div id="absencesList">
+            <div class="absence-empty">Checking today&apos;s absence list...</div>
+          </div>
         </div>
       </section>
 
@@ -1397,6 +1410,20 @@
       });
     }
 
+    function setupAbsencesToggle() {
+      const button = document.getElementById("absencesToggle");
+      const body = document.getElementById("absencesBody");
+      const arrow = document.getElementById("absencesArrow");
+      const text = document.getElementById("absencesToggleText");
+
+      button.addEventListener("click", () => {
+        const isHidden = body.classList.toggle("hidden");
+        button.setAttribute("aria-expanded", String(!isHidden));
+        arrow.classList.toggle("closed", isHidden);
+        text.textContent = isHidden ? "Show absences" : "Hide absences";
+      });
+    }
+
     function renderCountdowns(days, today = new Date(), countToday = true) {
       const rotationCounts = countByRotationDay(days);
       const periodCounts = countByPeriod(days);
@@ -1527,6 +1554,7 @@
     document.getElementById("todayWeekday").textContent = formatWeekdayShort(today);
 
     setupCalendarToggle();
+    setupAbsencesToggle();
     setupBellToggle();
     setupCountTodayToggle(today);
     loadAbsences();
