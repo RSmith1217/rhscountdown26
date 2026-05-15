@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RHS Countdown Timer v2.6</title>
+  <title>RHS Countdown Timer v2.7</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -201,6 +201,12 @@
       letter-spacing: -0.02em;
     }
 
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
     .count-toggle {
       display: inline-flex;
       align-items: center;
@@ -287,6 +293,126 @@
       color: var(--indigo-dark);
       font-size: 3rem;
       line-height: 1;
+      font-weight: 950;
+    }
+
+    .bell-body.hidden {
+      display: none;
+    }
+
+    .bell-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .bell-section {
+      min-width: 0;
+    }
+
+    .bell-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: #334155;
+    }
+
+    .bell-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .bell-card {
+      display: grid;
+      gap: 6px;
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+
+    .bell-card.lunch {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .bell-card.extra-help {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+    }
+
+    .bell-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .bell-time {
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+
+    .bell-note {
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.3;
+    }
+
+    .order-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .order-card {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+
+    .order-title {
+      color: var(--indigo-dark);
+      font-size: 14px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .order-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .period-chip {
+      min-width: 32px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 13px;
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .lunch-chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 13px;
       font-weight: 950;
     }
 
@@ -489,12 +615,13 @@
     @media (max-width: 1050px) {
       .stats { grid-template-columns: repeat(3, 1fr); }
       .period-grid { grid-template-columns: repeat(4, 1fr); }
+      .bell-layout { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
       .tearaway-calendar { align-self: flex-start; }
-      .rotation-grid, .period-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .rotation-grid, .period-grid, .bell-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
       .schedule-card.expanded { grid-column: span 2; }
     }
 
@@ -504,7 +631,7 @@
 
     @media (max-width: 540px) {
       main { padding: 14px; }
-      .stats, .rotation-grid, .period-grid, .schedule-grid { grid-template-columns: 1fr; }
+      .stats, .rotation-grid, .period-grid, .bell-grid, .schedule-grid { grid-template-columns: 1fr; }
       .schedule-card.expanded { grid-column: span 1; }
       .ap-details { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
@@ -517,6 +644,7 @@
       .hero, .stat-card, .panel, .schedule-card { box-shadow: none; }
       .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .calendar-body.hidden { display: block; }
+      .bell-body.hidden { display: block; }
       .toggle-button { display: none; }
       .tearaway-calendar { box-shadow: none; }
       .share-line { margin: 0 0 18px; }
@@ -528,7 +656,7 @@
     <div class="container">
       <section class="hero">
         <div>
-          <div class="eyebrow">🎓 v2.6</div>
+          <div class="eyebrow">🎓 v2.7</div>
           <h1 id="dailyMessage">RHS Countdown Timer</h1>
           <!-- <p>This version hides past dates automatically, highlights the next school day, and changes the header message each time it loads.</p> -->
           <div class="holiday-line" id="nationalDay">🍦 National Something Day</div>
@@ -577,6 +705,116 @@
         </div>
         <div class="rotation-grid" id="rotationCounts"></div>
         <div class="period-grid" id="periodCounts"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Bell Schedule</h2>
+          <button class="toggle-button" id="bellToggle" type="button" aria-expanded="false" aria-controls="bellBody">
+            <span class="arrow closed" id="bellArrow">▼</span>
+            <span id="bellToggleText">Show bell schedule</span>
+          </button>
+        </div>
+        <div class="bell-body hidden" id="bellBody">
+          <div class="bell-layout">
+            <div class="bell-section">
+              <div class="bell-section-title">
+                <h3>Daily Times</h3>
+              </div>
+              <div class="bell-grid">
+                <div class="bell-card">
+                  <div class="bell-label">Block 1</div>
+                  <div class="bell-time">8:20am - 9:10am</div>
+                </div>
+                <div class="bell-card">
+                  <div class="bell-label">Block 2</div>
+                  <div class="bell-time">9:15am - 10:25am</div>
+                </div>
+                <div class="bell-card">
+                  <div class="bell-label">Block 3</div>
+                  <div class="bell-time">10:30am - 11:20am</div>
+                </div>
+                <div class="bell-card lunch">
+                  <div class="bell-label">Lunch</div>
+                  <div class="bell-time">11:20am - 12:00pm</div>
+                </div>
+                <div class="bell-card">
+                  <div class="bell-label">Block 4</div>
+                  <div class="bell-time">12:05pm - 12:55pm</div>
+                </div>
+                <div class="bell-card">
+                  <div class="bell-label">Block 5</div>
+                  <div class="bell-time">1:00pm - 2:10pm</div>
+                </div>
+                <div class="bell-card">
+                  <div class="bell-label">Block 6</div>
+                  <div class="bell-time">2:15pm - 3:05pm</div>
+                </div>
+                <div class="bell-card extra-help">
+                  <div class="bell-label">Period 9</div>
+                  <div class="bell-time">3:05pm - 3:30pm</div>
+                  <div class="bell-note">Teachers are available to students for extra help.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bell-section">
+              <div class="bell-section-title">
+                <h3>Period Order</h3>
+              </div>
+              <div class="order-grid">
+                <div class="order-card">
+                  <div class="order-title">4 Day</div>
+                  <div class="order-flow">
+                    <span class="period-chip">4</span>
+                    <span class="period-chip">1</span>
+                    <span class="period-chip">2</span>
+                    <span class="lunch-chip">Lunch</span>
+                    <span class="period-chip">8</span>
+                    <span class="period-chip">5</span>
+                    <span class="period-chip">6</span>
+                  </div>
+                </div>
+                <div class="order-card">
+                  <div class="order-title">3 Day</div>
+                  <div class="order-flow">
+                    <span class="period-chip">3</span>
+                    <span class="period-chip">4</span>
+                    <span class="period-chip">1</span>
+                    <span class="lunch-chip">Lunch</span>
+                    <span class="period-chip">7</span>
+                    <span class="period-chip">8</span>
+                    <span class="period-chip">5</span>
+                  </div>
+                </div>
+                <div class="order-card">
+                  <div class="order-title">2 Day</div>
+                  <div class="order-flow">
+                    <span class="period-chip">2</span>
+                    <span class="period-chip">3</span>
+                    <span class="period-chip">4</span>
+                    <span class="lunch-chip">Lunch</span>
+                    <span class="period-chip">6</span>
+                    <span class="period-chip">7</span>
+                    <span class="period-chip">8</span>
+                  </div>
+                </div>
+                <div class="order-card">
+                  <div class="order-title">1 Day</div>
+                  <div class="order-flow">
+                    <span class="period-chip">1</span>
+                    <span class="period-chip">2</span>
+                    <span class="period-chip">3</span>
+                    <span class="lunch-chip">Lunch</span>
+                    <span class="period-chip">5</span>
+                    <span class="period-chip">6</span>
+                    <span class="period-chip">7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="panel">
@@ -924,6 +1162,20 @@
       });
     }
 
+    function setupBellToggle() {
+      const button = document.getElementById("bellToggle");
+      const body = document.getElementById("bellBody");
+      const arrow = document.getElementById("bellArrow");
+      const text = document.getElementById("bellToggleText");
+
+      button.addEventListener("click", () => {
+        const isHidden = body.classList.toggle("hidden");
+        button.setAttribute("aria-expanded", String(!isHidden));
+        arrow.classList.toggle("closed", isHidden);
+        text.textContent = isHidden ? "Show bell schedule" : "Hide bell schedule";
+      });
+    }
+
     function renderCountdowns(days, today = new Date(), countToday = true) {
       const rotationCounts = countByRotationDay(days);
       const periodCounts = countByPeriod(days);
@@ -1054,6 +1306,7 @@
     document.getElementById("todayWeekday").textContent = formatWeekdayShort(today);
 
     setupCalendarToggle();
+    setupBellToggle();
     setupCountTodayToggle(today);
   </script>
 </body>
