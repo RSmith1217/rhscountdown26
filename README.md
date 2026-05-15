@@ -9,6 +9,7 @@ Self-contained GitHub Pages widget with:
 - Finals and milestones
 - Random inspirational/quirky header message on each load
 - Date-based fun holiday message
+- Live RHS absences panel
 - Expandable AP Testing schedule details
 - Collapsible bell schedule
 - Collapsible upcoming schedule/calendar

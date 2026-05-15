@@ -296,6 +296,98 @@
       font-weight: 950;
     }
 
+    .absences-status {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .absences-source {
+      color: var(--indigo-dark);
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .absences-source:hover {
+      text-decoration: underline;
+    }
+
+    .absences-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .absence-card {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+
+    .absence-name {
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .absence-summary {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .absence-details {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .absence-detail {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .absence-detail-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .absence-empty,
+    .absence-error {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .absence-error {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #9a3412;
+    }
+
     .bell-body.hidden {
       display: none;
     }
@@ -621,7 +713,7 @@
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
       .tearaway-calendar { align-self: flex-start; }
-      .rotation-grid, .period-grid, .bell-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .rotation-grid, .period-grid, .absences-grid, .bell-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
       .schedule-card.expanded { grid-column: span 2; }
     }
 
@@ -631,7 +723,7 @@
 
     @media (max-width: 540px) {
       main { padding: 14px; }
-      .stats, .rotation-grid, .period-grid, .bell-grid, .schedule-grid { grid-template-columns: 1fr; }
+      .stats, .rotation-grid, .period-grid, .absences-grid, .bell-grid, .schedule-grid { grid-template-columns: 1fr; }
       .schedule-card.expanded { grid-column: span 1; }
       .ap-details { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
@@ -705,6 +797,19 @@
         </div>
         <div class="rotation-grid" id="rotationCounts"></div>
         <div class="period-grid" id="periodCounts"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Today's Absences</h2>
+            <div class="absences-status" id="absencesStatus">Loading from RHS...</div>
+          </div>
+          <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open source</a>
+        </div>
+        <div id="absencesList">
+          <div class="absence-empty">Checking today&apos;s absence list...</div>
+        </div>
       </section>
 
       <section class="panel">
@@ -977,6 +1082,9 @@
       4: [4, 1, 2, 8, 5, 6]
     };
 
+    const absencesSourceUrl = "https://app.ridgewood.k12.nj.us/";
+    const absencesProxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(absencesSourceUrl);
+
     const apExamSchedule = {
       "2026-05-04": {
         am: ["Biology", "Latin"],
@@ -1148,6 +1256,119 @@
       return isSameCalendarDate(item, today) ? "Today" : "#" + (index + 1);
     }
 
+    function cleanAbsenceText(text) {
+      return text.replace(/\s+/g, " ").trim();
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[character]));
+    }
+
+    function splitAbsenceHeading(heading) {
+      const cleanedHeading = cleanAbsenceText(heading).replace(/^UPDATE\s+/i, "");
+      const separatorIndex = cleanedHeading.indexOf(" - ");
+
+      if (separatorIndex === -1) {
+        return { name: cleanedHeading, summary: "" };
+      }
+
+      return {
+        name: cleanedHeading.slice(0, separatorIndex),
+        summary: cleanedHeading.slice(separatorIndex + 3)
+      };
+    }
+
+    function parseAbsencesDocument(doc) {
+      return Array.from(doc.querySelectorAll("#accordionFlushAbsences .accordion-item")).map((item) => {
+        const heading = cleanAbsenceText(item.querySelector("strong")?.textContent || "");
+        const { name, summary } = splitAbsenceHeading(heading);
+        const details = Array.from(item.querySelectorAll("tbody tr")).map((row) => {
+          const cells = Array.from(row.querySelectorAll("td")).map((cell) => cleanAbsenceText(cell.textContent));
+          return {
+            label: cells[0] || "",
+            value: cells[1] || ""
+          };
+        }).filter((detail) => detail.label || detail.value);
+
+        return { name, summary, details };
+      }).filter((absence) => absence.name);
+    }
+
+    function parseSourceDate(doc) {
+      const todayBar = Array.from(doc.querySelectorAll(".flexsubbar"))
+        .map((item) => cleanAbsenceText(item.textContent))
+        .find((text) => text.includes("Today -"));
+
+      return todayBar ? todayBar.replace(/^.*Today -\s*/, "") : "";
+    }
+
+    function renderAbsences(absences, sourceDate = "") {
+      const status = document.getElementById("absencesStatus");
+      const list = document.getElementById("absencesList");
+
+      status.textContent = sourceDate ? `Updated for ${sourceDate}` : "Updated from RHS";
+
+      if (!absences.length) {
+        list.innerHTML = '<div class="absence-empty">No absences listed for today.</div>';
+        return;
+      }
+
+      list.className = "absences-grid";
+      list.innerHTML = absences.map((absence) => `
+        <article class="absence-card">
+          <div class="absence-name">${escapeHTML(absence.name)}</div>
+          ${absence.summary ? `<div class="absence-summary">${escapeHTML(absence.summary)}</div>` : ""}
+          ${absence.details.length ? `
+            <div class="absence-details">
+              ${absence.details.map((detail) => `
+                <div class="absence-detail">
+                  <span class="absence-detail-label">${escapeHTML(detail.label)}</span>
+                  <span>${escapeHTML(detail.value)}</span>
+                </div>
+              `).join("")}
+            </div>
+          ` : ""}
+        </article>
+      `).join("");
+    }
+
+    async function fetchAbsencesHtml() {
+      try {
+        const response = await fetch(absencesSourceUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error("Direct fetch failed");
+        return await response.text();
+      } catch (directError) {
+        const proxyResponse = await fetch(absencesProxyUrl, { cache: "no-store" });
+        if (!proxyResponse.ok) throw new Error("Proxy fetch failed");
+        return await proxyResponse.text();
+      }
+    }
+
+    async function loadAbsences() {
+      const status = document.getElementById("absencesStatus");
+      const list = document.getElementById("absencesList");
+
+      try {
+        const html = await fetchAbsencesHtml();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        renderAbsences(parseAbsencesDocument(doc), parseSourceDate(doc));
+      } catch (error) {
+        status.textContent = "Could not load live absences";
+        list.className = "";
+        list.innerHTML = `
+          <div class="absence-error">
+            Live absences could not be loaded in this browser. Use the source link above to view today&apos;s RHS absence list.
+          </div>
+        `;
+      }
+    }
+
     function setupCalendarToggle() {
       const button = document.getElementById("calendarToggle");
       const body = document.getElementById("calendarBody");
@@ -1308,6 +1529,7 @@
     setupCalendarToggle();
     setupBellToggle();
     setupCountTodayToggle(today);
+    loadAbsences();
   </script>
 </body>
 </html>
