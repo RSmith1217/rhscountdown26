@@ -487,9 +487,9 @@
     .order-card {
       display: grid;
       align-content: start;
-      gap: 6px;
-      min-height: 132px;
-      padding: 14px;
+      gap: 12px;
+      min-height: 112px;
+      padding: 14px 12px;
       border: 1px solid var(--border);
       border-radius: 16px;
       background: #f8fafc;
@@ -505,29 +505,32 @@
 
     .order-flow {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
-      gap: 7px;
+      gap: 5px;
+      white-space: nowrap;
     }
 
     .period-chip {
-      min-width: 32px;
-      padding: 5px 9px;
+      min-width: 28px;
+      padding: 5px 7px;
       border-radius: 999px;
       background: #eef2ff;
       color: #3730a3;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 950;
       text-align: center;
     }
 
     .lunch-chip {
-      padding: 5px 10px;
+      min-width: 28px;
+      padding: 5px 7px;
       border-radius: 999px;
       background: #fef3c7;
       color: #92400e;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 950;
+      text-align: center;
     }
 
     .schedule-header p {
@@ -923,7 +926,7 @@
                     <span class="period-chip">4</span>
                     <span class="period-chip">1</span>
                     <span class="period-chip">2</span>
-                    <span class="lunch-chip">Lunch</span>
+                    <span class="lunch-chip" title="Lunch">L</span>
                     <span class="period-chip">8</span>
                     <span class="period-chip">5</span>
                     <span class="period-chip">6</span>
@@ -935,7 +938,7 @@
                     <span class="period-chip">3</span>
                     <span class="period-chip">4</span>
                     <span class="period-chip">1</span>
-                    <span class="lunch-chip">Lunch</span>
+                    <span class="lunch-chip" title="Lunch">L</span>
                     <span class="period-chip">7</span>
                     <span class="period-chip">8</span>
                     <span class="period-chip">5</span>
@@ -947,7 +950,7 @@
                     <span class="period-chip">2</span>
                     <span class="period-chip">3</span>
                     <span class="period-chip">4</span>
-                    <span class="lunch-chip">Lunch</span>
+                    <span class="lunch-chip" title="Lunch">L</span>
                     <span class="period-chip">6</span>
                     <span class="period-chip">7</span>
                     <span class="period-chip">8</span>
@@ -959,7 +962,7 @@
                     <span class="period-chip">1</span>
                     <span class="period-chip">2</span>
                     <span class="period-chip">3</span>
-                    <span class="lunch-chip">Lunch</span>
+                    <span class="lunch-chip" title="Lunch">L</span>
                     <span class="period-chip">5</span>
                     <span class="period-chip">6</span>
                     <span class="period-chip">7</span>
