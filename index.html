@@ -423,7 +423,7 @@
 
     .bell-card {
       display: grid;
-      align-content: center;
+      grid-template-rows: 16px 30px 20px 20px 14px;
       justify-items: center;
       gap: 3px;
       min-height: 132px;
@@ -472,6 +472,10 @@
       font-size: 11px;
       font-weight: 750;
       line-height: 1.1;
+    }
+
+    .bell-spacer {
+      min-height: 14px;
     }
 
     .order-grid {
@@ -854,41 +858,49 @@
                   <div class="bell-number">1</div>
                   <div class="bell-time">8:20 AM</div>
                   <div class="bell-time">9:10 AM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card">
                   <div class="bell-label">Period</div>
                   <div class="bell-number">2</div>
                   <div class="bell-time">9:15 AM</div>
                   <div class="bell-time">10:25 AM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card">
                   <div class="bell-label">Period</div>
                   <div class="bell-number">3</div>
                   <div class="bell-time">10:30 AM</div>
                   <div class="bell-time">11:20 AM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card lunch">
                   <div class="bell-label">Lunch</div>
+                  <div class="bell-number bell-spacer" aria-hidden="true"></div>
                   <div class="bell-time">11:20 AM</div>
                   <div class="bell-time">12:00 PM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card">
                   <div class="bell-label">Period</div>
                   <div class="bell-number">4</div>
                   <div class="bell-time">12:05 PM</div>
                   <div class="bell-time">12:55 PM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card">
                   <div class="bell-label">Period</div>
                   <div class="bell-number">5</div>
                   <div class="bell-time">1:00 PM</div>
                   <div class="bell-time">2:10 PM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card">
                   <div class="bell-label">Period</div>
                   <div class="bell-number">6</div>
                   <div class="bell-time">2:15 PM</div>
                   <div class="bell-time">3:05 PM</div>
+                  <div class="bell-spacer" aria-hidden="true"></div>
                 </div>
                 <div class="bell-card extra-help">
                   <div class="bell-label">Period</div>
