@@ -636,6 +636,20 @@
       background: #eef2ff;
     }
 
+    .schedule-card.today-schedule {
+      border-color: #e8b4bd;
+      background: #fff1f2;
+      box-shadow: inset 0 0 0 1px rgba(128, 0, 32, 0.08);
+    }
+
+    .schedule-card.today-schedule .number.next-label {
+      color: #7f1d1d;
+    }
+
+    .schedule-card.today-schedule .date {
+      color: #8a1538;
+    }
+
     .number {
       color: #94a3b8;
       font-size: 12px;
@@ -1695,14 +1709,15 @@
         const scheduleNote = getScheduleNote(item);
         const apExamDetails = getApExamDetails(item);
         const hasDetails = Boolean(apExamDetails);
+        const isToday = isSameCalendarDate(item, today);
 
         return `
           <article
-            class="schedule-card ${index === 0 ? "next" : ""} ${hasDetails ? "has-details" : ""}"
+            class="schedule-card ${index === 0 ? "next" : ""} ${isToday ? "today-schedule" : ""} ${hasDetails ? "has-details" : ""}"
             ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
           >
             <div>
-              <div class="number ${isSameCalendarDate(item, today) ? "next-label" : ""}">
+              <div class="number ${isToday ? "next-label" : ""}">
                 ${scheduleCardNumberText(item, index, today)}
               </div>
               <div class="date">${item.date}</div>
