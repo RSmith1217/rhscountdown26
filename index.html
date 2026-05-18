@@ -1089,8 +1089,6 @@
     };
 
     const absencesSourceUrl = "https://app.ridgewood.k12.nj.us/";
-    const absencesProxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(absencesSourceUrl);
-    const absencesReaderUrl = "https://r.jina.ai/" + absencesSourceUrl;
 
     const apExamSchedule = {
       "2026-05-04": {
@@ -1373,6 +1371,49 @@
       return sourceDateMatch ? sourceDateMatch[1] : "";
     }
 
+    function formatAbsenceSourceDate(date = new Date()) {
+      return date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+
+    function getAbsenceSourceDate(source) {
+      if (source.type === "text") {
+        return parseSourceDateText(source.text);
+      }
+
+      const doc = new DOMParser().parseFromString(source.text, "text/html");
+      return parseSourceDate(doc);
+    }
+
+    function parseAbsencesSource(source) {
+      if (source.type === "text") {
+        return {
+          absences: parseAbsencesText(source.text),
+          sourceDate: parseSourceDateText(source.text)
+        };
+      }
+
+      const doc = new DOMParser().parseFromString(source.text, "text/html");
+      return {
+        absences: parseAbsencesDocument(doc),
+        sourceDate: parseSourceDate(doc)
+      };
+    }
+
+    function getAbsenceSources() {
+      const cacheBuster = Date.now();
+      const freshSourceUrl = `${absencesSourceUrl}?_=${cacheBuster}`;
+
+      return [
+        { url: freshSourceUrl, type: "html" },
+        { url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(freshSourceUrl), type: "html" },
+        { url: "https://r.jina.ai/" + freshSourceUrl, type: "text" }
+      ];
+    }
+
     function renderAbsences(absences, sourceDate = "") {
       const status = document.getElementById("absencesStatus");
       const list = document.getElementById("absencesList");
@@ -1417,18 +1458,33 @@
     }
 
     async function fetchAbsences() {
-      const sources = [
-        { url: absencesSourceUrl, type: "html" },
-        { url: absencesProxyUrl, type: "html" },
-        { url: absencesReaderUrl, type: "text" }
-      ];
+      const expectedDate = formatAbsenceSourceDate();
+      const sameDaySources = [];
 
-      for (const source of sources) {
+      for (const source of getAbsenceSources()) {
         try {
-          return await fetchAbsencesSource(source.url, source.type);
+          const response = await fetchAbsencesSource(source.url, source.type);
+          const sourceDate = getAbsenceSourceDate(response);
+
+          if (sourceDate && sourceDate !== expectedDate) {
+            throw new Error("Stale absence source");
+          }
+
+          sameDaySources.push(response);
         } catch (error) {
           // Try the next source; public CORS helpers are occasionally unavailable.
         }
+      }
+
+      const parsedSources = sameDaySources.map(parseAbsencesSource);
+      const sourceWithAbsences = parsedSources.find((source) => source.absences.length);
+
+      if (sourceWithAbsences) {
+        return sourceWithAbsences;
+      }
+
+      if (parsedSources.length) {
+        return parsedSources[0];
       }
 
       throw new Error("All absence sources failed");
@@ -1439,15 +1495,8 @@
       const list = document.getElementById("absencesList");
 
       try {
-        const source = await fetchAbsences();
-
-        if (source.type === "text") {
-          renderAbsences(parseAbsencesText(source.text), parseSourceDateText(source.text));
-          return;
-        }
-
-        const doc = new DOMParser().parseFromString(source.text, "text/html");
-        renderAbsences(parseAbsencesDocument(doc), parseSourceDate(doc));
+        const { absences, sourceDate } = await fetchAbsences();
+        renderAbsences(absences, sourceDate);
       } catch (error) {
         status.textContent = "Could not load RHS App absences";
         list.className = "";
@@ -1625,6 +1674,9 @@
     console.assert(scheduleCardNumberText({ iso: "2026-05-07" }, 0, new Date(2026, 4, 6)) === "#1");
     console.assert(sortAbsencesByLastName([{ name: "Jane Smith" }, { name: "Brown, Alex" }, { name: "Pat Adams" }]).map((item) => item.name).join("|") === "Pat Adams|Brown, Alex|Jane Smith");
     console.assert(parseAbsencesText("RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements").length === 1);
+    console.assert(formatAbsenceSourceDate(new Date(2026, 4, 18)) === "May 18, 2026");
+    console.assert(getAbsenceSources().every((source) => source.url.includes("_=")));
+    console.assert(parseAbsencesSource({ type: "text", text: "RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements" }).absences[0].name === "C. Contreras");
 
     document.getElementById("dailyMessage").textContent = "RHS Countdown Timer";
     document.getElementById("nationalDay").textContent = "🎉 Today is " + getNationalDay(today);
