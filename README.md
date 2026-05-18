@@ -1,4 +1,4 @@
-# RHS Countdown Timer v3.0
+# RHS Countdown Timer v3.1
 
 Self-contained GitHub Pages widget with:
 - Auto-hiding past dates
