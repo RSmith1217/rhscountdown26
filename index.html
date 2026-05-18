@@ -423,12 +423,15 @@
 
     .bell-card {
       display: grid;
-      gap: 6px;
+      align-content: center;
+      justify-items: center;
+      gap: 3px;
       min-height: 132px;
       padding: 12px;
       border: 1px solid var(--border);
       border-radius: 16px;
       background: #f8fafc;
+      text-align: center;
     }
 
     .bell-card.lunch {
@@ -443,25 +446,32 @@
 
     .bell-label {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 950;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       overflow-wrap: anywhere;
     }
 
+    .bell-number {
+      color: var(--indigo-dark);
+      font-size: 1.45rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+
     .bell-time {
       color: var(--text);
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 950;
-      line-height: 1.15;
+      line-height: 1.08;
     }
 
     .bell-note {
       color: #64748b;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 750;
-      line-height: 1.2;
+      line-height: 1.1;
     }
 
     .order-grid {
@@ -840,17 +850,20 @@
               </div>
               <div class="bell-grid">
                 <div class="bell-card">
-                  <div class="bell-label">Period 1</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">1</div>
                   <div class="bell-time">8:20 AM</div>
                   <div class="bell-time">9:10 AM</div>
                 </div>
                 <div class="bell-card">
-                  <div class="bell-label">Period 2</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">2</div>
                   <div class="bell-time">9:15 AM</div>
                   <div class="bell-time">10:25 AM</div>
                 </div>
                 <div class="bell-card">
-                  <div class="bell-label">Period 3</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">3</div>
                   <div class="bell-time">10:30 AM</div>
                   <div class="bell-time">11:20 AM</div>
                 </div>
@@ -860,22 +873,26 @@
                   <div class="bell-time">12:00 PM</div>
                 </div>
                 <div class="bell-card">
-                  <div class="bell-label">Period 4</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">4</div>
                   <div class="bell-time">12:05 PM</div>
                   <div class="bell-time">12:55 PM</div>
                 </div>
                 <div class="bell-card">
-                  <div class="bell-label">Period 5</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">5</div>
                   <div class="bell-time">1:00 PM</div>
                   <div class="bell-time">2:10 PM</div>
                 </div>
                 <div class="bell-card">
-                  <div class="bell-label">Period 6</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">6</div>
                   <div class="bell-time">2:15 PM</div>
                   <div class="bell-time">3:05 PM</div>
                 </div>
                 <div class="bell-card extra-help">
-                  <div class="bell-label">Period 9</div>
+                  <div class="bell-label">Period</div>
+                  <div class="bell-number">9</div>
                   <div class="bell-time">3:05 PM</div>
                   <div class="bell-time">3:30 PM</div>
                   <div class="bell-note">Extra help</div>
