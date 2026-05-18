@@ -398,7 +398,7 @@
 
     .bell-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
       align-items: start;
     }
@@ -425,7 +425,7 @@
     .bell-card {
       display: grid;
       gap: 6px;
-      min-height: 92px;
+      min-height: 110px;
       padding: 14px;
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -466,10 +466,15 @@
 
     .order-grid {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
     .order-card {
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      min-height: 110px;
       padding: 14px;
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -489,7 +494,6 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 7px;
-      margin-top: 10px;
     }
 
     .period-chip {
@@ -711,7 +715,7 @@
     @media (max-width: 900px) {
       .hero { flex-direction: column; align-items: stretch; }
       .tearaway-calendar { align-self: flex-start; }
-      .rotation-grid, .period-grid, .absences-grid, .bell-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .rotation-grid, .period-grid, .absences-grid, .bell-grid, .order-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
       .schedule-card.expanded { grid-column: span 2; }
     }
 
@@ -721,7 +725,7 @@
 
     @media (max-width: 540px) {
       main { padding: 14px; }
-      .stats, .rotation-grid, .period-grid, .absences-grid, .bell-grid, .schedule-grid { grid-template-columns: 1fr; }
+      .stats, .rotation-grid, .period-grid, .absences-grid, .bell-grid, .order-grid, .schedule-grid { grid-template-columns: 1fr; }
       .schedule-card.expanded { grid-column: span 1; }
       .ap-details { grid-template-columns: 1fr; }
       .hero, .panel { border-radius: 20px; padding: 20px; }
