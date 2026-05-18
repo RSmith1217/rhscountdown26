@@ -615,8 +615,17 @@
 
     .schedule-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
+    }
+
+    .schedule-weekday {
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .schedule-card {
@@ -624,6 +633,7 @@
       justify-content: space-between;
       gap: 12px;
       align-items: center;
+      grid-column: var(--weekday-column);
       padding: 14px;
       border-radius: 16px;
     }
@@ -780,6 +790,8 @@
       .hero { flex-direction: column; align-items: stretch; }
       .tearaway-calendar { align-self: flex-start; }
       .rotation-grid, .period-grid, .absences-grid, .bell-grid, .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .schedule-weekday { display: none; }
+      .schedule-card { grid-column: auto; }
       .schedule-card.expanded { grid-column: span 2; }
     }
 
@@ -1359,6 +1371,11 @@
       return isSameCalendarDate(item, today) ? "Today" : "#" + (index + 1);
     }
 
+    function getSchoolWeekdayColumn(item) {
+      const weekday = parseISODate(item.iso).getDay();
+      return Math.min(Math.max(weekday, 1), 5);
+    }
+
     function cleanAbsenceText(text) {
       return text.replace(/\s+/g, " ").trim();
     }
@@ -1731,7 +1748,11 @@
       }
 
       scheduleElement.className = "schedule-grid";
-      scheduleElement.innerHTML = days.map((item, index) => {
+      const weekdayHeaders = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        .map((weekday) => `<div class="schedule-weekday">${weekday}</div>`)
+        .join("");
+
+      const scheduleCards = days.map((item, index) => {
         const scheduleNote = getScheduleNote(item);
         const apExamDetails = getApExamDetails(item);
         const hasDetails = Boolean(apExamDetails);
@@ -1740,6 +1761,7 @@
         return `
           <article
             class="schedule-card ${index === 0 ? "next" : ""} ${isToday ? "today-schedule" : ""} ${hasDetails ? "has-details" : ""}"
+            style="--weekday-column: ${getSchoolWeekdayColumn(item)}"
             ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
           >
             <div>
@@ -1755,6 +1777,8 @@
           </article>
         `;
       }).join("");
+
+      scheduleElement.innerHTML = weekdayHeaders + scheduleCards;
 
       setupApScheduleCards();
     }
@@ -1782,6 +1806,8 @@
     console.assert(apExamSchedule["2026-05-15"].pm.includes("Computer Science A"));
     console.assert(scheduleCardNumberText({ iso: "2026-05-06" }, 0, new Date(2026, 4, 6)) === "Today");
     console.assert(scheduleCardNumberText({ iso: "2026-05-07" }, 0, new Date(2026, 4, 6)) === "#1");
+    console.assert(getSchoolWeekdayColumn({ iso: "2026-05-18" }) === 1);
+    console.assert(getSchoolWeekdayColumn({ iso: "2026-05-22" }) === 5);
     console.assert(sortAbsencesByLastName([{ name: "Jane Smith" }, { name: "Brown, Alex" }, { name: "Pat Adams" }]).map((item) => item.name).join("|") === "Pat Adams|Brown, Alex|Jane Smith");
     console.assert(parseAbsencesText("RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements").length === 1);
     console.assert(formatAbsenceSourceDate(new Date(2026, 4, 18)) === "May 18, 2026");
