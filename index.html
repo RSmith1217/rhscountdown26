@@ -508,6 +508,16 @@
       background: #f8fafc;
     }
 
+    .order-card.today-order {
+      background: #fff1f2;
+      border-color: #e8b4bd;
+      box-shadow: inset 0 0 0 1px rgba(128, 0, 32, 0.08);
+    }
+
+    .order-card.today-order .order-title {
+      color: #8a1538;
+    }
+
     .order-title {
       color: var(--indigo-dark);
       font-size: 14px;
@@ -949,7 +959,7 @@
                 <h3>Period Order</h3>
               </div>
               <div class="order-grid">
-                <div class="order-card">
+                <div class="order-card" data-rotation-day="4">
                   <div class="order-title">4 Day</div>
                   <div class="order-flow">
                     <span class="period-chip">4</span>
@@ -961,7 +971,7 @@
                     <span class="period-chip">6</span>
                   </div>
                 </div>
-                <div class="order-card">
+                <div class="order-card" data-rotation-day="3">
                   <div class="order-title">3 Day</div>
                   <div class="order-flow">
                     <span class="period-chip">3</span>
@@ -973,7 +983,7 @@
                     <span class="period-chip">5</span>
                   </div>
                 </div>
-                <div class="order-card">
+                <div class="order-card" data-rotation-day="2">
                   <div class="order-title">2 Day</div>
                   <div class="order-flow">
                     <span class="period-chip">2</span>
@@ -985,7 +995,7 @@
                     <span class="period-chip">8</span>
                   </div>
                 </div>
-                <div class="order-card">
+                <div class="order-card" data-rotation-day="1">
                   <div class="order-title">1 Day</div>
                   <div class="order-flow">
                     <span class="period-chip">1</span>
@@ -1630,6 +1640,14 @@
       });
     }
 
+    function highlightTodayPeriodOrder(today = new Date()) {
+      const todayRotationDay = getTodayRotationDay(schoolDays, today);
+
+      document.querySelectorAll(".order-card").forEach((card) => {
+        card.classList.toggle("today-order", Number(card.dataset.rotationDay) === todayRotationDay);
+      });
+    }
+
     function renderCountdowns(days, today = new Date(), countToday = true) {
       const rotationCounts = countByRotationDay(days);
       const periodCounts = countByPeriod(days);
@@ -1771,6 +1789,7 @@
     setupCalendarToggle();
     setupAbsencesToggle();
     setupBellToggle();
+    highlightTodayPeriodOrder(today);
     setupCountTodayToggle(today);
     loadAbsences();
   </script>
