@@ -1290,6 +1290,25 @@
       };
     }
 
+    function getLastNameSortKey(name) {
+      const cleanedName = cleanAbsenceText(name).replace(/\([^)]*\)/g, "");
+      const commaName = cleanedName.split(",")[0].trim();
+
+      if (commaName && commaName !== cleanedName) {
+        return commaName.toLocaleLowerCase();
+      }
+
+      const nameParts = cleanedName.split(/\s+/).filter(Boolean);
+      return (nameParts[nameParts.length - 1] || cleanedName).toLocaleLowerCase();
+    }
+
+    function sortAbsencesByLastName(absences) {
+      return [...absences].sort((first, second) => {
+        const lastNameComparison = getLastNameSortKey(first.name).localeCompare(getLastNameSortKey(second.name));
+        return lastNameComparison || first.name.localeCompare(second.name);
+      });
+    }
+
     function parseAbsencesDocument(doc) {
       return Array.from(doc.querySelectorAll("#accordionFlushAbsences .accordion-item")).map((item) => {
         const heading = cleanAbsenceText(item.querySelector("strong")?.textContent || "");
@@ -1326,7 +1345,7 @@
       }
 
       list.className = "absences-grid";
-      list.innerHTML = absences.map((absence) => `
+      list.innerHTML = sortAbsencesByLastName(absences).map((absence) => `
         <article class="absence-card">
           <div class="absence-name">${escapeHTML(absence.name)}</div>
           ${absence.summary ? `<div class="absence-summary">${escapeHTML(absence.summary)}</div>` : ""}
