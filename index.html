@@ -280,6 +280,20 @@
       border: 1px solid var(--border);
     }
 
+    .rotation-card.today-rotation {
+      background: #fff1f2;
+      border-color: #e8b4bd;
+      box-shadow: inset 0 0 0 1px rgba(128, 0, 32, 0.08);
+    }
+
+    .rotation-card.today-rotation .small {
+      color: #7f1d1d;
+    }
+
+    .rotation-card.today-rotation .big {
+      color: #8a1538;
+    }
+
     .rotation-card .small {
       color: var(--muted);
       font-size: 13px;
@@ -1242,6 +1256,12 @@
       }));
     }
 
+    function getTodayRotationDay(days, today = new Date()) {
+      const todayOnly = toLocalDateOnly(today);
+      const todayItem = days.find((item) => item.type === "rotation" && parseISODate(item.iso).getTime() === todayOnly.getTime());
+      return todayItem ? todayItem.day : null;
+    }
+
     function countByPeriod(days) {
       const counts = Object.fromEntries(Array.from({ length: 8 }, (_, index) => [index + 1, 0]));
 
@@ -1599,6 +1619,7 @@
     function renderCountdowns(days, today = new Date(), countToday = true) {
       const rotationCounts = countByRotationDay(days);
       const periodCounts = countByPeriod(days);
+      const todayRotationDay = getTodayRotationDay(schoolDays, today);
 
       const studentDaysLeft = days.filter((item) => item.type !== "teacher" && item.date !== "June 25").length;
       const actualDaysUntilJune24 = getCalendarDaysUntil("2026-06-24", today, countToday);
@@ -1613,7 +1634,7 @@
       document.getElementById("finalDays").textContent = finalDaysLeft;
 
       document.getElementById("rotationCounts").innerHTML = rotationCounts.map((item) => `
-        <div class="rotation-card">
+        <div class="rotation-card ${item.day === todayRotationDay ? "today-rotation" : ""}">
           <div class="small">${item.day} Day</div>
           <div class="big">${item.count}</div>
         </div>
@@ -1706,6 +1727,8 @@
     console.assert(countByRotationDay(getUpcomingDays(schoolDays, new Date(2026, 3, 30), false))[1].count === 7);
     console.assert(countByPeriod(getUpcomingDays(schoolDays, new Date(2026, 3, 29))).every((x) => x.count === 24));
     console.assert(getUpcomingDays(schoolDays, new Date(2026, 4, 26))[0].type === "teacher");
+    console.assert(getTodayRotationDay(schoolDays, new Date(2026, 4, 18)) === 2);
+    console.assert(getTodayRotationDay(schoolDays, new Date(2026, 4, 26)) === null);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29), false) === 56);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 3, 29), true) === 57);
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
