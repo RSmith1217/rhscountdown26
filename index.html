@@ -629,10 +629,10 @@
     }
 
     .schedule-card {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 12px;
-      align-items: center;
+      align-items: start;
       grid-column: var(--weekday-column);
       padding: 14px;
       border-radius: 16px;
@@ -746,6 +746,7 @@
       padding: 5px 10px;
       font-size: 12px;
       font-weight: 900;
+      justify-self: start;
     }
 
     .badge.rotation {
@@ -1333,7 +1334,7 @@
     function badgeText(item) {
       if (item.type === "finals") return "Finals";
       if (item.type === "milestone") return "Milestone";
-      if (item.type === "teacher") return "Teacher Day";
+      if (item.type === "teacher") return "Teacher";
       return item.day + " Day";
     }
 
