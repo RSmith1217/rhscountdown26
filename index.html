@@ -704,6 +704,15 @@
     .description {
       color: var(--muted);
       font-size: 14px;
+      font-weight: 750;
+      line-height: 1.25;
+    }
+
+    .schedule-detail {
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.25;
     }
 
     .schedule-note {
@@ -1379,6 +1388,22 @@
       return Math.min(Math.max(weekday, 1), 5);
     }
 
+    function getScheduleSymbol(item) {
+      if (item.type === "rotation") {
+        return { value: item.day, label: "Day", detail: "" };
+      }
+
+      if (item.type === "teacher") {
+        return { value: "PD", label: "Professional Development", detail: "" };
+      }
+
+      if (item.type === "finals") {
+        return { value: "F", label: "Finals", detail: item.label };
+      }
+
+      return null;
+    }
+
     function cleanAbsenceText(text) {
       return text.replace(/\s+/g, " ").trim();
     }
@@ -1764,7 +1789,8 @@
         const apExamDetails = getApExamDetails(item);
         const hasDetails = Boolean(apExamDetails);
         const isToday = isSameCalendarDate(item, today);
-        const isRotation = item.type === "rotation";
+        const scheduleSymbol = getScheduleSymbol(item);
+        const showBadge = !scheduleSymbol;
 
         return `
           <article
@@ -1774,14 +1800,15 @@
           >
             <div>
               <div class="date">${item.date}</div>
-              ${isRotation ? `
-                <div class="schedule-day-number">${item.day}</div>
-                <div class="schedule-day-label">Day</div>
+              ${scheduleSymbol ? `
+                <div class="schedule-day-number">${scheduleSymbol.value}</div>
+                <div class="schedule-day-label">${scheduleSymbol.label}</div>
+                ${scheduleSymbol.detail ? `<div class="schedule-detail">${scheduleSymbol.detail}</div>` : ""}
               ` : `<div class="description">${item.label}</div>`}
               ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
               ${apExamDetails}
             </div>
-            ${isRotation ? "" : `<span class="${badgeClass(item)}">${badgeText(item)}</span>`}
+            ${showBadge ? `<span class="${badgeClass(item)}">${badgeText(item)}</span>` : ""}
           </article>
         `;
       }).join("");
@@ -1814,6 +1841,8 @@
     console.assert(apExamSchedule["2026-05-15"].pm.includes("Computer Science A"));
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-18" }) === 1);
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-22" }) === 5);
+    console.assert(getScheduleSymbol({ type: "teacher" }).value === "PD");
+    console.assert(getScheduleSymbol({ type: "finals", label: "Periods 1 & 5" }).value === "F");
     console.assert(sortAbsencesByLastName([{ name: "Jane Smith" }, { name: "Brown, Alex" }, { name: "Pat Adams" }]).map((item) => item.name).join("|") === "Pat Adams|Brown, Alex|Jane Smith");
     console.assert(parseAbsencesText("RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements").length === 1);
     console.assert(formatAbsenceSourceDate(new Date(2026, 4, 18)) === "May 18, 2026");
