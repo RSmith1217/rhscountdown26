@@ -669,25 +669,8 @@
       box-shadow: inset 0 0 0 1px rgba(128, 0, 32, 0.08);
     }
 
-    .schedule-card.today-schedule .number.next-label {
-      color: #7f1d1d;
-    }
-
     .schedule-card.today-schedule .date {
       color: #8a1538;
-    }
-
-    .number {
-      color: #94a3b8;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .number.next-label {
-      color: var(--indigo-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 950;
     }
 
     .date {
@@ -1368,10 +1351,6 @@
       return parseISODate(item.iso).getTime() === toLocalDateOnly(date).getTime();
     }
 
-    function scheduleCardNumberText(item, index, today = new Date()) {
-      return isSameCalendarDate(item, today) ? "Today" : "#" + (index + 1);
-    }
-
     function getSchoolWeekdayColumn(item) {
       const weekday = parseISODate(item.iso).getDay();
       return Math.min(Math.max(weekday, 1), 5);
@@ -1766,11 +1745,8 @@
             ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
           >
             <div>
-              <div class="number ${isToday ? "next-label" : ""}">
-                ${scheduleCardNumberText(item, index, today)}
-              </div>
               <div class="date">${item.date}</div>
-              <div class="description">${item.label}</div>
+              ${item.type === "rotation" ? "" : `<div class="description">${item.label}</div>`}
               ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
               ${apExamDetails}
             </div>
@@ -1805,8 +1781,6 @@
     console.assert(typeof getNationalDay(new Date(2026, 3, 29)) === "string");
     console.assert(apExamSchedule["2026-05-04"].am.includes("Biology"));
     console.assert(apExamSchedule["2026-05-15"].pm.includes("Computer Science A"));
-    console.assert(scheduleCardNumberText({ iso: "2026-05-06" }, 0, new Date(2026, 4, 6)) === "Today");
-    console.assert(scheduleCardNumberText({ iso: "2026-05-07" }, 0, new Date(2026, 4, 6)) === "#1");
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-18" }) === 1);
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-22" }) === 5);
     console.assert(sortAbsencesByLastName([{ name: "Jane Smith" }, { name: "Brown, Alex" }, { name: "Pat Adams" }]).map((item) => item.name).join("|") === "Pat Adams|Brown, Alex|Jane Smith");
