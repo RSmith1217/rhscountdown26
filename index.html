@@ -631,13 +631,14 @@
     .schedule-card {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 12px;
-      align-items: start;
+      align-content: center;
+      justify-items: center;
+      gap: 6px;
       grid-column: var(--weekday-column);
       min-height: 128px;
       padding: 14px;
       border-radius: 16px;
+      text-align: center;
     }
 
     .schedule-card.has-details {
@@ -655,7 +656,7 @@
 
     .schedule-card.expanded {
       grid-column: span 2;
-      align-items: flex-start;
+      align-content: start;
       border-color: #a5b4fc;
       background: #f8fafc;
     }
@@ -678,6 +679,26 @@
     .date {
       font-size: 1.05rem;
       font-weight: 950;
+    }
+
+    .schedule-day-number {
+      color: var(--indigo-dark);
+      font-size: 2.65rem;
+      font-weight: 950;
+      line-height: 0.95;
+    }
+
+    .schedule-day-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .today-schedule .schedule-day-number,
+    .today-schedule .schedule-day-label {
+      color: #8a1538;
     }
 
     .description {
@@ -731,8 +752,7 @@
       padding: 5px 10px;
       font-size: 12px;
       font-weight: 900;
-      align-self: end;
-      justify-self: start;
+      justify-self: center;
     }
 
     .badge.rotation {
@@ -1740,6 +1760,7 @@
         const apExamDetails = getApExamDetails(item);
         const hasDetails = Boolean(apExamDetails);
         const isToday = isSameCalendarDate(item, today);
+        const isRotation = item.type === "rotation";
 
         return `
           <article
@@ -1749,11 +1770,14 @@
           >
             <div>
               <div class="date">${item.date}</div>
-              ${item.type === "rotation" ? "" : `<div class="description">${item.label}</div>`}
+              ${isRotation ? `
+                <div class="schedule-day-number">${item.day}</div>
+                <div class="schedule-day-label">Day</div>
+              ` : `<div class="description">${item.label}</div>`}
               ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
               ${apExamDetails}
             </div>
-            <span class="${badgeClass(item)}">${badgeText(item)}</span>
+            ${isRotation ? "" : `<span class="${badgeClass(item)}">${badgeText(item)}</span>`}
           </article>
         `;
       }).join("");
