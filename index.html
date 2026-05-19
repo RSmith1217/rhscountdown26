@@ -631,9 +631,11 @@
     .schedule-card {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) auto;
       gap: 12px;
       align-items: start;
       grid-column: var(--weekday-column);
+      min-height: 178px;
       padding: 14px;
       border-radius: 16px;
     }
@@ -729,6 +731,7 @@
       padding: 5px 10px;
       font-size: 12px;
       font-weight: 900;
+      align-self: end;
       justify-self: start;
     }
 
@@ -1069,10 +1072,10 @@
       { date: "June 12", iso: "2026-06-12", label: "1 Day", type: "rotation", day: 1 },
       { date: "June 15", iso: "2026-06-15", label: "4 Day", type: "rotation", day: 4 },
       { date: "June 16", iso: "2026-06-16", label: "3 Day", type: "rotation", day: 3 },
-      { date: "June 17", iso: "2026-06-17", label: "Finals: Periods 4 & 8", type: "finals" },
-      { date: "June 18", iso: "2026-06-18", label: "Finals: Periods 3 & 7", type: "finals" },
-      { date: "June 22", iso: "2026-06-22", label: "Finals: Periods 2 & 6", type: "finals" },
-      { date: "June 23", iso: "2026-06-23", label: "Finals: Periods 1 & 5", type: "finals" },
+      { date: "June 17", iso: "2026-06-17", label: "Periods 4 & 8", type: "finals" },
+      { date: "June 18", iso: "2026-06-18", label: "Periods 3 & 7", type: "finals" },
+      { date: "June 22", iso: "2026-06-22", label: "Periods 2 & 6", type: "finals" },
+      { date: "June 23", iso: "2026-06-23", label: "Periods 1 & 5", type: "finals" },
       { date: "June 24", iso: "2026-06-24", label: "Last Student Day", type: "milestone" },
       { date: "June 25", iso: "2026-06-25", label: "Last Teacher Day", type: "milestone" }
     ];
