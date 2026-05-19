@@ -1510,14 +1510,16 @@
       if (source.type === "text") {
         return {
           absences: parseAbsencesText(source.text),
-          sourceDate: parseSourceDateText(source.text)
+          sourceDate: parseSourceDateText(source.text),
+          hasNoAbsences: source.text.includes("No Absences Today")
         };
       }
 
       const doc = new DOMParser().parseFromString(source.text, "text/html");
       return {
         absences: parseAbsencesDocument(doc),
-        sourceDate: parseSourceDate(doc)
+        sourceDate: parseSourceDate(doc),
+        hasNoAbsences: source.text.includes("No Absences Today")
       };
     }
 
@@ -1527,6 +1529,7 @@
 
       return [
         { url: freshSourceUrl, type: "html" },
+        { url: "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent(freshSourceUrl), type: "html" },
         { url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(freshSourceUrl), type: "html" },
         { url: "https://r.jina.ai/" + freshSourceUrl, type: "text" }
       ];
@@ -1564,7 +1567,7 @@
 
     async function fetchAbsencesSource(url, type) {
       const controller = new AbortController();
-      const timeout = window.setTimeout(() => controller.abort(), 5000);
+      const timeout = window.setTimeout(() => controller.abort(), 2500);
 
       try {
         const response = await fetch(url, { cache: "no-store", signal: controller.signal });
@@ -1596,16 +1599,17 @@
 
       const parsedSources = sameDaySources.map(parseAbsencesSource);
       const sourceWithAbsences = parsedSources.find((source) => source.absences.length);
+      const sourceWithExplicitNoAbsences = parsedSources.find((source) => source.hasNoAbsences);
 
       if (sourceWithAbsences) {
         return sourceWithAbsences;
       }
 
-      if (parsedSources.length) {
-        return parsedSources[0];
+      if (sourceWithExplicitNoAbsences) {
+        return sourceWithExplicitNoAbsences;
       }
 
-      throw new Error("All absence sources failed");
+      throw new Error("No reliable absence source found");
     }
 
     async function loadAbsences() {
