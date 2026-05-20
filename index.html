@@ -539,7 +539,9 @@
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
+      justify-content: center;
       gap: 5px;
+      width: 100%;
       white-space: nowrap;
     }
 
@@ -641,6 +643,15 @@
       text-align: center;
     }
 
+    .schedule-content {
+      display: grid;
+      grid-template-rows: 24px 42px 17px 17px;
+      align-items: center;
+      justify-items: center;
+      width: 100%;
+      min-height: 100px;
+    }
+
     .schedule-card.has-details {
       cursor: pointer;
       transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -689,12 +700,26 @@
       padding: 3px 0 2px;
     }
 
+    .schedule-day-number.is-empty {
+      visibility: hidden;
+    }
+
     .schedule-day-label {
       color: var(--muted);
       font-size: 12px;
       font-weight: 950;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+
+    .schedule-day-label,
+    .description,
+    .schedule-detail,
+    .schedule-note {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .today-schedule .schedule-day-number,
@@ -1389,17 +1414,25 @@
       return Math.min(Math.max(weekday, 1), 5);
     }
 
+    function compactFinalsLabel(label) {
+      return label.replace(/^Periods\s+/i, "").replace(/\s*&\s*/g, ", ");
+    }
+
     function getScheduleSymbol(item) {
       if (item.type === "rotation") {
         return { value: item.day, label: "Day", detail: "" };
       }
 
       if (item.type === "teacher") {
-        return { value: "PD", label: "Professional Development", detail: "" };
+        return { value: "PD", label: "Prof. Dev.", detail: "" };
       }
 
       if (item.type === "finals") {
-        return { value: "F", label: "Finals", detail: item.label };
+        return { value: "F", label: "Finals", detail: compactFinalsLabel(item.label) };
+      }
+
+      if (item.type === "milestone") {
+        return { value: "", label: item.label, detail: "" };
       }
 
       return null;
@@ -1791,7 +1824,6 @@
         const hasDetails = Boolean(apExamDetails);
         const isToday = isSameCalendarDate(item, today);
         const scheduleSymbol = getScheduleSymbol(item);
-        const showBadge = !scheduleSymbol;
 
         return `
           <article
@@ -1799,17 +1831,16 @@
             style="--weekday-column: ${getSchoolWeekdayColumn(item)}"
             ${hasDetails ? 'role="button" tabindex="0" aria-expanded="false"' : ""}
           >
-            <div>
+            <div class="schedule-content">
               <div class="date">${item.date}</div>
               ${scheduleSymbol ? `
-                <div class="schedule-day-number">${scheduleSymbol.value}</div>
+                <div class="schedule-day-number ${scheduleSymbol.value ? "" : "is-empty"}">${scheduleSymbol.value || "&nbsp;"}</div>
                 <div class="schedule-day-label">${scheduleSymbol.label}</div>
                 ${scheduleSymbol.detail ? `<div class="schedule-detail">${scheduleSymbol.detail}</div>` : ""}
               ` : `<div class="description">${item.label}</div>`}
               ${scheduleNote ? `<div class="schedule-note">${scheduleNote}</div>` : ""}
               ${apExamDetails}
             </div>
-            ${showBadge ? `<span class="${badgeClass(item)}">${badgeText(item)}</span>` : ""}
           </article>
         `;
       }).join("");
@@ -1844,6 +1875,8 @@
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-22" }) === 5);
     console.assert(getScheduleSymbol({ type: "teacher" }).value === "PD");
     console.assert(getScheduleSymbol({ type: "finals", label: "Periods 1 & 5" }).value === "F");
+    console.assert(getScheduleSymbol({ type: "finals", label: "Periods 1 & 5" }).detail === "1, 5");
+    console.assert(getScheduleSymbol({ type: "milestone", label: "Last Student Day" }).label === "Last Student Day");
     console.assert(sortAbsencesByLastName([{ name: "Jane Smith" }, { name: "Brown, Alex" }, { name: "Pat Adams" }]).map((item) => item.name).join("|") === "Pat Adams|Brown, Alex|Jane Smith");
     console.assert(parseAbsencesText("RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements").length === 1);
     console.assert(formatAbsenceSourceDate(new Date(2026, 4, 18)) === "May 18, 2026");
