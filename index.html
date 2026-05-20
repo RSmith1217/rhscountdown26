@@ -1415,7 +1415,7 @@
     }
 
     function compactFinalsLabel(label) {
-      return label.replace(/^Periods\s+/i, "").replace(/\s*&\s*/g, ", ");
+      return label.replace(/^Periods\s+/i, "P").replace(/\s*&\s*/g, "/P");
     }
 
     function getScheduleSymbol(item) {
@@ -1424,11 +1424,11 @@
       }
 
       if (item.type === "teacher") {
-        return { value: "PD", label: "Prof. Dev.", detail: "" };
+        return { value: "PD", label: "", detail: "" };
       }
 
       if (item.type === "finals") {
-        return { value: "F", label: "Finals", detail: compactFinalsLabel(item.label) };
+        return { value: "F", label: compactFinalsLabel(item.label), detail: "" };
       }
 
       if (item.type === "milestone") {
@@ -1874,8 +1874,9 @@
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-18" }) === 1);
     console.assert(getSchoolWeekdayColumn({ iso: "2026-05-22" }) === 5);
     console.assert(getScheduleSymbol({ type: "teacher" }).value === "PD");
+    console.assert(getScheduleSymbol({ type: "teacher" }).label === "");
     console.assert(getScheduleSymbol({ type: "finals", label: "Periods 1 & 5" }).value === "F");
-    console.assert(getScheduleSymbol({ type: "finals", label: "Periods 1 & 5" }).detail === "1, 5");
+    console.assert(getScheduleSymbol({ type: "finals", label: "Periods 1 & 5" }).label === "P1/P5");
     console.assert(getScheduleSymbol({ type: "milestone", label: "Last Student Day" }).label === "Last Student Day");
     console.assert(sortAbsencesByLastName([{ name: "Jane Smith" }, { name: "Brown, Alex" }, { name: "Pat Adams" }]).map((item) => item.name).join("|") === "Pat Adams|Brown, Alex|Jane Smith");
     console.assert(parseAbsencesText("RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements").length === 1);
