@@ -6,6 +6,7 @@ Self-contained GitHub Pages widget with:
 - Rotation day counts
 - Period meeting counts
 - Count-today toggle
+- Days until finals count
 - Finals and milestones
 - Random inspirational/quirky header message on each load
 - Date-based fun holiday message
