@@ -925,7 +925,7 @@
           <div>
             <h2>Today's Absences</h2>
             <div class="absences-status" id="absencesStatus">Loading from RHS...</div>
-            <div class="absences-note">Populates from the RHS App; refresh if a temporary loading error appears.</div>
+            <div class="absences-note">Uses a scheduled RHS App snapshot; open RHS App if the list looks stale.</div>
           </div>
           <div class="heading-with-hint">
             <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open RHS App</a>
@@ -1235,6 +1235,7 @@
     };
 
     const absencesSourceUrl = "https://app.ridgewood.k12.nj.us/";
+    const absencesSnapshotUrl = "absences.json";
 
     const apExamSchedule = {
       "2026-05-04": {
@@ -1668,6 +1669,31 @@
       }
     }
 
+    function normalizePublishedAbsences(data) {
+      if (!data || !Array.isArray(data.absences)) {
+        throw new Error("Invalid absence snapshot");
+      }
+
+      const sourceDate = normalizeAbsenceDateLabel(data.updatedFor || "");
+      const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
+
+      if (sourceDate && sourceDate !== expectedDate) {
+        throw new Error("Stale absence snapshot");
+      }
+
+      return {
+        absences: data.absences,
+        sourceDate,
+        hasNoAbsences: Boolean(data.hasNoAbsences)
+      };
+    }
+
+    async function fetchPublishedAbsences() {
+      const response = await fetch(`${absencesSnapshotUrl}?_=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Absence snapshot fetch failed");
+      return normalizePublishedAbsences(await response.json());
+    }
+
     async function fetchAbsences() {
       const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
       const sameDaySources = [];
@@ -1708,7 +1734,15 @@
       const list = document.getElementById("absencesList");
 
       try {
-        const { absences, sourceDate } = await fetchAbsences();
+        let absenceData;
+
+        try {
+          absenceData = await fetchPublishedAbsences();
+        } catch (snapshotError) {
+          absenceData = await fetchAbsences();
+        }
+
+        const { absences, sourceDate } = absenceData;
         renderAbsences(absences, sourceDate);
       } catch (error) {
         status.textContent = "Could not load RHS App absences";
@@ -1918,6 +1952,7 @@
     console.assert(formatAbsenceSourceDate(new Date(2026, 4, 18)) === "May 18, 2026");
     console.assert(normalizeAbsenceDateLabel("Jun 01, 2026") === "June 1, 2026");
     console.assert(normalizeAbsenceDateLabel("June 1, 2026") === "June 1, 2026");
+    console.assert(normalizePublishedAbsences({ updatedFor: formatAbsenceSourceDate(), absences: [] }).absences.length === 0);
     console.assert(getAbsenceSources().every((source) => source.url.includes("_=")));
     console.assert(parseAbsencesSource({ type: "text", text: "RHS\n\nToday - May 18, 2026\n\nAbsences\n\n## C. Contreras - 2 ONLY\n\nOnline Assignment | 2 ONLY\n\nAnnouncements" }).absences[0].name === "C. Contreras");
 
