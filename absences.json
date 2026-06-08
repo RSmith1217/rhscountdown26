@@ -1,7 +1,80 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "June 7, 2026",
-  "updatedAt": "2026-06-07T14:56:32Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedFor": "June 8, 2026",
+  "updatedAt": "2026-06-08T13:14:59Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "A. Policelli",
+      "summary": "7 ONLY, Report to 1 and 6",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "1 and 6"
+        }
+      ]
+    },
+    {
+      "name": "K. Pinches",
+      "summary": "7 ONLY, Report to 5 and 6",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "5 and 6"
+        }
+      ]
+    },
+    {
+      "name": "G. Minichini",
+      "summary": "2 ONLY, Report to 1, 3, 5, and 7",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "1, 3, 5, and 7"
+        }
+      ]
+    },
+    {
+      "name": "S. Gigante",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "S. Kase",
+      "summary": "REPORT TO ALL CLASSES TODAY",
+      "details": [
+        {
+          "label": "REPORT TO",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "M. Luo",
+      "summary": "REPORT TO ALL CLASSES TODAY",
+      "details": [
+        {
+          "label": "REPORT TO",
+          "value": "All Periods"
+        }
+      ]
+    }
+  ]
 }
