@@ -1,16 +1,30 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "June 8, 2026",
-  "updatedAt": "2026-06-08T16:54:22Z",
+  "updatedFor": "June 9, 2026",
+  "updatedAt": "2026-06-09T12:45:36Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "A. Policelli",
-      "summary": "7 ONLY, Report to 1 and 6",
+      "name": "K. Aromando",
+      "summary": "6 ONLY, Report to 1 and 5",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "7 ONLY"
+          "value": "6 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "1 and 5"
+        }
+      ]
+    },
+    {
+      "name": "A. Policelli",
+      "summary": "4, 8 ONLY, Report to 1 and 6",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "4, 8 ONLY"
         },
         {
           "label": "Report to",
@@ -19,30 +33,26 @@
       ]
     },
     {
-      "name": "K. Pinches",
-      "summary": "7 ONLY, Report to 5 and 6",
+      "name": "N. Makhlouf",
+      "summary": "4, 8 ONLY, Report to 2 and 6",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "7 ONLY"
+          "value": "4, 8 ONLY"
         },
         {
           "label": "Report to",
-          "value": "5 and 6"
+          "value": "2 and 6"
         }
       ]
     },
     {
-      "name": "G. Minichini",
-      "summary": "2 ONLY, Report to 1, 3, 5, and 7",
+      "name": "S. Lynaugh",
+      "summary": "4 ONLY",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2 ONLY"
-        },
-        {
-          "label": "Report to",
-          "value": "1, 3, 5, and 7"
+          "value": "4 ONLY"
         }
       ]
     },
@@ -58,20 +68,40 @@
     },
     {
       "name": "S. Kase",
-      "summary": "REPORT TO ALL CLASSES TODAY",
+      "summary": "REPORT TO ALL PERIODS",
       "details": [
         {
-          "label": "REPORT TO",
+          "label": "REPORT",
           "value": "All Periods"
         }
       ]
     },
     {
       "name": "M. Luo",
-      "summary": "REPORT TO ALL CLASSES TODAY",
+      "summary": "REPORT TO ALL PERIODS",
       "details": [
         {
-          "label": "REPORT TO",
+          "label": "REPORT",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "E. Carollo",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Vergona",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
           "value": "All Periods"
         }
       ]
