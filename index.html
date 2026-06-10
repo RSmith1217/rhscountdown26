@@ -1455,15 +1455,17 @@
 
     function splitAbsenceHeading(heading) {
       const cleanedHeading = cleanAbsenceText(heading).replace(/^UPDATE\s+/i, "");
-      const separatorIndex = cleanedHeading.indexOf(" - ");
+      const separatorMatch = cleanedHeading.match(/\s+-\s+|-\s+(?=\d|AM\b|PM\b|All\b|REPORT\b|Period\b)/i);
 
-      if (separatorIndex === -1) {
+      if (!separatorMatch) {
         return { name: cleanedHeading, summary: "" };
       }
 
+      const separatorIndex = separatorMatch.index;
+
       return {
-        name: cleanedHeading.slice(0, separatorIndex),
-        summary: cleanedHeading.slice(separatorIndex + 3)
+        name: cleanedHeading.slice(0, separatorIndex).trim(),
+        summary: cleanedHeading.slice(separatorIndex + separatorMatch[0].length).trim()
       };
     }
 
@@ -1626,14 +1628,19 @@
       ];
     }
 
-    function renderAbsences(absences, sourceDate = "") {
+    function renderAbsences(absences, sourceDate = "", isStale = false) {
       const status = document.getElementById("absencesStatus");
       const list = document.getElementById("absencesList");
 
-      status.textContent = sourceDate ? `Updated for ${sourceDate}` : "Updated from RHS";
+      status.textContent = sourceDate
+        ? `${isStale ? "Last snapshot from" : "Updated for"} ${sourceDate}`
+        : "Updated from RHS";
 
       if (!absences.length) {
-        list.innerHTML = '<div class="absence-empty">No absences listed for today.</div>';
+        list.className = "";
+        list.innerHTML = isStale
+          ? '<div class="absence-error">The scheduled absence snapshot has not updated for today yet. Use the RHS App link above for the current list.</div>'
+          : '<div class="absence-empty">No absences listed for today.</div>';
         return;
       }
 
@@ -1677,14 +1684,11 @@
       const sourceDate = normalizeAbsenceDateLabel(data.updatedFor || "");
       const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
 
-      if (sourceDate && sourceDate !== expectedDate) {
-        throw new Error("Stale absence snapshot");
-      }
-
       return {
         absences: data.absences,
         sourceDate,
-        hasNoAbsences: Boolean(data.hasNoAbsences)
+        hasNoAbsences: Boolean(data.hasNoAbsences),
+        isStale: Boolean(sourceDate && sourceDate !== expectedDate)
       };
     }
 
@@ -1737,13 +1741,24 @@
         let absenceData;
 
         try {
-          absenceData = await fetchPublishedAbsences();
+          const snapshotData = await fetchPublishedAbsences();
+          if (!snapshotData.isStale) {
+            renderAbsences(snapshotData.absences, snapshotData.sourceDate);
+            return;
+          }
+
+          renderAbsences(snapshotData.absences, snapshotData.sourceDate, true);
+          try {
+            absenceData = await fetchAbsences();
+          } catch (sourceError) {
+            return;
+          }
         } catch (snapshotError) {
           absenceData = await fetchAbsences();
         }
 
-        const { absences, sourceDate } = absenceData;
-        renderAbsences(absences, sourceDate);
+        const { absences, sourceDate, isStale } = absenceData;
+        renderAbsences(absences, sourceDate, isStale);
       } catch (error) {
         status.textContent = "Could not load RHS App absences";
         list.className = "";

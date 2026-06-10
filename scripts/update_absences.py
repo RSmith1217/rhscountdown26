@@ -23,14 +23,14 @@ def clean_text(value: str) -> str:
 
 def split_absence_heading(heading: str) -> dict[str, str]:
     cleaned = re.sub(r"^UPDATE\s+", "", clean_text(heading), flags=re.I)
-    separator = cleaned.find(" - ")
+    separator = re.search(r"\s+-\s+|-\s+(?=\d|AM\b|PM\b|All\b|REPORT\b|Period\b)", cleaned, flags=re.I)
 
-    if separator == -1:
+    if not separator:
         return {"name": cleaned, "summary": ""}
 
     return {
-        "name": cleaned[:separator],
-        "summary": cleaned[separator + 3 :],
+        "name": cleaned[: separator.start()].strip(),
+        "summary": cleaned[separator.end() :].strip(),
     }
 
 
