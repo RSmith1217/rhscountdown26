@@ -1,7 +1,7 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "June 11, 2026",
-  "updatedAt": "2026-06-11T11:59:21Z",
+  "updatedAt": "2026-06-11T16:18:16Z",
   "hasNoAbsences": false,
   "absences": [
     {
@@ -71,12 +71,12 @@
       ]
     },
     {
-      "name": "M. Cheplic",
-      "summary": "AM ONLY - 2 ONLY",
+      "name": "K. Pinches",
+      "summary": "PM ONLY - 6, 7 ONLY",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2 ONLY"
+          "value": "6, 7 ONLY"
         }
       ]
     },
