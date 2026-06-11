@@ -19,7 +19,7 @@ Self-contained GitHub Pages widget with:
 ## Absence Updates
 
 Teacher absences are written to `absences.json` by `.github/workflows/update-absences.yml`.
-The workflow runs every 15 minutes from 10:00-16:59 UTC on weekdays and can also be run manually from the GitHub Actions tab.
+The workflow runs every 5 minutes from 10:00-18:59 UTC on weekdays and can also be run manually from the GitHub Actions tab.
 
 ## Deploy
 

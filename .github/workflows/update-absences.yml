@@ -3,7 +3,7 @@ name: Update RHS Absences
 on:
   workflow_dispatch:
   schedule:
-    - cron: "7,22,37,52 10-16 * * 1-5"
+    - cron: "3,8,13,18,23,28,33,38,43,48,53,58 10-18 * * 1-5"
 
 permissions:
   contents: write
