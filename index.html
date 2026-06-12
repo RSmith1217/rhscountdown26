@@ -1455,7 +1455,7 @@
 
     function splitAbsenceHeading(heading) {
       const cleanedHeading = cleanAbsenceText(heading).replace(/^UPDATE\s+/i, "");
-      const separatorMatch = cleanedHeading.match(/\s+-\s+|-\s+(?=\d|AM\b|PM\b|All\b|REPORT\b|Period\b)/i);
+      const separatorMatch = cleanedHeading.match(/\s+-\s+|-\s+(?=\d|AM\b|PM\b|All\b|REPORT\b|Period\b|Per\b)/i);
 
       if (!separatorMatch) {
         return { name: cleanedHeading, summary: "" };

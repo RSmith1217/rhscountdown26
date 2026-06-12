@@ -1,148 +1,12 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "June 11, 2026",
-  "updatedAt": "2026-06-11T19:17:10Z",
+  "updatedFor": "June 12, 2026",
+  "updatedAt": "2026-06-12T13:34:34Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "C. Appel",
-      "summary": "AM ONLY - 4 ONLY, Report to 2",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "4 ONLY"
-        },
-        {
-          "label": "Report to",
-          "value": "2"
-        }
-      ]
-    },
-    {
-      "name": "C. DeTora",
-      "summary": "4, 8 ONLY, Report to 2 and 3",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "4, 8 ONLY"
-        },
-        {
-          "label": "Report to",
-          "value": "2 and 3"
-        }
-      ]
-    },
-    {
-      "name": "C. Garlasco",
-      "summary": "3, 7 ONLY, Report to 2, 6 and 8",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 7 ONLY"
-        },
-        {
-          "label": "Report to",
-          "value": "2, 6 and 8"
-        }
-      ]
-    },
-    {
-      "name": "P. Thurlow",
-      "summary": "6, 7 ONLY, Report to 2 and 8",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "6, 7 ONLY"
-        },
-        {
-          "label": "Report to",
-          "value": "2 and 8"
-        }
-      ]
-    },
-    {
-      "name": "D. Gareri",
-      "summary": "PM ONLY - 7, 8 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "7, 8 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "K. Pinches",
-      "summary": "PM ONLY - 6, 7 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "6, 7 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "D. Purrinos",
-      "summary": "PM ONLY - 6, 7, 8 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "6, 7, 8 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "M. Rotella",
-      "summary": "PM ONLY - 6, 8 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "6, 8 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "S. Song",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "A. Policelli",
-      "summary": "REPORT TO ALL PERIODS",
-      "details": [
-        {
-          "label": "REPORT",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "A. Vergona",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "A. Cuellar",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "P. Kay",
-      "summary": "All Periods",
+      "name": "C. Bunzey",
+      "summary": "",
       "details": [
         {
           "label": "Online Assignment",
@@ -152,7 +16,7 @@
     },
     {
       "name": "J. Citko",
-      "summary": "All Periods",
+      "summary": "",
       "details": [
         {
           "label": "Online Assignment",
@@ -161,8 +25,368 @@
       ]
     },
     {
-      "name": "J. Greco",
-      "summary": "All Periods",
+      "name": "A. Cuellar",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "C. Darajky",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "D. Felano",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "C. Gayed",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "K. Geronimo",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "F. Giannantonio",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "J. Gyulay",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "R. Hastie",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "S. Marzloff",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "K. Mendez",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Nolan",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Non",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "J. Saladino",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "A. Sieck",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "C. Cardasco",
+      "summary": "Per 1 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "Per 1 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "D. Liu",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "L. Valenti",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "S. Kase",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "L. Lauro",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "S. Lynaugh",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "B. Quirk",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "K. Rehain",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "L. Polk",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "A. McCullough",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "E. Karan",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "G. Minichini",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "B. Ingoglia",
+      "summary": "Per 1 & 3 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "Per 1 & 3 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "R. Block",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "N. Riordan",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "D. Gareri",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "S. Driscoll",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "M. Doris",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "E. D'Elia",
+      "summary": "AM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "AM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "M. Maksimov",
+      "summary": "PM ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "PM ONLY"
+        }
+      ]
+    },
+    {
+      "name": "K. Pinches",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Policelli",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "M. Richardson",
+      "summary": "",
       "details": [
         {
           "label": "Online Assignment",
@@ -172,7 +396,7 @@
     },
     {
       "name": "L. Sargenti",
-      "summary": "All Periods",
+      "summary": "",
       "details": [
         {
           "label": "Online Assignment",
@@ -181,8 +405,8 @@
       ]
     },
     {
-      "name": "C. Bunzey",
-      "summary": "All Periods",
+      "name": "A. Scevola",
+      "summary": "",
       "details": [
         {
           "label": "Online Assignment",
@@ -191,11 +415,41 @@
       ]
     },
     {
-      "name": "S. Gigante",
-      "summary": "REPORT TO ALL PERIODS",
+      "name": "T. Schreck",
+      "summary": "",
       "details": [
         {
-          "label": "REPORT",
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "K. Sterni",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "M. Stucke",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Vergona",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
           "value": "All Periods"
         }
       ]
