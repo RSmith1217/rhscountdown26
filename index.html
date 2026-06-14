@@ -1830,7 +1830,7 @@
       const teacherDaysLeft = days.length;
       const rotationDaysLeft = days.filter((item) => item.type === "rotation").length;
       const firstFinalDay = schoolDays.find((item) => item.type === "finals");
-      const daysUntilFinals = firstFinalDay ? getCalendarDaysUntil(firstFinalDay.iso, today, countToday) : 0;
+      const daysUntilFinals = firstFinalDay ? getCalendarDaysUntil(firstFinalDay.iso, today, false) : 0;
 
       document.getElementById("studentDays").textContent = studentDaysLeft;
       document.getElementById("actualDays").textContent = actualDaysUntilJune24;
@@ -1948,6 +1948,7 @@
     console.assert(getCalendarDaysUntil("2026-06-24", new Date(2026, 5, 24)) === 0);
     console.assert(getCalendarDaysUntil("2026-06-17", new Date(2026, 4, 27), true) === 22);
     console.assert(getCalendarDaysUntil("2026-06-17", new Date(2026, 4, 27), false) === 21);
+    console.assert(getCalendarDaysUntil("2026-06-17", new Date(2026, 5, 14), false) === 3);
     console.assert(typeof getRandomItem(dailyMessages) === "string");
     console.assert(getNationalDay(new Date(2026, 4, 1)) === "School Principals' Day");
     console.assert(getNationalDay(new Date(2026, 4, 2)) === "Free Comic Book Day");
