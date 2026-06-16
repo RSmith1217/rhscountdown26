@@ -1,12 +1,72 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "June 15, 2026",
-  "updatedAt": "2026-06-15T19:51:04Z",
+  "updatedFor": "June 16, 2026",
+  "updatedAt": "2026-06-16T15:20:08Z",
   "hasNoAbsences": false,
   "absences": [
     {
+      "name": "C. Cordasco",
+      "summary": "AM ONLY - 1, 4",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 4"
+        }
+      ]
+    },
+    {
+      "name": "J. Mirkovich",
+      "summary": "REPORT TO ALL CLASSES",
+      "details": [
+        {
+          "label": "REPORT TO",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
       "name": "A. Cuellar",
-      "summary": "",
+      "summary": "REPORT TO ALL CLASSES",
+      "details": [
+        {
+          "label": "REPORT TO",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "S. Gigante",
+      "summary": "REPORT TO ALL CLASSES",
+      "details": [
+        {
+          "label": "REPORT TO",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Policelli",
+      "summary": "REPORT TO ALL CLASSES",
+      "details": [
+        {
+          "label": "REPORT TO",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "L. Polk",
+      "summary": "PM ONLY - 5 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "M. Richardson",
+      "summary": "All Periods Released",
       "details": [
         {
           "label": "Online Assignment",
@@ -16,7 +76,7 @@
     },
     {
       "name": "J. Gyulay",
-      "summary": "",
+      "summary": "All Periods Released",
       "details": [
         {
           "label": "Online Assignment",
@@ -25,8 +85,8 @@
       ]
     },
     {
-      "name": "A. Lefer",
-      "summary": "",
+      "name": "C. DeTora",
+      "summary": "All Periods Released",
       "details": [
         {
           "label": "Online Assignment",
@@ -35,48 +95,8 @@
       ]
     },
     {
-      "name": "M. McDermott",
-      "summary": "PM ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "PM ONLY"
-        }
-      ]
-    },
-    {
-      "name": "M. Pounds",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "M. Richardson",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "K. Sterni",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "M. Stucke",
-      "summary": "",
+      "name": "A. Vergona",
+      "summary": "All Periods Released",
       "details": [
         {
           "label": "Online Assignment",
