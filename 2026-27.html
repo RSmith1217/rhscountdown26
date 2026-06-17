@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2026-27 RHS Countdown</title>
+    <meta
+      name="description"
+      content="A sandbox countdown page for the 2026-27 Ridgewood High School rotation calendar, with PDF downloads."
+    />
+    <style>
+      :root {
+        --ink: #1d242f;
+        --muted: #5f6c7a;
+        --maroon: #7d1f2d;
+        --maroon-dark: #58131e;
+        --gold: #f2bd54;
+        --blue: #204f77;
+        --green: #2e6b4d;
+        --paper: #fffdf9;
+        --soft: #f4f0ea;
+        --line: #ded2c6;
+        --shadow: 0 18px 45px rgba(52, 45, 38, 0.13);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+          linear-gradient(180deg, rgba(125, 31, 45, 0.08), transparent 320px),
+          var(--paper);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        padding: 0.75rem clamp(1rem, 4vw, 3rem);
+        color: #fff;
+        background: var(--maroon-dark);
+      }
+
+      .topbar a {
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .topbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        justify-content: flex-end;
+      }
+
+      .topbar nav a {
+        padding: 0.34rem 0.66rem;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        border-radius: 999px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+        gap: clamp(1.4rem, 4vw, 3rem);
+        align-items: center;
+        max-width: 1160px;
+        min-height: min(650px, calc(100vh - 48px));
+        margin: 0 auto;
+        padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 4vw, 2rem);
+      }
+
+      .eyebrow {
+        margin: 0 0 0.65rem;
+        color: var(--maroon);
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin: 0;
+        font-size: clamp(2.35rem, 6vw, 5rem);
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      .lede {
+        max-width: 680px;
+        margin: 1.1rem 0 0;
+        color: var(--muted);
+        font-size: clamp(1.02rem, 2vw, 1.25rem);
+        line-height: 1.55;
+      }
+
+      .hero-actions,
+      .download-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.35rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0.68rem 1rem;
+        border: 1px solid var(--maroon);
+        border-radius: 999px;
+        color: #fff;
+        background: var(--maroon);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .button.secondary {
+        color: var(--maroon);
+        background: #fff;
+      }
+
+      .countdown-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .panel-heading {
+        padding: 1rem 1.1rem;
+        color: #fff;
+        background: var(--blue);
+      }
+
+      .panel-heading h2 {
+        margin: 0;
+        font-size: 1.08rem;
+      }
+
+      .target-name {
+        margin: 0.35rem 0 0;
+        color: rgba(255, 255, 255, 0.83);
+        font-size: 0.9rem;
+      }
+
+      .timer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--line);
+      }
+
+      .timer-cell {
+        min-width: 0;
+        padding: 1rem 0.6rem;
+        text-align: center;
+        background: #fff;
+      }
+
+      .timer-value {
+        display: block;
+        color: var(--maroon);
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .timer-label {
+        display: block;
+        margin-top: 0.3rem;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .today-line {
+        margin: 0;
+        padding: 1rem 1.1rem;
+        color: var(--ink);
+        background: #fff8eb;
+        border-top: 1px solid var(--line);
+        font-weight: 700;
+      }
+
+      main {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 4vw, 2rem) 4rem;
+      }
+
+      .section {
+        padding: clamp(1.5rem, 4vw, 2.6rem) 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(1.45rem, 3vw, 2rem);
+      }
+
+      .section-note {
+        max-width: 620px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .status-card,
+      .download-card,
+      .milestone-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 10px 25px rgba(52, 45, 38, 0.08);
+      }
+
+      .status-card {
+        padding: 1rem;
+      }
+
+      .status-label {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .status-value {
+        margin: 0.45rem 0 0;
+        color: var(--maroon);
+        font-size: 1.35rem;
+        font-weight: 900;
+      }
+
+      .rotation-list {
+        display: grid;
+        gap: 0.7rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .rotation-item {
+        display: grid;
+        grid-template-columns: 140px 1fr auto;
+        gap: 1rem;
+        align-items: center;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .date-text {
+        font-weight: 900;
+      }
+
+      .note-text {
+        color: var(--muted);
+        line-height: 1.35;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 74px;
+        padding: 0.4rem 0.65rem;
+        border-radius: 999px;
+        color: #fff;
+        background: var(--green);
+        font-weight: 900;
+      }
+
+      .badge.no-rotation {
+        background: var(--blue);
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .download-card {
+        overflow: hidden;
+      }
+
+      .download-preview {
+        aspect-ratio: 8.5 / 6.2;
+        width: 100%;
+        object-fit: cover;
+        object-position: top center;
+        border-bottom: 1px solid var(--line);
+        background: var(--soft);
+      }
+
+      .download-body {
+        padding: 1rem;
+      }
+
+      .download-body h3 {
+        margin: 0;
+        font-size: 1.12rem;
+      }
+
+      .download-body p {
+        margin: 0.5rem 0 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .milestone-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .milestone-card {
+        padding: 1rem;
+        border-top: 5px solid var(--gold);
+      }
+
+      .milestone-card h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1rem;
+      }
+
+      .milestone-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      footer {
+        padding: 2rem clamp(1rem, 4vw, 3rem);
+        color: #fff;
+        background: var(--maroon-dark);
+      }
+
+      footer p {
+        max-width: 1160px;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.78);
+        line-height: 1.5;
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .download-grid,
+        .milestone-grid,
+        .status-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        .rotation-item {
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+
+        .badge {
+          justify-self: start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar {
+          position: static;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .timer-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a href="index.html">RHS Countdown</a>
+      <nav aria-label="Page links">
+        <a href="#rotation">Rotation</a>
+        <a href="#downloads">PDFs</a>
+        <a href="#milestones">Milestones</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Sandbox draft for 2026-27</p>
+        <h1>RHS Countdown 2026-27</h1>
+        <p class="lede">
+          A live school-year countdown built from the 2026-27 RHS rotation calendar and the
+          revised district school calendar. It tracks the next school marker, upcoming rotation
+          days, exams, breaks, graduation, and end-of-year dates.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#rotation">See Upcoming Days</a>
+          <a class="button secondary" href="#downloads">Download Calendars</a>
+        </div>
+      </div>
+
+      <aside class="countdown-panel" aria-live="polite">
+        <div class="panel-heading">
+          <h2>Countdown</h2>
+          <p class="target-name" id="targetName">Loading next school-year marker...</p>
+        </div>
+        <div class="timer-grid" aria-label="Time remaining">
+          <div class="timer-cell">
+            <span class="timer-value" id="days">0</span>
+            <span class="timer-label">Days</span>
+          </div>
+          <div class="timer-cell">
+            <span class="timer-value" id="hours">0</span>
+            <span class="timer-label">Hours</span>
+          </div>
+          <div class="timer-cell">
+            <span class="timer-value" id="minutes">0</span>
+            <span class="timer-label">Minutes</span>
+          </div>
+          <div class="timer-cell">
+            <span class="timer-value" id="seconds">0</span>
+            <span class="timer-label">Seconds</span>
+          </div>
+        </div>
+        <p class="today-line" id="todayLine">Checking today's schedule...</p>
+      </aside>
+    </section>
+
+    <main>
+      <section class="section" aria-labelledby="snapshot-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="snapshot-heading">Current Snapshot</h2>
+            <p class="section-note">
+              These fields update automatically from the local calendar data embedded in this draft.
+            </p>
+          </div>
+        </div>
+        <div class="status-grid">
+          <div class="status-card">
+            <p class="status-label">Next School Day</p>
+            <p class="status-value" id="nextSchoolDay">Loading...</p>
+          </div>
+          <div class="status-card">
+            <p class="status-label">Next Rotation</p>
+            <p class="status-value" id="nextRotation">Loading...</p>
+          </div>
+          <div class="status-card">
+            <p class="status-label">Next Closure or Special Day</p>
+            <p class="status-value" id="nextSpecial">Loading...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="rotation" aria-labelledby="rotation-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="rotation-heading">Upcoming Rotation Days</h2>
+            <p class="section-note">
+              Shows the next ten school markers from the RHS rotation calendar, including minimum
+              days, exams, and closures.
+            </p>
+          </div>
+        </div>
+        <ul class="rotation-list" id="rotationList"></ul>
+      </section>
+
+      <section class="section" id="downloads" aria-labelledby="downloads-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="downloads-heading">Calendar Downloads</h2>
+            <p class="section-note">
+              Keep the original source documents available for students and families.
+            </p>
+          </div>
+        </div>
+        <div class="download-grid">
+          <article class="download-card">
+            <img
+              class="download-preview"
+              src="images/2026-27-rotation-calendar-preview.png"
+              alt="Preview of the 2026-27 RHS rotation calendar"
+            />
+            <div class="download-body">
+              <h3>2026-27 RHS Rotation Calendar</h3>
+              <p>Daily rotation schedule, quarter markers, midterms, final exams, and graduation.</p>
+              <div class="download-actions">
+                <a
+                  class="button"
+                  href="pdfs/2026-27-rhs-rotation-calendar.pdf"
+                  download
+                >Download PDF</a>
+                <a
+                  class="button secondary"
+                  href="pdfs/2026-27-rhs-rotation-calendar.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Open PDF</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="download-card">
+            <img
+              class="download-preview"
+              src="images/2026-27-school-calendar-preview.png"
+              alt="Preview of the revised 2026-27 district school calendar"
+            />
+            <div class="download-body">
+              <h3>Revised 2026-27 School Calendar</h3>
+              <p>District calendar with holidays, recesses, professional days, and emergency day notes.</p>
+              <div class="download-actions">
+                <a
+                  class="button"
+                  href="pdfs/2026-27-school-calendar.pdf"
+                  download
+                >Download PDF</a>
+                <a
+                  class="button secondary"
+                  href="pdfs/2026-27-school-calendar.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Open PDF</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="milestones" aria-labelledby="milestones-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="milestones-heading">Major Dates</h2>
+            <p class="section-note">A compact list of the school-year markers most likely to matter.</p>
+          </div>
+        </div>
+        <div class="milestone-grid" id="milestoneGrid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Draft page for local review. Source documents: 2026-27 RHS Rotation Calendar ADA and
+        Revised 2026-27 School Calendar, revised 5/18/26.
+      </p>
+    </footer>
+
+    <script>
+      const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+      const calendarItems = [
+        ["2026-08-26", "PD/Convocation", "No student rotation"],
+        ["2026-08-27", "PD Day", "No student rotation"],
+        ["2026-08-28", "Remote PD Day", "Mandatory online training"],
+        ["2026-09-01", "First Day Schedule", "Schools open - minimum day"],
+        ["2026-09-02", "Day 4", ""],
+        ["2026-09-03", "Day 3", ""],
+        ["2026-09-04", "Day 2", "Minimum day"],
+        ["2026-09-07", "School Closed", "Labor Day"],
+        ["2026-09-08", "Day 1", ""],
+        ["2026-09-09", "Day 4", ""],
+        ["2026-09-10", "Day 3", ""],
+        ["2026-09-11", "Day 2", ""],
+        ["2026-09-14", "Day 1", ""],
+        ["2026-09-15", "Day 4", ""],
+        ["2026-09-16", "Day 3", ""],
+        ["2026-09-17", "Day 2", ""],
+        ["2026-09-18", "Day 1", ""],
+        ["2026-09-21", "School Closed", "Yom Kippur"],
+        ["2026-09-22", "Day 4", ""],
+        ["2026-09-23", "Day 3", ""],
+        ["2026-09-24", "Day 2", ""],
+        ["2026-09-25", "Day 1", ""],
+        ["2026-09-28", "Day 4", ""],
+        ["2026-09-29", "Day 3", ""],
+        ["2026-09-30", "Day 2", ""],
+        ["2026-10-01", "Day 1", ""],
+        ["2026-10-02", "Day 4", ""],
+        ["2026-10-05", "Day 3", ""],
+        ["2026-10-06", "Day 2", ""],
+        ["2026-10-07", "Day 1", ""],
+        ["2026-10-08", "Day 4", ""],
+        ["2026-10-09", "Day 3", ""],
+        ["2026-10-12", "PD Day", "Columbus Day"],
+        ["2026-10-13", "Day 2", ""],
+        ["2026-10-14", "Day 1", ""],
+        ["2026-10-15", "Day 4", ""],
+        ["2026-10-16", "Day 3", ""],
+        ["2026-10-19", "Day 2", ""],
+        ["2026-10-20", "Day 1", ""],
+        ["2026-10-21", "Day 4", ""],
+        ["2026-10-22", "Day 3", ""],
+        ["2026-10-23", "Day 2", ""],
+        ["2026-10-26", "Day 1", ""],
+        ["2026-10-27", "Day 4", ""],
+        ["2026-10-28", "Day 3", ""],
+        ["2026-10-29", "Day 2", ""],
+        ["2026-10-30", "Day 1", ""],
+        ["2026-11-02", "Day 4", ""],
+        ["2026-11-03", "Schools Closed", "Election Day"],
+        ["2026-11-04", "Day 3", "Q1 ends"],
+        ["2026-11-05", "School Closed", "NJEA Convention"],
+        ["2026-11-06", "School Closed", "NJEA Convention"],
+        ["2026-11-09", "Day 2", "Q2 begins"],
+        ["2026-11-10", "Day 1", ""],
+        ["2026-11-11", "Day 4", ""],
+        ["2026-11-12", "Day 3", ""],
+        ["2026-11-13", "Day 2", ""],
+        ["2026-11-16", "Day 1", ""],
+        ["2026-11-17", "Day 4", ""],
+        ["2026-11-18", "Day 3", ""],
+        ["2026-11-19", "Day 2", ""],
+        ["2026-11-20", "Day 1", ""],
+        ["2026-11-23", "Day 4", ""],
+        ["2026-11-24", "Day 3", ""],
+        ["2026-11-25", "Day 2", "Minimum day"],
+        ["2026-11-26", "School Closed", "Thanksgiving"],
+        ["2026-11-27", "School Closed", "Thanksgiving"],
+        ["2026-11-30", "Day 1", ""],
+        ["2026-12-01", "Day 4", ""],
+        ["2026-12-02", "Day 3", ""],
+        ["2026-12-03", "Day 2", ""],
+        ["2026-12-04", "Day 1", ""],
+        ["2026-12-07", "Day 4", ""],
+        ["2026-12-08", "Day 3", ""],
+        ["2026-12-09", "Day 2", ""],
+        ["2026-12-10", "Day 1", ""],
+        ["2026-12-11", "Day 4", ""],
+        ["2026-12-14", "Day 3", ""],
+        ["2026-12-15", "Day 2", ""],
+        ["2026-12-16", "Day 1", ""],
+        ["2026-12-17", "Day 4", ""],
+        ["2026-12-18", "Day 3", ""],
+        ["2026-12-21", "Day 2", ""],
+        ["2026-12-22", "Day 1", ""],
+        ["2026-12-23", "Day 4", "Minimum day"],
+        ["2026-12-24", "School Closed", "Christmas Eve"],
+        ["2026-12-25", "School Closed", "Christmas"],
+        ["2026-12-28", "School Closed", "December recess"],
+        ["2026-12-29", "School Closed", "December recess"],
+        ["2026-12-30", "School Closed", "December recess"],
+        ["2026-12-31", "School Closed", "New Year's Eve"],
+        ["2027-01-01", "School Closed", "New Year's Day"],
+        ["2027-01-04", "Day 3", ""],
+        ["2027-01-05", "Day 2", ""],
+        ["2027-01-06", "Day 1", ""],
+        ["2027-01-07", "Day 4", ""],
+        ["2027-01-08", "Day 3", ""],
+        ["2027-01-11", "Day 2", ""],
+        ["2027-01-12", "Day 1", ""],
+        ["2027-01-13", "Day 4", ""],
+        ["2027-01-14", "Day 3", ""],
+        ["2027-01-15", "Day 2", ""],
+        ["2027-01-18", "School Closed", "MLK Day"],
+        ["2027-01-19", "Day 1", ""],
+        ["2027-01-20", "Midterm Exams", ""],
+        ["2027-01-21", "Midterm Exams", ""],
+        ["2027-01-22", "Midterm Exams", ""],
+        ["2027-01-25", "Midterm Exams", ""],
+        ["2027-01-26", "Day 4", ""],
+        ["2027-01-27", "Day 3", "Q2 ends"],
+        ["2027-01-28", "Day 2", "Q3 begins"],
+        ["2027-01-29", "Day 1", ""],
+        ["2027-02-01", "Day 4", ""],
+        ["2027-02-02", "Day 3", ""],
+        ["2027-02-03", "Day 2", ""],
+        ["2027-02-04", "Day 1", ""],
+        ["2027-02-05", "Day 4", ""],
+        ["2027-02-08", "Day 3", ""],
+        ["2027-02-09", "Day 2", ""],
+        ["2027-02-10", "Day 1", ""],
+        ["2027-02-11", "Day 4", ""],
+        ["2027-02-12", "Day 3", "Minimum day"],
+        ["2027-02-15", "School Closed", "Presidents' Day"],
+        ["2027-02-16", "School Closed", "February break"],
+        ["2027-02-17", "PD Day", "Closed for students"],
+        ["2027-02-18", "Day 2", ""],
+        ["2027-02-19", "Day 1", ""],
+        ["2027-02-22", "Day 4", ""],
+        ["2027-02-23", "Day 3", ""],
+        ["2027-02-24", "Day 2", ""],
+        ["2027-02-25", "Day 1", ""],
+        ["2027-02-26", "Day 4", ""],
+        ["2027-03-01", "Day 3", ""],
+        ["2027-03-02", "Day 2", ""],
+        ["2027-03-03", "Day 1", ""],
+        ["2027-03-04", "Day 4", ""],
+        ["2027-03-05", "Day 3", ""],
+        ["2027-03-08", "Day 2", ""],
+        ["2027-03-09", "School Closed", "Eid-Al-Fitr"],
+        ["2027-03-10", "Day 1", ""],
+        ["2027-03-11", "Day 4", ""],
+        ["2027-03-12", "Day 3", ""],
+        ["2027-03-15", "Day 2", ""],
+        ["2027-03-16", "Day 1", ""],
+        ["2027-03-17", "Day 4", ""],
+        ["2027-03-18", "Day 3", ""],
+        ["2027-03-19", "Day 2", ""],
+        ["2027-03-22", "Day 1", ""],
+        ["2027-03-23", "Day 4", ""],
+        ["2027-03-24", "Day 3", ""],
+        ["2027-03-25", "Day 2", ""],
+        ["2027-03-26", "School Closed", "Good Friday"],
+        ["2027-03-29", "School Closed", "Spring recess"],
+        ["2027-03-30", "School Closed", "Spring recess"],
+        ["2027-03-31", "School Closed", "Spring recess"],
+        ["2027-04-01", "School Closed", "Spring recess"],
+        ["2027-04-02", "School Closed", "Spring recess"],
+        ["2027-04-05", "Day 1", ""],
+        ["2027-04-06", "Day 4", ""],
+        ["2027-04-07", "Day 3", ""],
+        ["2027-04-08", "Day 2", ""],
+        ["2027-04-09", "Day 1", ""],
+        ["2027-04-12", "Day 4", ""],
+        ["2027-04-13", "Day 3", "Q3 ends"],
+        ["2027-04-14", "Day 2", "Q4 begins"],
+        ["2027-04-15", "Day 1", ""],
+        ["2027-04-16", "Day 4", ""],
+        ["2027-04-19", "Day 3", ""],
+        ["2027-04-20", "Day 2", ""],
+        ["2027-04-21", "Day 1", ""],
+        ["2027-04-22", "Day 4", ""],
+        ["2027-04-23", "Day 3", ""],
+        ["2027-04-26", "Day 2", ""],
+        ["2027-04-27", "Day 1", ""],
+        ["2027-04-28", "Day 4", ""],
+        ["2027-04-29", "Day 3", ""],
+        ["2027-04-30", "Day 2", ""],
+        ["2027-05-03", "Day 1", ""],
+        ["2027-05-04", "Day 4", ""],
+        ["2027-05-05", "Day 3", ""],
+        ["2027-05-06", "Day 2", ""],
+        ["2027-05-07", "Day 1", ""],
+        ["2027-05-10", "Day 4", ""],
+        ["2027-05-11", "Day 3", ""],
+        ["2027-05-12", "Day 2", ""],
+        ["2027-05-13", "Day 1", ""],
+        ["2027-05-14", "Day 4", ""],
+        ["2027-05-17", "Day 3", ""],
+        ["2027-05-18", "Day 2", ""],
+        ["2027-05-19", "Day 1", ""],
+        ["2027-05-20", "Day 4", ""],
+        ["2027-05-21", "Day 3", ""],
+        ["2027-05-24", "Day 2", ""],
+        ["2027-05-25", "Day 1", ""],
+        ["2027-05-26", "Day 4", ""],
+        ["2027-05-27", "Day 3", ""],
+        ["2027-05-28", "Day 2", "Emergency day may be closed"],
+        ["2027-05-31", "School Closed", "Memorial Day observed"],
+        ["2027-06-01", "Day 1", "Emergency day may be closed"],
+        ["2027-06-02", "Day 4", "Emergency day may be closed"],
+        ["2027-06-03", "Day 3", ""],
+        ["2027-06-04", "Day 2", ""],
+        ["2027-06-07", "Day 1", ""],
+        ["2027-06-08", "Day 4", ""],
+        ["2027-06-09", "Day 3", ""],
+        ["2027-06-10", "Day 2", ""],
+        ["2027-06-11", "Day 1", ""],
+        ["2027-06-14", "Day 4", ""],
+        ["2027-06-15", "Final Exams", ""],
+        ["2027-06-16", "Final Exams", ""],
+        ["2027-06-17", "Final Exams", ""],
+        ["2027-06-18", "School Closed", "Juneteenth"],
+        ["2027-06-21", "Final Exams", ""],
+        ["2027-06-22", "Last Day Schedule", "Graduation and last day of instruction - minimum day"],
+        ["2027-06-23", "PD Day", "Closing day for teachers"],
+      ].map(([date, label, note]) => ({
+        date,
+        label,
+        note,
+        time: new Date(`${date}T08:00:00`),
+      }));
+
+      const milestoneItems = [
+        ["2026-09-01", "First Day", "Schools open - minimum day"],
+        ["2026-11-04", "Q1 Ends", "Day 3"],
+        ["2026-11-09", "Q2 Begins", "Day 2"],
+        ["2027-01-20", "Midterms Begin", "Midterm exams run Jan. 20, 21, 22, and 25"],
+        ["2027-01-27", "Q2 Ends", "Day 3"],
+        ["2027-01-28", "Q3 Begins", "Day 2"],
+        ["2027-04-13", "Q3 Ends", "Day 3"],
+        ["2027-04-14", "Q4 Begins", "Day 2"],
+        ["2027-06-15", "Finals Begin", "Final exams run June 15, 16, 17, and 21"],
+        ["2027-06-22", "Graduation", "Last day of instruction - minimum day"],
+        ["2027-06-23", "Closing Day", "PD day for teachers"],
+      ].map(([date, title, detail]) => ({
+        date,
+        title,
+        detail,
+        time: new Date(`${date}T08:00:00`),
+      }));
+
+      const dateFormatter = new Intl.DateTimeFormat("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+
+      function formatDate(date) {
+        return dateFormatter.format(date);
+      }
+
+      function isRotationDay(item) {
+        return /^Day [1-4]$/.test(item.label);
+      }
+
+      function isStudentDay(item) {
+        return (
+          isRotationDay(item) ||
+          /first day|midterm|final exams|last day/i.test(item.label)
+        );
+      }
+
+      function findToday(now) {
+        const todayKey = now.toLocaleDateString("en-CA");
+        return calendarItems.find((item) => item.date === todayKey);
+      }
+
+      function getNext(items, now, predicate = () => true) {
+        return items.find((item) => item.time >= now && predicate(item));
+      }
+
+      function getCountdownTarget(now) {
+        const nextMilestone = getNext(milestoneItems, now);
+        const nextSchoolDay = getNext(calendarItems, now, isStudentDay);
+        if (!nextMilestone) {
+          return {
+            time: new Date("2027-06-23T15:00:00"),
+            title: "2026-27 school year complete",
+          };
+        }
+        if (nextSchoolDay && nextSchoolDay.date < nextMilestone.date) {
+          return {
+            time: nextSchoolDay.time,
+            title: `${nextSchoolDay.label} on ${formatDate(nextSchoolDay.time)}`,
+          };
+        }
+        return {
+          time: nextMilestone.time,
+          title: `${nextMilestone.title} on ${formatDate(nextMilestone.time)}`,
+        };
+      }
+
+      function renderCountdown() {
+        const now = new Date();
+        const target = getCountdownTarget(now);
+        const remaining = Math.max(0, target.time - now);
+
+        document.getElementById("targetName").textContent = target.title;
+        document.getElementById("days").textContent = Math.floor(remaining / MS_PER_DAY);
+        document.getElementById("hours").textContent = Math.floor((remaining % MS_PER_DAY) / 3600000);
+        document.getElementById("minutes").textContent = Math.floor((remaining % 3600000) / 60000);
+        document.getElementById("seconds").textContent = Math.floor((remaining % 60000) / 1000);
+
+        const today = findToday(now);
+        const todayText = today
+          ? `Today: ${today.label}${today.note ? ` - ${today.note}` : ""}`
+          : "Today is not listed as a school calendar marker.";
+        document.getElementById("todayLine").textContent = todayText;
+      }
+
+      function renderSnapshot() {
+        const now = new Date();
+        const nextSchoolDay = getNext(calendarItems, now, isStudentDay);
+        const nextRotation = getNext(calendarItems, now, isRotationDay);
+        const nextSpecial = getNext(
+          calendarItems,
+          now,
+          (item) => !isRotationDay(item) || item.note
+        );
+
+        document.getElementById("nextSchoolDay").textContent = nextSchoolDay
+          ? `${formatDate(nextSchoolDay.time)} - ${nextSchoolDay.label}`
+          : "School year complete";
+        document.getElementById("nextRotation").textContent = nextRotation
+          ? `${formatDate(nextRotation.time)} - ${nextRotation.label}`
+          : "No upcoming rotation day";
+        document.getElementById("nextSpecial").textContent = nextSpecial
+          ? `${formatDate(nextSpecial.time)} - ${nextSpecial.label}`
+          : "No upcoming special day";
+      }
+
+      function renderRotationList() {
+        const now = new Date();
+        const upcoming = calendarItems.filter((item) => item.time >= now).slice(0, 10);
+        const list = document.getElementById("rotationList");
+        list.innerHTML = "";
+
+        upcoming.forEach((item) => {
+          const li = document.createElement("li");
+          li.className = "rotation-item";
+
+          const date = document.createElement("span");
+          date.className = "date-text";
+          date.textContent = formatDate(item.time);
+
+          const note = document.createElement("span");
+          note.className = "note-text";
+          note.textContent = item.note || "Regular school day";
+
+          const badge = document.createElement("span");
+          badge.className = `badge${isRotationDay(item) ? "" : " no-rotation"}`;
+          badge.textContent = item.label;
+
+          li.append(date, note, badge);
+          list.appendChild(li);
+        });
+      }
+
+      function renderMilestones() {
+        const now = new Date();
+        const grid = document.getElementById("milestoneGrid");
+        grid.innerHTML = "";
+
+        milestoneItems
+          .filter((item) => item.time >= now)
+          .slice(0, 8)
+          .forEach((item) => {
+            const article = document.createElement("article");
+            article.className = "milestone-card";
+            article.innerHTML = `
+              <h3>${item.title}</h3>
+              <p><strong>${formatDate(item.time)}</strong></p>
+              <p>${item.detail}</p>
+            `;
+            grid.appendChild(article);
+          });
+      }
+
+      function renderAll() {
+        renderCountdown();
+        renderSnapshot();
+        renderRotationList();
+        renderMilestones();
+      }
+
+      renderAll();
+      setInterval(renderCountdown, 1000);
+    </script>
+  </body>
+</html>
