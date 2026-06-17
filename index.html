@@ -109,6 +109,23 @@
       text-decoration: underline;
     }
 
+    .site-credit {
+      margin: 0 auto 22px;
+      color: #64748b;
+      font-size: 0.82rem;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .site-credit a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-credit a:hover {
+      text-decoration: underline;
+    }
+
     .tearaway-calendar {
       flex-shrink: 0;
       min-width: 132px;
@@ -870,6 +887,7 @@
       .toggle-button { display: none; }
       .tearaway-calendar { box-shadow: none; }
       .share-line { margin: 0 0 18px; }
+      .site-credit { display: none; }
     }
   </style>
 </head>
@@ -1103,6 +1121,10 @@
       </section>
     </div>
   </main>
+
+  <footer class="site-credit">
+    <a href="https://dydxmath.com/" target="_blank" rel="noopener">dydxmath.com</a>
+  </footer>
 
   <script>
     const schoolDays = [
