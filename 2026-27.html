@@ -411,17 +411,27 @@
       }
 
       .site-credit {
-        margin-top: 0.55rem;
-        font-size: 0.82rem;
+        margin-top: 0.85rem;
       }
 
       .site-credit a {
-        color: rgba(255, 255, 255, 0.72);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.42rem;
+        padding: 0.55rem 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 7px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.84rem;
+        font-weight: 800;
         text-decoration: none;
+        transition: background 160ms ease, border-color 160ms ease;
       }
 
       .site-credit a:hover {
-        text-decoration: underline;
+        border-color: rgba(255, 255, 255, 0.48);
+        background: rgba(255, 255, 255, 0.14);
       }
 
       @media (max-width: 860px) {
@@ -680,7 +690,9 @@
         Revised 2026-27 School Calendar, revised 5/18/26.
       </p>
       <p class="site-credit">
-        <a href="https://dydxmath.com/" target="_blank" rel="noopener">dydxmath.com</a>
+        <a href="https://dydxmath.com/" target="_blank" rel="noopener">
+          Explore more math at dydxmath.com <span aria-hidden="true">&rarr;</span>
+        </a>
       </p>
     </footer>
 
