@@ -230,13 +230,28 @@
         line-height: 1.55;
       }
 
-      .status-grid {
+      .status-grid,
+      .totals-grid,
+      .rotation-total-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 1rem;
       }
 
+      .status-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .totals-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .rotation-total-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: 1rem;
+      }
+
       .status-card,
+      .total-card,
       .download-card,
       .milestone-card {
         border: 1px solid var(--line);
@@ -245,11 +260,13 @@
         box-shadow: 0 10px 25px rgba(52, 45, 38, 0.08);
       }
 
-      .status-card {
+      .status-card,
+      .total-card {
         padding: 1rem;
       }
 
-      .status-label {
+      .status-label,
+      .total-label {
         margin: 0;
         color: var(--muted);
         font-size: 0.78rem;
@@ -258,11 +275,17 @@
         text-transform: uppercase;
       }
 
-      .status-value {
+      .status-value,
+      .total-value {
         margin: 0.45rem 0 0;
         color: var(--maroon);
         font-size: 1.35rem;
         font-weight: 900;
+      }
+
+      .total-value {
+        font-size: clamp(1.9rem, 4vw, 2.8rem);
+        line-height: 1;
       }
 
       .rotation-list {
@@ -382,7 +405,9 @@
         .hero,
         .download-grid,
         .milestone-grid,
-        .status-grid {
+        .status-grid,
+        .totals-grid,
+        .rotation-total-grid {
           grid-template-columns: 1fr;
         }
 
@@ -417,6 +442,7 @@
     <header class="topbar">
       <a href="index.html">RHS Countdown</a>
       <nav aria-label="Page links">
+        <a href="#totals">Totals</a>
         <a href="#rotation">Rotation</a>
         <a href="#downloads">PDFs</a>
         <a href="#milestones">Milestones</a>
@@ -488,6 +514,54 @@
             <p class="status-label">Next Closure or Special Day</p>
             <p class="status-value" id="nextSpecial">Loading...</p>
           </div>
+        </div>
+      </section>
+
+      <section class="section" id="totals" aria-labelledby="totals-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="totals-heading">Countdown Totals</h2>
+            <p class="section-note">
+              Planning counts for the remaining 2026-27 calendar, including today when it is a
+              listed school-year marker.
+            </p>
+          </div>
+        </div>
+        <div class="totals-grid">
+          <article class="total-card">
+            <p class="total-label">Student Days Left</p>
+            <p class="total-value" id="studentDaysLeft">0</p>
+          </article>
+          <article class="total-card">
+            <p class="total-label">Teacher Days Left</p>
+            <p class="total-value" id="teacherDaysLeft">0</p>
+          </article>
+          <article class="total-card">
+            <p class="total-label">Rotation Days Left</p>
+            <p class="total-value" id="rotationDaysLeft">0</p>
+          </article>
+          <article class="total-card">
+            <p class="total-label">Listed Dates Left</p>
+            <p class="total-value" id="calendarMarkersLeft">0</p>
+          </article>
+        </div>
+        <div class="rotation-total-grid" aria-label="Remaining rotation day totals">
+          <article class="total-card">
+            <p class="total-label">Day 1 Left</p>
+            <p class="total-value" id="day1Left">0</p>
+          </article>
+          <article class="total-card">
+            <p class="total-label">Day 2 Left</p>
+            <p class="total-value" id="day2Left">0</p>
+          </article>
+          <article class="total-card">
+            <p class="total-label">Day 3 Left</p>
+            <p class="total-value" id="day3Left">0</p>
+          </article>
+          <article class="total-card">
+            <p class="total-label">Day 4 Left</p>
+            <p class="total-value" id="day4Left">0</p>
+          </article>
         </div>
       </section>
 
@@ -851,6 +925,26 @@
         );
       }
 
+      function isClosedDay(item) {
+        return /^Schools? Closed$/i.test(item.label);
+      }
+
+      function isTeacherDay(item) {
+        return !isClosedDay(item);
+      }
+
+      function getLocalDateKey(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function getRemainingCalendarItems(now) {
+        const todayKey = getLocalDateKey(now);
+        return calendarItems.filter((item) => item.date >= todayKey);
+      }
+
       function findToday(now) {
         const todayKey = now.toLocaleDateString("en-CA");
         return calendarItems.find((item) => item.date === todayKey);
@@ -920,6 +1014,23 @@
           : "No upcoming special day";
       }
 
+      function renderTotals() {
+        const remainingItems = getRemainingCalendarItems(new Date());
+        const rotationItems = remainingItems.filter(isRotationDay);
+
+        document.getElementById("studentDaysLeft").textContent =
+          remainingItems.filter(isStudentDay).length;
+        document.getElementById("teacherDaysLeft").textContent =
+          remainingItems.filter(isTeacherDay).length;
+        document.getElementById("rotationDaysLeft").textContent = rotationItems.length;
+        document.getElementById("calendarMarkersLeft").textContent = remainingItems.length;
+
+        [1, 2, 3, 4].forEach((day) => {
+          document.getElementById(`day${day}Left`).textContent =
+            rotationItems.filter((item) => item.label === `Day ${day}`).length;
+        });
+      }
+
       function renderRotationList() {
         const now = new Date();
         const upcoming = calendarItems.filter((item) => item.time >= now).slice(0, 10);
@@ -970,6 +1081,7 @@
       function renderAll() {
         renderCountdown();
         renderSnapshot();
+        renderTotals();
         renderRotationList();
         renderMilestones();
       }
