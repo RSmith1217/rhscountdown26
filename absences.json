@@ -1,22 +1,7 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "June 24, 2026",
-  "updatedAt": "2026-06-24T19:14:29Z",
-  "hasNoAbsences": false,
-  "absences": [
-    {
-      "name": "C. Richards",
-      "summary": "1, 5 & 8 ONLY, Report to 3 & 4",
-      "details": [
-        {
-          "label": "Released",
-          "value": "1, 5, 8 ONLY"
-        },
-        {
-          "label": "Report to",
-          "value": "3 & 4"
-        }
-      ]
-    }
-  ]
+  "updatedFor": "June 25, 2026",
+  "updatedAt": "2026-06-25T12:30:10Z",
+  "hasNoAbsences": true,
+  "absences": []
 }
