@@ -1,7 +1,28 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "September 1, 2026",
-  "updatedAt": "2026-09-01T20:58:02Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedFor": "September 2, 2026",
+  "updatedAt": "2026-09-02T14:21:08Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "A. Raiani",
+      "summary": "AM ONLY - 1, 2, 4 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2 and 4"
+        }
+      ]
+    },
+    {
+      "name": "N. Riordan",
+      "summary": "AM ONLY - 1 and 4 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1 and 4 ONLY"
+        }
+      ]
+    }
+  ]
 }
