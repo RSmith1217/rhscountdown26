@@ -210,6 +210,20 @@
         border-top: 1px solid var(--line);
       }
 
+      .daily-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(1rem, 3vw, 1.6rem);
+        padding: clamp(1.15rem, 3vw, 2rem) 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .daily-grid .section {
+        min-width: 0;
+        padding: 0;
+        border-top: 0;
+      }
+
       .section-heading {
         display: flex;
         align-items: end;
@@ -276,7 +290,7 @@
       }
 
       .absences-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .status-card,
@@ -395,8 +409,8 @@
 
       .rotation-item {
         display: grid;
-        grid-template-columns: minmax(190px, 0.24fr) minmax(0, 1fr) 132px;
-        gap: 0.8rem;
+        grid-template-columns: minmax(160px, 0.36fr) minmax(0, 1fr) 124px;
+        gap: 0.65rem;
         align-items: center;
         padding: 0.65rem 0.85rem;
         border: 1px solid var(--line);
@@ -420,7 +434,7 @@
         justify-content: center;
         justify-self: end;
         min-width: 74px;
-        max-width: 132px;
+        max-width: 124px;
         padding: 0.4rem 0.65rem;
         border-radius: 999px;
         color: #fff;
@@ -528,6 +542,7 @@
 
       @media (max-width: 860px) {
         .hero,
+        .daily-grid,
         .download-grid,
         .milestone-grid,
         .status-grid,
@@ -693,33 +708,35 @@
         </div>
       </section>
 
-      <section class="section" id="absences" aria-labelledby="absences-heading">
-        <div class="section-heading">
-          <div>
-            <h2 id="absences-heading">Today's Absences</h2>
-            <p class="absences-status" id="absencesStatus">Loading from RHS...</p>
+      <div class="daily-grid">
+        <section class="section" id="absences" aria-labelledby="absences-heading">
+          <div class="section-heading">
+            <div>
+              <h2 id="absences-heading">Today's Absences</h2>
+              <p class="absences-status" id="absencesStatus">Loading from RHS...</p>
+            </div>
+            <div class="section-actions">
+              <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open RHS App</a>
+            </div>
           </div>
-          <div class="section-actions">
-            <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open RHS App</a>
+          <div id="absencesList">
+            <div class="absence-empty">Checking today&apos;s absence list...</div>
           </div>
-        </div>
-        <div id="absencesList">
-          <div class="absence-empty">Checking today&apos;s absence list...</div>
-        </div>
-      </section>
+        </section>
 
-      <section class="section" id="rotation" aria-labelledby="rotation-heading">
-        <div class="section-heading">
-          <div>
-            <h2 id="rotation-heading">Upcoming Rotation Days</h2>
-            <p class="section-note">
-              Shows the next ten school markers from the RHS rotation calendar, including minimum
-              days, exams, and closures.
-            </p>
+        <section class="section" id="rotation" aria-labelledby="rotation-heading">
+          <div class="section-heading">
+            <div>
+              <h2 id="rotation-heading">Upcoming Rotation Days</h2>
+              <p class="section-note">
+                Shows the next ten school markers from the RHS rotation calendar, including minimum
+                days, exams, and closures.
+              </p>
+            </div>
           </div>
-        </div>
-        <ul class="rotation-list" id="rotationList"></ul>
-      </section>
+          <ul class="rotation-list" id="rotationList"></ul>
+        </section>
+      </div>
 
       <section class="section" id="downloads" aria-labelledby="downloads-heading">
         <div class="section-heading">
