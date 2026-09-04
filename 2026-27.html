@@ -282,6 +282,8 @@
       .hero-snapshot .status-card {
         display: grid;
         align-content: center;
+        justify-items: center;
+        text-align: center;
       }
 
       .totals-grid {
@@ -1241,7 +1243,9 @@
           ? formatCalendarLabel(nextRotation.label)
           : "No upcoming rotation day";
         document.getElementById("nextSpecial").textContent = nextSpecial
-          ? `${formatDate(nextSpecial.time)} - ${formatCalendarLabel(nextSpecial.label)}`
+          ? isClosedDay(nextSpecial)
+            ? formatDate(nextSpecial.time)
+            : `${formatDate(nextSpecial.time)} - ${formatCalendarLabel(nextSpecial.label)}`
           : "No upcoming special day";
       }
 
