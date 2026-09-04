@@ -229,8 +229,34 @@
         line-height: 1.55;
       }
 
+      .section-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .absences-status {
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 800;
+      }
+
+      .absences-source {
+        color: var(--maroon);
+        font-size: 0.86rem;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .absences-source:hover {
+        text-decoration: underline;
+      }
+
       .status-grid,
       .totals-grid,
+      .absences-grid,
       .rotation-total-grid {
         display: grid;
         gap: 0.8rem;
@@ -249,8 +275,13 @@
         margin-top: 1rem;
       }
 
+      .absences-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
       .status-card,
       .total-card,
+      .absence-card,
       .download-card,
       .milestone-card {
         border: 1px solid var(--line);
@@ -260,7 +291,8 @@
       }
 
       .status-card,
-      .total-card {
+      .total-card,
+      .absence-card {
         padding: 1rem;
       }
 
@@ -293,6 +325,64 @@
       .total-value {
         font-size: clamp(1.9rem, 4vw, 2.8rem);
         line-height: 1;
+      }
+
+      .absence-name {
+        color: var(--ink);
+        font-weight: 950;
+        line-height: 1.25;
+      }
+
+      .absence-summary {
+        margin-top: 0.25rem;
+        color: var(--maroon);
+        font-size: 0.86rem;
+        font-weight: 850;
+      }
+
+      .absence-details {
+        display: grid;
+        gap: 0.45rem;
+        margin-top: 0.75rem;
+      }
+
+      .absence-detail {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.45rem 0.55rem;
+        border-radius: 7px;
+        background: var(--soft);
+        color: var(--ink);
+        font-size: 0.84rem;
+        font-weight: 800;
+      }
+
+      .absence-detail-label {
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 950;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .absence-empty,
+      .absence-error {
+        padding: 1rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--muted);
+        font-weight: 800;
+        line-height: 1.4;
+      }
+
+      .absence-error {
+        border-color: #f0c08f;
+        background: #fff8eb;
+        color: #8a3a0a;
       }
 
       .rotation-list {
@@ -439,6 +529,7 @@
         .download-grid,
         .milestone-grid,
         .status-grid,
+        .absences-grid,
         .totals-grid,
         .rotation-total-grid {
           grid-template-columns: 1fr;
@@ -480,6 +571,7 @@
       <a href="index.html">RHS Countdown</a>
       <nav aria-label="Page links">
         <a href="#totals">Totals</a>
+        <a href="#absences">Absences</a>
         <a href="#rotation">Rotation</a>
         <a href="#downloads">PDFs</a>
         <a href="#milestones">Milestones</a>
@@ -595,6 +687,21 @@
             <p class="total-label">4 Day Left</p>
             <p class="total-value" id="day4Left">0</p>
           </article>
+        </div>
+      </section>
+
+      <section class="section" id="absences" aria-labelledby="absences-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="absences-heading">Today's Absences</h2>
+            <p class="absences-status" id="absencesStatus">Loading from RHS...</p>
+          </div>
+          <div class="section-actions">
+            <a class="absences-source" href="https://app.ridgewood.k12.nj.us/" target="_blank" rel="noopener">Open RHS App</a>
+          </div>
+        </div>
+        <div id="absencesList">
+          <div class="absence-empty">Checking today&apos;s absence list...</div>
         </div>
       </section>
 
@@ -941,6 +1048,8 @@
         time: new Date(`${date}T08:00:00`),
       }));
 
+      const absencesSnapshotUrl = "absences.json";
+
       const dateFormatter = new Intl.DateTimeFormat("en-US", {
         weekday: "short",
         month: "short",
@@ -952,12 +1061,84 @@
         return dateFormatter.format(date);
       }
 
+      function formatAbsenceSourceDate(date = new Date()) {
+        return date.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
       function isRotationDay(item) {
         return /^Day [1-4]$/.test(item.label);
       }
 
       function formatCalendarLabel(label) {
-        return label.replace(/\bDay ([1-4])\b/g, "$1 Day");
+        return String(label).replace(/\bDay ([1-4])\b/g, "$1 Day");
+      }
+
+      function cleanText(text) {
+        return String(text).replace(/\s+/g, " ").trim();
+      }
+
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, (character) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[character]));
+      }
+
+      function getLastNameSortKey(name) {
+        const cleanedName = cleanText(name).replace(/\([^)]*\)/g, "");
+        const commaName = cleanedName.split(",")[0].trim();
+
+        if (commaName && commaName !== cleanedName) {
+          return commaName.toLocaleLowerCase();
+        }
+
+        const nameParts = cleanedName.split(/\s+/).filter(Boolean);
+        return (nameParts[nameParts.length - 1] || cleanedName).toLocaleLowerCase();
+      }
+
+      function sortAbsencesByLastName(absences) {
+        return [...absences].sort((first, second) => {
+          const lastNameComparison = getLastNameSortKey(first.name).localeCompare(getLastNameSortKey(second.name));
+          return lastNameComparison || String(first.name).localeCompare(String(second.name));
+        });
+      }
+
+      function normalizeAbsenceDateLabel(value) {
+        const dateText = cleanText(value);
+        const dateMatch = dateText.match(/^([A-Za-z]+)\s+0?(\d{1,2}),\s+(\d{4})$/);
+
+        if (!dateMatch) {
+          return "";
+        }
+
+        const monthLookup = {
+          jan: 0,
+          feb: 1,
+          mar: 2,
+          apr: 3,
+          may: 4,
+          jun: 5,
+          jul: 6,
+          aug: 7,
+          sep: 8,
+          oct: 9,
+          nov: 10,
+          dec: 11,
+        };
+        const monthIndex = monthLookup[dateMatch[1].slice(0, 3).toLowerCase()];
+
+        if (monthIndex === undefined) {
+          return "";
+        }
+
+        return formatAbsenceSourceDate(new Date(Number(dateMatch[3]), monthIndex, Number(dateMatch[2])));
       }
 
       function isStudentDay(item) {
@@ -1119,12 +1300,91 @@
           });
       }
 
+      function normalizePublishedAbsences(data) {
+        if (!data || !Array.isArray(data.absences)) {
+          throw new Error("Invalid absence snapshot");
+        }
+
+        const sourceDate = normalizeAbsenceDateLabel(data.updatedFor || "");
+        const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
+
+        return {
+          absences: data.absences,
+          sourceDate,
+          hasNoAbsences: Boolean(data.hasNoAbsences),
+          isStale: Boolean(sourceDate && sourceDate !== expectedDate),
+        };
+      }
+
+      function renderAbsences(absences, sourceDate = "", isStale = false) {
+        const status = document.getElementById("absencesStatus");
+        const list = document.getElementById("absencesList");
+
+        status.textContent = sourceDate
+          ? `${isStale ? "Last snapshot from" : "Updated for"} ${sourceDate}`
+          : "Updated from RHS";
+
+        if (!absences.length) {
+          list.className = "";
+          list.innerHTML = isStale
+            ? '<div class="absence-error">The scheduled absence snapshot has not updated for today yet. Use the RHS App link above for the current list.</div>'
+            : '<div class="absence-empty">No absences listed for today.</div>';
+          return;
+        }
+
+        list.className = "absences-grid";
+        list.innerHTML = sortAbsencesByLastName(absences).map((absence) => {
+          const details = Array.isArray(absence.details) ? absence.details : [];
+
+          return `
+            <article class="absence-card">
+              <div class="absence-name">${escapeHTML(absence.name)}</div>
+              ${absence.summary ? `<div class="absence-summary">${escapeHTML(absence.summary)}</div>` : ""}
+              ${details.length ? `
+                <div class="absence-details">
+                  ${details.map((detail) => `
+                    <div class="absence-detail">
+                      <span class="absence-detail-label">${escapeHTML(detail.label || "Assignment")}</span>
+                      <span>${escapeHTML(detail.value || "")}</span>
+                    </div>
+                  `).join("")}
+                </div>
+              ` : ""}
+            </article>
+          `;
+        }).join("");
+      }
+
+      async function loadAbsences() {
+        const status = document.getElementById("absencesStatus");
+        const list = document.getElementById("absencesList");
+
+        try {
+          const response = await fetch(`${absencesSnapshotUrl}?_=${Date.now()}`, { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Absence snapshot fetch failed");
+          }
+
+          const snapshotData = normalizePublishedAbsences(await response.json());
+          renderAbsences(snapshotData.absences, snapshotData.sourceDate, snapshotData.isStale);
+        } catch (error) {
+          status.textContent = "Could not load RHS App absences";
+          list.className = "";
+          list.innerHTML = `
+            <div class="absence-error">
+              The scheduled absence snapshot could not be loaded right now. Use the RHS App link above to check the current list.
+            </div>
+          `;
+        }
+      }
+
       function renderAll() {
         renderCountdown();
         renderSnapshot();
         renderTotals();
         renderRotationList();
         renderMilestones();
+        loadAbsences();
       }
 
       renderAll();
