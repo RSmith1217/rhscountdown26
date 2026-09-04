@@ -1,20 +1,26 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "September 3, 2026",
-  "updatedAt": "2026-09-03T20:55:22Z",
+  "updatedFor": "September 4, 2026",
+  "updatedAt": "2026-09-04T14:14:24Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "C. Richards",
-      "summary": "1, 5 ONLY, Report to 4 and 8",
+      "name": "M. Maksimov",
+      "summary": "Per 6 ONLY",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 5 ONLY"
-        },
+          "value": "Per 6 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "M. Pounds",
+      "summary": "",
+      "details": [
         {
-          "label": "Report to",
-          "value": "4 and 8"
+          "label": "Online Assignment",
+          "value": "All Periods"
         }
       ]
     }
