@@ -73,7 +73,7 @@
 
       .hero {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+        grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.18fr);
         gap: clamp(1.4rem, 4vw, 3rem);
         align-items: center;
         max-width: 1160px;
@@ -99,15 +99,6 @@
         letter-spacing: 0;
       }
 
-      .lede {
-        max-width: 680px;
-        margin: 1.1rem 0 0;
-        color: var(--muted);
-        font-size: clamp(1.02rem, 2vw, 1.25rem);
-        line-height: 1.55;
-      }
-
-      .hero-actions,
       .download-actions {
         display: flex;
         flex-wrap: wrap;
@@ -132,6 +123,18 @@
       .button.secondary {
         color: var(--maroon);
         background: #fff;
+      }
+
+      .hero-dashboard {
+        display: grid;
+        grid-template-columns: minmax(280px, 1.12fr) minmax(210px, 0.88fr);
+        gap: 0.9rem;
+        align-items: stretch;
+      }
+
+      .hero-snapshot {
+        display: grid;
+        gap: 0.75rem;
       }
 
       .countdown-panel {
@@ -278,6 +281,11 @@
 
       .status-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-snapshot .status-card {
+        display: grid;
+        align-content: center;
       }
 
       .totals-grid {
@@ -543,6 +551,7 @@
 
       @media (max-width: 860px) {
         .hero,
+        .hero-dashboard,
         .daily-grid,
         .download-grid,
         .milestone-grid,
@@ -600,52 +609,36 @@
     <section class="hero">
       <div>
         <h1>RHS Countdown 2026-27</h1>
-        <p class="lede">
-          A live school-year countdown built from the 2026-27 RHS rotation calendar and the
-          revised district school calendar. It tracks the last student day, upcoming rotation
-          days, exams, breaks, graduation, and end-of-year dates.
-        </p>
-        <div class="hero-actions">
-          <a class="button" href="#rotation">See Upcoming Days</a>
-          <a class="button secondary" href="#downloads">Download Calendars</a>
-        </div>
       </div>
 
-      <aside class="countdown-panel" aria-live="polite">
-        <div class="panel-heading">
-          <h2>Countdown</h2>
-          <p class="target-name" id="targetName">Loading last student day...</p>
-        </div>
-        <div class="timer-grid" aria-label="Time remaining">
-          <div class="timer-cell">
-            <span class="timer-value" id="days">0</span>
-            <span class="timer-label">Days</span>
+      <div class="hero-dashboard">
+        <aside class="countdown-panel" aria-live="polite">
+          <div class="panel-heading">
+            <h2>End-of-Year Countdown</h2>
+            <p class="target-name" id="targetName">Loading last student day...</p>
           </div>
-          <div class="timer-cell">
-            <span class="timer-value" id="hours">0</span>
-            <span class="timer-label">Hours</span>
+          <div class="timer-grid" aria-label="Time remaining">
+            <div class="timer-cell">
+              <span class="timer-value" id="days">0</span>
+              <span class="timer-label">Days</span>
+            </div>
+            <div class="timer-cell">
+              <span class="timer-value" id="hours">0</span>
+              <span class="timer-label">Hours</span>
+            </div>
+            <div class="timer-cell">
+              <span class="timer-value" id="minutes">0</span>
+              <span class="timer-label">Minutes</span>
+            </div>
+            <div class="timer-cell">
+              <span class="timer-value" id="seconds">0</span>
+              <span class="timer-label">Seconds</span>
+            </div>
           </div>
-          <div class="timer-cell">
-            <span class="timer-value" id="minutes">0</span>
-            <span class="timer-label">Minutes</span>
-          </div>
-          <div class="timer-cell">
-            <span class="timer-value" id="seconds">0</span>
-            <span class="timer-label">Seconds</span>
-          </div>
-        </div>
-        <p class="today-line" id="todayLine">Checking today's schedule...</p>
-      </aside>
-    </section>
+          <p class="today-line" id="todayLine">Checking today's schedule...</p>
+        </aside>
 
-    <main>
-      <section class="section" aria-labelledby="snapshot-heading">
-        <div class="section-heading">
-          <div>
-            <h2 id="snapshot-heading">Current Snapshot</h2>
-          </div>
-        </div>
-        <div class="status-grid">
+        <div class="hero-snapshot" aria-label="Current Snapshot">
           <div class="status-card">
             <p class="status-label">Next School Day</p>
             <p class="status-value" id="nextSchoolDay">Loading...</p>
@@ -659,8 +652,10 @@
             <p class="status-value" id="nextSpecial">Loading...</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
+    <main>
       <section class="section" id="totals" aria-labelledby="totals-heading">
         <div class="section-heading">
           <div>
