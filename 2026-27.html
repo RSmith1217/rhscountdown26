@@ -352,6 +352,7 @@
         color: var(--maroon);
         font-size: 0.86rem;
         font-weight: 850;
+        min-height: 1.2em;
       }
 
       .absence-details {
@@ -1359,7 +1360,7 @@
           return `
             <article class="absence-card">
               <div class="absence-name">${escapeHTML(absence.name)}</div>
-              ${absence.summary ? `<div class="absence-summary">${escapeHTML(absence.summary)}</div>` : ""}
+              <div class="absence-summary">${absence.summary ? escapeHTML(absence.summary) : "&nbsp;"}</div>
               ${details.length ? `
                 <div class="absence-details">
                   ${details.map((detail) => `
