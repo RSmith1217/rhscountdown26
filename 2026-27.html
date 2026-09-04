@@ -581,19 +581,19 @@
         </div>
         <div class="rotation-total-grid" aria-label="Remaining rotation day totals">
           <article class="total-card">
-            <p class="total-label">Day 1 Left</p>
+            <p class="total-label">1 Day Left</p>
             <p class="total-value" id="day1Left">0</p>
           </article>
           <article class="total-card">
-            <p class="total-label">Day 2 Left</p>
+            <p class="total-label">2 Day Left</p>
             <p class="total-value" id="day2Left">0</p>
           </article>
           <article class="total-card">
-            <p class="total-label">Day 3 Left</p>
+            <p class="total-label">3 Day Left</p>
             <p class="total-value" id="day3Left">0</p>
           </article>
           <article class="total-card">
-            <p class="total-label">Day 4 Left</p>
+            <p class="total-label">4 Day Left</p>
             <p class="total-value" id="day4Left">0</p>
           </article>
         </div>
@@ -957,6 +957,10 @@
         return /^Day [1-4]$/.test(item.label);
       }
 
+      function formatCalendarLabel(label) {
+        return label.replace(/\bDay ([1-4])\b/g, "$1 Day");
+      }
+
       function isStudentDay(item) {
         return (
           isRotationDay(item) ||
@@ -1026,7 +1030,7 @@
 
         const today = findToday(now);
         const todayText = today
-          ? `Today: ${today.label}${today.note ? ` - ${today.note}` : ""}`
+          ? `Today: ${formatCalendarLabel(today.label)}${today.note ? ` - ${formatCalendarLabel(today.note)}` : ""}`
           : "Today is not listed as a school calendar marker.";
         document.getElementById("todayLine").textContent = todayText;
       }
@@ -1045,10 +1049,10 @@
           ? formatDate(nextSchoolDay.time)
           : "School year complete";
         document.getElementById("nextRotation").textContent = nextRotation
-          ? nextRotation.label
+          ? formatCalendarLabel(nextRotation.label)
           : "No upcoming rotation day";
         document.getElementById("nextSpecial").textContent = nextSpecial
-          ? `${formatDate(nextSpecial.time)} - ${nextSpecial.label}`
+          ? `${formatDate(nextSpecial.time)} - ${formatCalendarLabel(nextSpecial.label)}`
           : "No upcoming special day";
       }
 
@@ -1089,7 +1093,7 @@
 
           const badge = document.createElement("span");
           badge.className = `badge${isRotationDay(item) ? "" : " no-rotation"}`;
-          badge.textContent = item.label;
+          badge.textContent = formatCalendarLabel(item.label);
 
           li.append(date, note, badge);
           list.appendChild(li);
@@ -1110,7 +1114,7 @@
             article.innerHTML = `
               <h3>${item.title}</h3>
               <p><strong>${formatDate(item.time)}</strong></p>
-              <p>${item.detail}</p>
+              <p>${formatCalendarLabel(item.detail)}</p>
             `;
             grid.appendChild(article);
           });
