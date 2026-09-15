@@ -1,16 +1,46 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "",
-  "updatedAt": "2026-09-14T20:22:25Z",
+  "updatedAt": "2026-09-15T14:53:11Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "D. Dalby",
-      "summary": "1 and 3 ONLY",
+      "name": "K. Gallagher",
+      "summary": "PM ONLY - 6 and 8 ONLY",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1 and 3 ONLY"
+          "value": "6 and 8 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "C. Bunzey",
+      "summary": "PM ONLY - 5, 6 and 8 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5, 6 and 8 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "A. Cuellar",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "J. Citko",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
         }
       ]
     }
