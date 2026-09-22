@@ -1,7 +1,66 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "",
-  "updatedAt": "2026-09-21T20:29:56Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedAt": "2026-09-22T14:41:38Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "L. Weinstein Period 5 ONLY, Report to 2, 8, 6",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5 ONLY"
+        },
+        {
+          "label": "Report to Class",
+          "value": "2, 8, 6"
+        }
+      ]
+    },
+    {
+      "name": "C. Mitchell 2, 5, 6 ONLY. Report to 4 and 8",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 5, 6 ONLY"
+        },
+        {
+          "label": "Report to Class",
+          "value": "4, 8"
+        }
+      ]
+    },
+    {
+      "name": "B. VanHise 1, 2, 8, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2, 8, 6 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "L. Valenti Period 1, 2, 5 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2, 5"
+        }
+      ]
+    },
+    {
+      "name": "H. Donovan Period 2, 8, 5 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 8, 5"
+        }
+      ]
+    }
+  ]
 }
