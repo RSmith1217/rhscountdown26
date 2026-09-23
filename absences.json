@@ -1,64 +1,50 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "",
-  "updatedAt": "2026-09-22T21:31:14Z",
+  "updatedAt": "2026-09-23T14:54:17Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "L. Weinstein Period 5 ONLY, Report to 2, 8, 6",
+      "name": "L. Rosenfeld Report To 1, 4",
+      "summary": "",
+      "details": [
+        {
+          "label": "Report to",
+          "value": "1, 4"
+        }
+      ]
+    },
+    {
+      "name": "R. Pearson Pd. 5 Only, Report to 3, 7",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "5 ONLY"
+          "value": "5"
         },
         {
-          "label": "Report to Class",
-          "value": "2, 8, 6"
+          "label": "Report To",
+          "value": "3, 7"
         }
       ]
     },
     {
-      "name": "C. Mitchell 2, 5, 6 ONLY. Report to 4 and 8",
+      "name": "A. Cuellar Pd. 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 5, 6 ONLY"
-        },
-        {
-          "label": "Report to Class",
-          "value": "4, 8"
+          "value": "8"
         }
       ]
     },
     {
-      "name": "B. VanHise 1, 2, 8, 6 ONLY",
+      "name": "K. Mendez Pd. 7, 5 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 2, 8, 6 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "L. Valenti Period 1, 2, 5 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "1, 2, 5"
-        }
-      ]
-    },
-    {
-      "name": "H. Donovan Period 2, 8, 5 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2, 8, 5"
+          "value": "7, 5"
         }
       ]
     }
