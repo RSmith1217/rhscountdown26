@@ -1,7 +1,7 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "",
-  "updatedAt": "2026-09-24T14:55:21Z",
+  "updatedAt": "2026-09-24T18:57:58Z",
   "hasNoAbsences": false,
   "absences": [
     {
@@ -61,22 +61,12 @@
       ]
     },
     {
-      "name": "C. Delgado Pd. 7, 8 ONLY",
+      "name": "A. Saladino Pd 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "7, 8"
-        }
-      ]
-    },
-    {
-      "name": "N. Makhlouf Pd. 6, 7, 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "6, 7, 8"
+          "value": "8"
         }
       ]
     },
@@ -91,11 +81,31 @@
       ]
     },
     {
-      "name": "A. Saladino Pd 8 ONLY",
+      "name": "N. Makhlouf Pd. 6, 7, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
+          "value": "6, 7, 8"
+        }
+      ]
+    },
+    {
+      "name": "C. Delgado Pd. 7, 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7, 8"
+        }
+      ]
+    },
+    {
+      "name": "G. Bunzey Pd 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Released",
           "value": "8"
         }
       ]
