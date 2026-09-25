@@ -1,30 +1,88 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "",
-  "updatedAt": "2026-09-24T22:14:17Z",
+  "updatedAt": "2026-09-25T15:09:40Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "E. Karan 2, 6 ONLY. Report to 4,8",
+      "name": "B. Quirk Pd. 2, 5, 7",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 6"
-        },
-        {
-          "label": "Report to 4,8",
-          "value": ""
+          "value": "2, 5, 7"
         }
       ]
     },
     {
-      "name": "L. Lauro Pd. 2, 3, 8 ONLY. Report to 6",
+      "name": "B. DeSousa Pd. 3, 5, 7",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 3, 8"
+          "value": "3, 5, 7"
+        }
+      ]
+    },
+    {
+      "name": "R. Zakowski Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        },
+        {
+          "label": "Report to",
+          "value": "2, 6"
+        }
+      ]
+    },
+    {
+      "name": "Y. Hassan Pd. 2, 3, ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 3"
+        },
+        {
+          "label": "Report To",
+          "value": "1, 6, 7"
+        }
+      ]
+    },
+    {
+      "name": "L. Besser Pd. 2 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2"
+        },
+        {
+          "label": "Report to",
+          "value": "5, 6"
+        }
+      ]
+    },
+    {
+      "name": "E. Carollo Pd. 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6, 7"
+        }
+      ]
+    },
+    {
+      "name": "D. Muro Pd. 2, 3, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 3, 7"
         },
         {
           "label": "Report to",
@@ -33,90 +91,22 @@
       ]
     },
     {
-      "name": "Y. Hassan Pd. 2 ONLY. Report to 4, 6, 7",
+      "name": "J. Mirkovich Pd. 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2"
-        },
-        {
-          "label": "Report to",
-          "value": "4, 6, 7"
+          "value": "7"
         }
       ]
     },
     {
-      "name": "L. Besser Pd. 2 ONLY. Report to 4, 6, 8",
+      "name": "L. Lauro Pd. 1, 2, 3 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2"
-        },
-        {
-          "label": "Report to",
-          "value": "4, 6, 8"
-        }
-      ]
-    },
-    {
-      "name": "A. Saladino Pd 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "8"
-        }
-      ]
-    },
-    {
-      "name": "J. Gyulay Pd. 2, 3, 4, 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2, 3, 4, 8"
-        }
-      ]
-    },
-    {
-      "name": "N. Makhlouf Pd. 6, 7, 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "6, 7, 8"
-        }
-      ]
-    },
-    {
-      "name": "C. Delgado Pd. 7, 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "7, 8"
-        }
-      ]
-    },
-    {
-      "name": "G. Bunzey Pd 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Released",
-          "value": "8"
-        }
-      ]
-    },
-    {
-      "name": "B. VanHise Pd. 2, 3, 6, 8 ONLY.",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2, 3, 6, 8."
+          "value": "1, 2, 3"
         }
       ]
     }
