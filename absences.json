@@ -1,31 +1,11 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "",
-  "updatedAt": "2026-10-05T19:13:48Z",
+  "updatedAt": "2026-10-06T16:40:34Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "K. Rehan Pd. 3, 1, 7, ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 1, 7"
-        }
-      ]
-    },
-    {
-      "name": "M. Hoogerhyde Pd. 3, 4, 1 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 4, 1"
-        }
-      ]
-    },
-    {
-      "name": "A. Cuellar Pd. 8 ONLY",
+      "name": "C. Bunzey Pd. 8 ONLY",
       "summary": "",
       "details": [
         {
@@ -35,92 +15,32 @@
       ]
     },
     {
-      "name": "G. Stewart Pd. 3, 4, 8, 5 ONLY",
+      "name": "E. Karten Pd. 3, 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 8, 5"
+          "value": "3, 6"
         }
       ]
     },
     {
-      "name": "J. Gyulay Pd. 3, 4, 8, 5, ONLY",
+      "name": "L. Valenti Pd. 2, 3, 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 8, 5"
+          "value": "2, 3, 7"
         }
       ]
     },
     {
-      "name": "N. Riordan Pd. 4, 1, 7, 8, 5 ONLY",
+      "name": "A. Joseph Pd. 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4, 1, 7, 8, 5"
-        }
-      ]
-    },
-    {
-      "name": "P. Cronk Pd. 4, 1, 5 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "4, 1, 5"
-        }
-      ]
-    },
-    {
-      "name": "L. Lauro Pd. 3, 1, 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 1, 8"
-        }
-      ]
-    },
-    {
-      "name": "A. Mende Pd. 3, 4, 8, 5 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 4, 8, 5"
-        }
-      ]
-    },
-    {
-      "name": "K. Gallagher Pd. 4, 7, 8 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "4, 7, 8"
-        }
-      ]
-    },
-    {
-      "name": "K. Aromondo Pd. 1 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "1"
-        }
-      ]
-    },
-    {
-      "name": "M. Richardson Pd. 3, 1, 7, 8, 5 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 1, 7, 8, 5"
+          "value": "6"
         }
       ]
     }
