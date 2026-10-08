@@ -1585,6 +1585,10 @@
     }
 
     function parseSourceDate(doc) {
+      const selectedDate = doc.querySelector("#datePicker")?.getAttribute("value");
+      if (/^\d{4}-\d{2}-\d{2}$/.test(selectedDate || "")) {
+        return formatAbsenceSourceDate(new Date(`${selectedDate}T12:00:00`));
+      }
       const todayBar = Array.from(doc.querySelectorAll(".flexsubbar"))
         .map((item) => cleanAbsenceText(item.textContent))
         .find((text) => text.includes("Today -"));
@@ -1680,9 +1684,9 @@
 
       status.textContent = sourceDate
         ? `${isStale ? "Last snapshot from" : "Updated for"} ${sourceDate}`
-        : "Updated from RHS";
+        : "Snapshot date unavailable";
 
-      if (!absences.length) {
+      if (isStale || !absences.length) {
         list.className = "";
         list.innerHTML = isStale
           ? '<div class="absence-error">The scheduled absence snapshot has not updated for today yet. Use the RHS App link above for the current list.</div>'
@@ -1728,13 +1732,13 @@
       }
 
       const sourceDate = normalizeAbsenceDateLabel(data.updatedFor || "");
-      const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
+      const expectedDate = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York", month: "long", day: "numeric", year: "numeric" });
 
       return {
         absences: data.absences,
         sourceDate,
         hasNoAbsences: Boolean(data.hasNoAbsences),
-        isStale: Boolean(sourceDate && sourceDate !== expectedDate)
+        isStale: sourceDate !== expectedDate
       };
     }
 
@@ -1745,7 +1749,7 @@
     }
 
     async function fetchAbsences() {
-      const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
+      const expectedDate = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York", month: "long", day: "numeric", year: "numeric" });
       const sameDaySources = [];
 
       for (const source of getAbsenceSources()) {
@@ -1754,7 +1758,7 @@
           const sourceDate = getAbsenceSourceDate(response);
           const normalizedSourceDate = normalizeAbsenceDateLabel(sourceDate);
 
-          if (normalizedSourceDate && normalizedSourceDate !== expectedDate) {
+          if (normalizedSourceDate !== expectedDate) {
             throw new Error("Stale absence source");
           }
 
@@ -2032,6 +2036,7 @@
     highlightTodayPeriodOrder(today);
     setupCountTodayToggle(today);
     loadAbsences();
+    setInterval(loadAbsences, 5 * 60 * 1000);
   </script>
   <!-- Cloudflare Web Analytics -->
   <script

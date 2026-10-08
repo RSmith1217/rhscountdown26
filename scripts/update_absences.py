@@ -11,6 +11,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.error import URLError
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 SOURCE_URL = "https://app.ridgewood.k12.nj.us/"
@@ -52,6 +53,7 @@ class RHSAbsenceParser(HTMLParser):
         super().__init__()
         self.stack: list[dict[str, object]] = []
         self.today_bars: list[str] = []
+        self.selected_date = ""
         self.absences: list[dict[str, object]] = []
         self.no_absences_today = False
 
@@ -67,6 +69,10 @@ class RHSAbsenceParser(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attr_map = {key: value or "" for key, value in attrs}
         classes = set(attr_map.get("class", "").split())
+        if tag == "input" and attr_map.get("id") == "datePicker":
+            self.selected_date = attr_map.get("value", "")
+        if tag in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
+            return
         frame = {
             "tag": tag,
             "today": False,
@@ -169,6 +175,9 @@ class RHSAbsenceParser(HTMLParser):
 
     @property
     def source_date(self) -> str:
+        if self.selected_date:
+            date = datetime.strptime(self.selected_date, "%Y-%m-%d")
+            return f"{date.strftime('%B')} {date.day}, {date.year}"
         today_bar = next((text for text in self.today_bars if "Today -" in text), "")
         if not today_bar:
             return ""
@@ -177,8 +186,9 @@ class RHSAbsenceParser(HTMLParser):
 
 def fetch_rhs_app() -> str:
     request = Request(
-        SOURCE_URL,
+        f"{SOURCE_URL}?viewDate={datetime.now(ZoneInfo('America/New_York')).date().isoformat()}&_={int(datetime.now(timezone.utc).timestamp())}",
         headers={
+            "Cache-Control": "no-cache",
             "User-Agent": "Mozilla/5.0 (compatible; RHSCountdownAbsenceUpdater/1.0)",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         },
@@ -191,6 +201,11 @@ def fetch_rhs_app() -> str:
 def build_payload(html: str) -> dict[str, object]:
     parser = RHSAbsenceParser()
     parser.feed(html)
+
+    if not parser.source_date:
+        raise ValueError("RHS App did not provide a source date")
+    if not parser.absences and not parser.no_absences_today:
+        raise ValueError("RHS App did not provide a reliable absence list")
 
     return {
         "source": SOURCE_URL,
@@ -205,7 +220,7 @@ def main() -> int:
     try:
         html = fetch_rhs_app()
         payload = build_payload(html)
-    except (OSError, URLError) as error:
+    except (OSError, URLError, ValueError) as error:
         print(f"Could not fetch RHS App: {error}", file=sys.stderr)
         return 1
 

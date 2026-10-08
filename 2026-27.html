@@ -1319,13 +1319,13 @@
         }
 
         const sourceDate = normalizeAbsenceDateLabel(data.updatedFor || "");
-        const expectedDate = normalizeAbsenceDateLabel(formatAbsenceSourceDate());
+        const expectedDate = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York", month: "long", day: "numeric", year: "numeric" });
 
         return {
           absences: data.absences,
           sourceDate,
           hasNoAbsences: Boolean(data.hasNoAbsences),
-          isStale: Boolean(sourceDate && sourceDate !== expectedDate),
+          isStale: sourceDate !== expectedDate,
         };
       }
 
@@ -1335,9 +1335,9 @@
 
         status.textContent = sourceDate
           ? `${isStale ? "Last snapshot from" : "Updated for"} ${sourceDate}`
-          : "Updated from RHS";
+          : "Snapshot date unavailable";
 
-        if (!absences.length) {
+        if (isStale || !absences.length) {
           list.className = "";
           list.innerHTML = isStale
             ? '<div class="absence-error">The scheduled absence snapshot has not updated for today yet. Use the RHS App link above for the current list.</div>'
@@ -1402,6 +1402,7 @@
 
       renderAll();
       setInterval(renderCountdown, 1000);
+      setInterval(loadAbsences, 5 * 60 * 1000);
     </script>
     <!-- Cloudflare Web Analytics -->
     <script
