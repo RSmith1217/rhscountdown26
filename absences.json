@@ -1,76 +1,86 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 8, 2026",
-  "updatedAt": "2026-10-08T22:15:58Z",
+  "updatedFor": "October 9, 2026",
+  "updatedAt": "2026-10-09T16:56:53Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "C. Bunzey Pd. 1, 8, 5, 6 ONLY",
+      "name": "J. Citko Pd. 4 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 8, 5, 6"
+          "value": "4"
         }
       ]
     },
     {
-      "name": "S. Lynaugh Pd. 8 ONLY",
+      "name": "S. Cruz Pd. 3,4, 1, 5 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "8"
+          "value": "3, 4, 1, 5"
         }
       ]
     },
     {
-      "name": "C. DiBrita Pd. 2, 5, 6 ONLY",
+      "name": "J. Wohner Pd. 3, 4, 1, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 5, 6"
+          "value": "3, 4, 1, 8"
         }
       ]
     },
     {
-      "name": "P. Cronk Pd. 4, 1, 2, 5, 6 ONLY",
+      "name": "K. Pinches Pd. 4 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4, 1, 2, 5, 6"
+          "value": "4"
         }
       ]
     },
     {
-      "name": "M. McDermott Pd. 4, 1, 8, 6 ONLY",
+      "name": "M. McDermott Pd. 3, 4, 1 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4, 1, 8, 6"
+          "value": "3, 4, 1"
         }
       ]
     },
     {
-      "name": "K. Gallagher Pd. 4, 2, 8, 6 ONLY",
+      "name": "K. Gallagher Pd. 4, 7, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4, 2, 8, 6"
+          "value": "4, 7, 8"
         }
       ]
     },
     {
-      "name": "D. Liu Pd. 5 ONLY",
+      "name": "A. Policelli Pd. 3, 5 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "5"
+          "value": "3, 5"
+        }
+      ]
+    },
+    {
+      "name": "A. McCullough Pd. 3, 1, 7, 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3, 1, 7, 8"
         }
       ]
     }
