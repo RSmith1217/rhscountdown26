@@ -1,7 +1,108 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 12, 2026",
-  "updatedAt": "2026-10-12T19:45:33Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedFor": "October 13, 2026",
+  "updatedAt": "2026-10-13T12:31:08Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "M. Troy Pd. 4 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "name": "C. Cordasco Pd. 4 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "name": "D. Dalby Pd. 3, 4, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3, 4, 7"
+        }
+      ]
+    },
+    {
+      "name": "C. Delgado Pd. 2, 4, 7, 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 4, 7, 8"
+        }
+      ]
+    },
+    {
+      "name": "J. Greco Pd. 2, 3, 4, 7, 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 3, 4, 7,8"
+        }
+      ]
+    },
+    {
+      "name": "C. Anderson Pd. 2, 4, 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 4, 6, 7"
+        }
+      ]
+    },
+    {
+      "name": "D. Purrinos Pd. 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6, 7"
+        }
+      ]
+    },
+    {
+      "name": "C. Mitchell Pd. 2, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 6"
+        }
+      ]
+    },
+    {
+      "name": "S. Crowe Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "E. Karten Pd. 3, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3, 6"
+        }
+      ]
+    }
+  ]
 }
