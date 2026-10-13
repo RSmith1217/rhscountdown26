@@ -19,7 +19,9 @@ Self-contained GitHub Pages widget with:
 ## Absence Updates
 
 Teacher absences are written to `absences.json` by `.github/workflows/update-absences.yml`.
-The workflow runs every 5 minutes from 10:00-18:59 UTC on weekdays and can also be run manually from the GitHub Actions tab.
+Scheduled attempts run every 10 minutes from 7:03 AM through 8:53 AM in America/New_York, automatically following daylight saving time. Before contacting the RHS App, the workflow reads the student-day calendar in `2026-27.html` and skips holidays, weekends, PD-only days, and dates outside the listed school year. Exam and minimum days are included. Calendar changes (including emergency closures) must be reflected in that existing calendar.
+
+Manual runs from GitHub Actions bypass the calendar check for troubleshooting. Refresh jobs are serialized to avoid competing commits. GitHub scheduled jobs can still be delayed or dropped; this schedule is not an uptime guarantee. Skipped school days use a small workflow run but make no request to the RHS App.
 
 ## Deploy
 

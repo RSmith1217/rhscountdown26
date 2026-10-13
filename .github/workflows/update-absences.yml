@@ -3,10 +3,16 @@ name: Update RHS Absences
 on:
   workflow_dispatch:
   schedule:
-    - cron: "3,8,13,18,23,28,33,38,43,48,53,58 10-18 * * 1-5"
+    # Twelve morning attempts, offset from the busy top of the hour.
+    - cron: "3,13,23,33,43,53 7-8 * * 1-5"
+      timezone: "America/New_York"
 
 permissions:
   contents: write
+
+concurrency:
+  group: rhs-absence-refresh
+  cancel-in-progress: false
 
 jobs:
   update-absences:
@@ -21,10 +27,16 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Check the school calendar
+        id: calendar
+        run: python scripts/absence_schedule.py
+
       - name: Scrape RHS App absences
+        if: steps.calendar.outputs.refresh == 'true'
         run: python scripts/update_absences.py
 
       - name: Commit updated absence data
+        if: steps.calendar.outputs.refresh == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
