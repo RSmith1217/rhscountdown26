@@ -1,106 +1,86 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 13, 2026",
-  "updatedAt": "2026-10-13T19:34:55Z",
+  "updatedFor": "October 14, 2026",
+  "updatedAt": "2026-10-14T15:47:54Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "M. Troy Pd. 4 ONLY",
+      "name": "J. Greco Pd. 2, 3, 7",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4"
+          "value": "2, 3, 7"
         }
       ]
     },
     {
-      "name": "C. Cordasco Pd. 4 ONLY",
+      "name": "J. Citko Pd. 2, 6, 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4"
+          "value": "2, 6, 7"
         }
       ]
     },
     {
-      "name": "D. Dalby Pd. 3, 4, 7 ONLY",
+      "name": "R. Dawson Pd. 1, 2, 3, 5, 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 7"
+          "value": "1, 2, 3, 5, 7"
         }
       ]
     },
     {
-      "name": "C. Delgado Pd. 2, 4, 7, 8 ONLY",
+      "name": "T. Schreck Pd. 2, 3, 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 4, 7, 8"
+          "value": "2, 3, 6"
         }
       ]
     },
     {
-      "name": "J. Greco Pd. 2, 3, 4, 7, 8 ONLY",
+      "name": "K. Aromando Pd. 1 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 3, 4, 7,8"
+          "value": "1"
         }
       ]
     },
     {
-      "name": "C. Anderson Pd. 2, 4, 6, 7 ONLY",
+      "name": "C. DiBrita 5, 6, 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 4, 6, 7"
+          "value": "5, 6, 7"
         }
       ]
     },
     {
-      "name": "D. Purrinos Pd. 6, 7 ONLY",
+      "name": "C. Mitchell Pd. 2, 5, 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "6, 7"
+          "value": "2, 5, 6"
         }
       ]
     },
     {
-      "name": "C. Mitchell Pd. 2, 6 ONLY",
+      "name": "K. Mendez Pd. 2, 3 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 6"
-        }
-      ]
-    },
-    {
-      "name": "S. Crowe Pd. 7 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "7"
-        }
-      ]
-    },
-    {
-      "name": "E. Karten Pd. 3, 6 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3, 6"
+          "value": "2, 3"
         }
       ]
     }
