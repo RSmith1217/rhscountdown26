@@ -1,66 +1,76 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 15, 2026",
-  "updatedAt": "2026-10-15T15:33:44Z",
+  "updatedFor": "October 16, 2026",
+  "updatedAt": "2026-10-16T15:20:20Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "A. Scevola Pd. 1 ONLY",
+      "name": "A. Johnson Pd. 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1"
+          "value": "7"
         }
       ]
     },
     {
-      "name": "J. Greco Pd. 4, 2, 8 ONLY",
+      "name": "B. Quirk Pd. 8, 5 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4, 2, 8"
+          "value": "8, 5"
         }
       ]
     },
     {
-      "name": "M. Cheplic Pd. 1, 2, 5 ONLY",
+      "name": "M. McDermott Pd. 3, 4, 1, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 2, 5"
+          "value": "3, 4, 1, 8"
         }
       ]
     },
     {
-      "name": "S. Cruz Pd. 4, 1, 5, 6 ONLY",
+      "name": "J. Saladino Pd. 3, 1 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4, 1, 5, 6"
+          "value": "3, 1"
         }
       ]
     },
     {
-      "name": "D. Muro Pd. 2, 8 ONLY",
+      "name": "C. Cordasco Pd. 4 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 8"
+          "value": "4"
         }
       ]
     },
     {
-      "name": "E. Farrar Pd. 1, 2, 5 ONLY",
+      "name": "A. Cuellar Pd. 3, 4, 1, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 2, 5"
+          "value": "3, 4, 1, 8"
+        }
+      ]
+    },
+    {
+      "name": "J. Greco Pd. 7, 8, 5 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7, 8, 5"
         }
       ]
     }
