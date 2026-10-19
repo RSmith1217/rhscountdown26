@@ -1,76 +1,76 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 16, 2026",
-  "updatedAt": "2026-10-16T15:20:20Z",
+  "updatedFor": "October 19, 2026",
+  "updatedAt": "2026-10-19T17:25:31Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "A. Johnson Pd. 7 ONLY",
+      "name": "E. Carollo Pd. 2, 3, 4, 6, 7 ,8",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "7"
+          "value": "2, 3, 4, 6, 7 ,8"
         }
       ]
     },
     {
-      "name": "B. Quirk Pd. 8, 5 ONLY",
+      "name": "M. Maksimov Pd. 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "8, 5"
+          "value": "6"
         }
       ]
     },
     {
-      "name": "M. McDermott Pd. 3, 4, 1, 8 ONLY",
+      "name": "F. Giannantonio Pd. 6, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 1, 8"
+          "value": "6, 8"
         }
       ]
     },
     {
-      "name": "J. Saladino Pd. 3, 1 ONLY",
+      "name": "M. Richardson Pd. 3, 7, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 1"
+          "value": "3, 7, 8"
         }
       ]
     },
     {
-      "name": "C. Cordasco Pd. 4 ONLY",
+      "name": "M. Rotella Pd. 6, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "4"
+          "value": "6, 8"
         }
       ]
     },
     {
-      "name": "A. Cuellar Pd. 3, 4, 1, 8 ONLY",
+      "name": "K. Seavers Pd. 2, 4, 7, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 1, 8"
+          "value": "2, 4, 7, 8"
         }
       ]
     },
     {
-      "name": "J. Greco Pd. 7, 8, 5 ONLY",
+      "name": "F. LaFemina Pd. 2 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "7, 8, 5"
+          "value": "2"
         }
       ]
     }
