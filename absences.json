@@ -1,46 +1,96 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 22, 2026",
-  "updatedAt": "2026-10-22T15:51:16Z",
+  "updatedFor": "October 23, 2026",
+  "updatedAt": "2026-10-23T15:42:31Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "P. Thurlow Pd. 3, 4, 1 ONLY",
+      "name": "D. Muro Pd. 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 1"
+          "value": "8"
         }
       ]
     },
     {
-      "name": "S. Song Pd. 3, 4, 1, 8 ONLY",
+      "name": "T. Watson Pd. 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 4, 1, 8"
+          "value": "8"
         }
       ]
     },
     {
-      "name": "A. Ballas Pd. 8, 5 ONLY",
+      "name": "J. Greco Pd. 2, 3, 4, 7, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "8, 5"
+          "value": "2, 3, 4, 7, 8"
         }
       ]
     },
     {
-      "name": "L. Weinstein Pd. 5 ONLY",
+      "name": "L. Polk Pd. 3, 6, 8 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "5"
+          "value": "3, 6, 8 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "E. Walsh Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "D. Forgash Pd. 3 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "name": "D. Felano Pd. 4, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "4, 6"
+        }
+      ]
+    },
+    {
+      "name": "M. Berman Pd. 2, 4, 6, 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 4, 6, 8"
+        }
+      ]
+    },
+    {
+      "name": "A. Raiani Pd. 2, 4, 6, 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 4, 6, 8"
         }
       ]
     }
