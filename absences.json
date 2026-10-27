@@ -1,11 +1,31 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 26, 2026",
-  "updatedAt": "2026-10-26T17:16:02Z",
+  "updatedFor": "October 27, 2026",
+  "updatedAt": "2026-10-27T16:25:17Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "C. DeTora Pd. 2 ONLY",
+      "name": "C. DiBrita Pd. 2, 5, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 5, 6"
+        }
+      ]
+    },
+    {
+      "name": "K. Aromando Pd. 1, 2 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2"
+        }
+      ]
+    },
+    {
+      "name": "C. Contrares Pd. 2 ONLY",
       "summary": "",
       "details": [
         {
@@ -15,72 +35,22 @@
       ]
     },
     {
-      "name": "Y. Hassan Pd. 1, 2, 3 ONLY",
+      "name": "C. Bunzey Pd. 1, 8, 5, 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 2, 3"
+          "value": "1, 8, 5, 6"
         }
       ]
     },
     {
-      "name": "B. Witt Pd. 3, 5 ONLY",
+      "name": "P. Cronk Pd. 4, 1, 2, 5, 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "3, 5"
-        }
-      ]
-    },
-    {
-      "name": "M. Berman Pd. 2, 6, 7 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2, 6, 7"
-        }
-      ]
-    },
-    {
-      "name": "A. Raiani Pd. 2 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2"
-        }
-      ]
-    },
-    {
-      "name": "B. Lee Pd. 2 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2"
-        }
-      ]
-    },
-    {
-      "name": "D. Muro Pd. 2, 3, 7 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2, 3, 7"
-        }
-      ]
-    },
-    {
-      "name": "J. Saladino Pd. 1, 3, 5, 6 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "1, 3, 5 ,6"
+          "value": "4, 1, 2, 5, 6"
         }
       ]
     }
