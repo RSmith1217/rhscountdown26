@@ -1,56 +1,26 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 27, 2026",
-  "updatedAt": "2026-10-27T16:25:17Z",
+  "updatedFor": "October 28, 2026",
+  "updatedAt": "2026-10-28T14:24:23Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "C. DiBrita Pd. 2, 5, 6 ONLY",
+      "name": "S. Crowe Pd. 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 5, 6"
+          "value": "7"
         }
       ]
     },
     {
-      "name": "K. Aromando Pd. 1, 2 ONLY",
+      "name": "J. Wohner Pd. 8, 5 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "1, 2"
-        }
-      ]
-    },
-    {
-      "name": "C. Contrares Pd. 2 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "2"
-        }
-      ]
-    },
-    {
-      "name": "C. Bunzey Pd. 1, 8, 5, 6 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "1, 8, 5, 6"
-        }
-      ]
-    },
-    {
-      "name": "P. Cronk Pd. 4, 1, 2, 5, 6 ONLY",
-      "summary": "",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "4, 1, 2, 5, 6"
+          "value": "8, 5"
         }
       ]
     }
