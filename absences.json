@@ -1,7 +1,7 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "October 29, 2026",
-  "updatedAt": "2026-10-29T11:15:44Z",
+  "updatedAt": "2026-10-29T17:23:16Z",
   "hasNoAbsences": false,
   "absences": [
     {
@@ -21,6 +21,16 @@
         {
           "label": "Online Assignment",
           "value": "2, 3, 6, 8"
+        }
+      ]
+    },
+    {
+      "name": "C. Bunzey Pd. 8 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "8"
         }
       ]
     }
