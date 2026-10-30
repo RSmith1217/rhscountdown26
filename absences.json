@@ -1,36 +1,196 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "October 29, 2026",
-  "updatedAt": "2026-10-29T17:23:16Z",
+  "updatedFor": "October 30, 2026",
+  "updatedAt": "2026-10-30T13:49:32Z",
   "hasNoAbsences": false,
   "absences": [
     {
-      "name": "C. DeTora Pd. 2, 7 ONLY",
+      "name": "J. Greco Pd. 2, 3, 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 7"
+          "value": "2, 3, 7"
         }
       ]
     },
     {
-      "name": "M. Berman Pd. 2, 3, 6, 8 ONLY",
+      "name": "A. Cuellar Pd. 1, 3, 6 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "2, 3, 6, 8"
+          "value": "1, 3, 6"
         }
       ]
     },
     {
-      "name": "C. Bunzey Pd. 8 ONLY",
+      "name": "A. Raiani Pd. 6, 7 ONLY",
       "summary": "",
       "details": [
         {
           "label": "Online Assignment",
-          "value": "8"
+          "value": "6, 7"
+        }
+      ]
+    },
+    {
+      "name": "L. Valenti Pd. 1, 2, 3, 5, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2, 3, 5, 7"
+        }
+      ]
+    },
+    {
+      "name": "C. Delgado Pd. 5, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5, 7"
+        }
+      ]
+    },
+    {
+      "name": "K. Geronimo Pd. 5, 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5, 6, 7"
+        }
+      ]
+    },
+    {
+      "name": "A. Policelli Pd. 5, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5, 6"
+        }
+      ]
+    },
+    {
+      "name": "A. Scevola Pd. 1, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 7"
+        }
+      ]
+    },
+    {
+      "name": "A. McCullough Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "J. Saladino Pd. 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "name": "D. Muro Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "T. Watson Pd. 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "name": "S. Kase Pd. 1, 2, 5, 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2, 5, 6, 7"
+        }
+      ]
+    },
+    {
+      "name": "J. Citko Pd. 2, 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 6, 7"
+        }
+      ]
+    },
+    {
+      "name": "D. Purrinos Pd. 1, 2, 3, 6, 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 2, 3, 6, 7"
+        }
+      ]
+    },
+    {
+      "name": "J. Mirkovich Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "F. Giannantonio Pd. 5, 6 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "5, 6"
+        }
+      ]
+    },
+    {
+      "name": "B. Quirk Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "name": "D. Muro Pd. 7 ONLY",
+      "summary": "",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7"
         }
       ]
     }
