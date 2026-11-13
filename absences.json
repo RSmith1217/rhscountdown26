@@ -1,58 +1,7 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "November 12, 2026",
-  "updatedAt": "2026-11-12T19:48:35Z",
-  "hasNoAbsences": false,
-  "absences": [
-    {
-      "name": "J. Greco",
-      "summary": "AM ONLY - 3 and 4 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "3 and 4 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "L. Valenti",
-      "summary": "PM ONLY - 5, 7 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "5, 7 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "L. Sargenti",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "M. Kirtane",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "M. Rotella",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    }
-  ]
+  "updatedFor": "November 13, 2026",
+  "updatedAt": "2026-11-13T12:38:53Z",
+  "hasNoAbsences": true,
+  "absences": []
 }
