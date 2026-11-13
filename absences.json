@@ -1,7 +1,116 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "November 13, 2026",
-  "updatedAt": "2026-11-13T12:38:53Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedAt": "2026-11-13T19:31:33Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "P. Nyhuis",
+      "summary": "4 ONLY, Report to 2, 6 and 7",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "4 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "2, 6 and 7"
+        }
+      ]
+    },
+    {
+      "name": "E. D'Elia",
+      "summary": "6 ONLY, Report to 3, 8",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "3, 8"
+        }
+      ]
+    },
+    {
+      "name": "R. Smith",
+      "summary": "6 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "D. Purrinos",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "A. Mason",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "M Luo",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "G. Fink",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "D. Purrinos",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "C. Bunzey",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "R. Plattel",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    }
+  ]
 }
