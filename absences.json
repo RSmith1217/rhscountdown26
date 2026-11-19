@@ -1,7 +1,128 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "November 19, 2026",
-  "updatedAt": "2026-11-19T12:01:38Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedAt": "2026-11-19T20:26:20Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "F. LaFemina",
+      "summary": "2, 8 ONLY, Report to 3 and 6",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 8 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "3 and 6"
+        }
+      ]
+    },
+    {
+      "name": "L. Dolby",
+      "summary": "6, 8 ONLY, Report to 2 and 7",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6, 8 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "2, 7"
+        }
+      ]
+    },
+    {
+      "name": "Y. Hassan",
+      "summary": "2 Only, Report to 4, 6 and 7",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "4, 6 and 7"
+        }
+      ]
+    },
+    {
+      "name": "L. Rosenfeld",
+      "summary": "2 ONLY, Report to 4, 7 and 8",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "4, 7 AND 8"
+        }
+      ]
+    },
+    {
+      "name": "A. Ballas",
+      "summary": "2, 7 ONLY, Report to 4 and 8",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 7 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "4 and 8"
+        }
+      ]
+    },
+    {
+      "name": "L. Lauro",
+      "summary": "2, 4 and 8 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "2, 4 8 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "S. Cruz",
+      "summary": "AM ONLY - 3, 4 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3 and 4 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "D. Muro",
+      "summary": "3 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "R. Block",
+      "summary": "PM ONLY - 6 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "6 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "K. Rehain",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    }
+  ]
 }
