@@ -1,38 +1,7 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
-  "updatedFor": "November 23, 2026",
-  "updatedAt": "2026-11-23T23:45:41Z",
-  "hasNoAbsences": false,
-  "absences": [
-    {
-      "name": "K. Rehain",
-      "summary": "AM ONLY - 1 ONLY",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "1 ONLY"
-        }
-      ]
-    },
-    {
-      "name": "K. Geronimo",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    },
-    {
-      "name": "Lindsey \"Drue\" Dalby",
-      "summary": "All Periods",
-      "details": [
-        {
-          "label": "Online Assignment",
-          "value": "All Periods"
-        }
-      ]
-    }
-  ]
+  "updatedFor": "November 24, 2026",
+  "updatedAt": "2026-11-24T12:19:49Z",
+  "hasNoAbsences": true,
+  "absences": []
 }
