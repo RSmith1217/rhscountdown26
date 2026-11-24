@@ -1,7 +1,76 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "November 24, 2026",
-  "updatedAt": "2026-11-24T12:19:49Z",
-  "hasNoAbsences": true,
-  "absences": []
+  "updatedAt": "2026-11-24T22:18:14Z",
+  "hasNoAbsences": false,
+  "absences": [
+    {
+      "name": "K. Walters",
+      "summary": "1, 4, 7, 8 ONLY, Report to 3",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1, 4, 7, 8 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "name": "P. Nyhuis",
+      "summary": "4 ONLY, Report to 1, 5, 7",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "4 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "1, 5, 7"
+        }
+      ]
+    },
+    {
+      "name": "N. Makhlouf",
+      "summary": "PM ONLY, 7 and 8 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "7, 8 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "M. Cheplic",
+      "summary": "AM ONLY - 1 ONLY",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "1 ONLY"
+        }
+      ]
+    },
+    {
+      "name": "S. Song",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    },
+    {
+      "name": "M. Berman",
+      "summary": "All Periods",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "All Periods"
+        }
+      ]
+    }
+  ]
 }
