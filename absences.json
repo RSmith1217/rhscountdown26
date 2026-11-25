@@ -1,9 +1,23 @@
 {
   "source": "https://app.ridgewood.k12.nj.us/",
   "updatedFor": "November 25, 2026",
-  "updatedAt": "2026-11-25T12:32:33Z",
+  "updatedAt": "2026-11-25T21:34:31Z",
   "hasNoAbsences": false,
   "absences": [
+    {
+      "name": "H. Donovan",
+      "summary": "3, 8 ONLY, Report to 7",
+      "details": [
+        {
+          "label": "Online Assignment",
+          "value": "3, 8 ONLY"
+        },
+        {
+          "label": "Report to",
+          "value": "7"
+        }
+      ]
+    },
     {
       "name": "A. Cuellar",
       "summary": "All Periods",
